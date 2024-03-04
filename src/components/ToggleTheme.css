@@ -1,0 +1,19 @@
+.toggle-theme {
+    display: contents;
+    white-space: nowrap;
+}
+
+.bg-dark .toggle-theme i {
+    color: #d9d9da!important;
+}
+.bg-light .toggle-theme i {
+    color: #212529!important;
+}
+
+.flag-en {
+    background-image: url('https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/0.8.2/flags/4x3/gb.svg');
+}
+
+.flag-hu {
+    background-image: url('https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/0.8.2/flags/4x3/hu.svg');
+}
