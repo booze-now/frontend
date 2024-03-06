@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-//import { useTranslation } from "../contexts/TranslationContext";
+import { useTranslation } from "../contexts/TranslationContext";
 import { useUser } from "../contexts/UserContext";
 // import { useTheme } from '../contexts/ThemeContext';
 import { useMessages } from "../contexts/MessagesContext";
@@ -9,7 +9,7 @@ import axiosService from "../models/axiosService.js";
 import { Button } from "react-bootstrap";
 
 const Login = () => {
-  // const { __ } = useTranslation();
+  const { __ } = useTranslation();
   const { user, login /*, logout*/ } = useUser();
   const { addMessage } = useMessages();
   const navigate = useNavigate();
@@ -60,31 +60,31 @@ const Login = () => {
       <div className="row justify-content-center">
         <div className="col-lg-5">
           <div className="card shadow-lg border-0 rounded-lg mt-5">
-            <div className="card-header"><h3 className="text-center font-weight-light my-4">Login</h3></div>
+            <div className="card-header"><h3 className="text-center font-weight-light my-4">{__('Login')}</h3></div>
             <div className="card-body">
               <form onSubmit={handleSubmit}>
                 <div className="form-floating mb-3">
                   <input className="form-control" id="email" type="email"
                     value={email} onChange={(event) => setEmail(event.target.value)} placeholder="name@example.com" />
-                  <label htmlFor="email">Email address</label>
+                  <label htmlFor="email">{__('Email address')}</label>
                 </div>
                 <div className="form-floating mb-3">
                   <input className="form-control" id="password" type="password"
                     value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Password" />
-                  <label htmlFor="password">Password</label>
+                  <label htmlFor="password">{__('Password')}</label>
                 </div>
                 {/* <div className="form-check mb-3">
                             <input className="form-check-input" id="rememberPassword" type="checkbox" value="" />
                             <label className="form-check-label" htmlFor="rememberPassword">Remember Password</label>
                         </div> */}
                 <div className="d-flex align-items-center justify-content-between mt-4 mb-0">
-                  <Link className="small" to="/password">Forgot Password?</Link>
-                  <Button type="submit" variant="primary" >Login</Button>
+                  <Link className="small" to="/password">{__('Forgot Password?')}</Link>
+                  <Button type="submit" variant="primary" >{__('Login')}</Button>
                 </div>
               </form>
             </div>
             <div className="card-footer text-center py-3">
-              <div className="small"><a href="register.html">Need an account? Sign up!</a></div>
+              <div className="small"><a href="register.html">{__('Need an account? Sign up!')}</a></div>
             </div>
           </div>
         </div>

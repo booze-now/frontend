@@ -97,9 +97,9 @@ const SideNav = () => {
       </div>
       <div className="sb-sidenav-footer">
         {user ? <>
-          <div className="small">Logged in as:</div>
+          <div className="small">{__('Logged in as:')}</div>
           {user.name}
-        </> : <div>Not logged is</div>}
+        </> : <div>{__('Not logged is')}</div>}
       </div>
     </nav>
   );
