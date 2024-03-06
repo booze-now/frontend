@@ -34,7 +34,7 @@ export const ConfigProvider = ({ children }) => {
 
     const cleanupConfig = () => {
         localStorage.removeItem(CONFIG_KEY);
-        setItems({});
+        setItems(config);
     }
 
     return (
