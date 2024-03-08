@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import ToggleTheme from "../components/ToggleTheme.jsx";
 import { useTranslation } from "../contexts/TranslationContext.js";
 import { useUser } from "../contexts/UserContext.js";
@@ -37,6 +37,7 @@ const TopNav = () => {
           <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
             <li><Link data-ek="settings" className="dropdown-item" href="#!">{__('Settings')}</Link></li>
             <li><Link data-ek="activityLog" className="dropdown-item" href="#!">{__('Activity Log')}</Link></li>
+            {user && <li><NavLink data-ek="profile" className="dropdown-item" to="profile">{__('Profile')}</NavLink></li>}
             <li><hr className="dropdown-divider" /></li>
             {user && <li><Link data-ek="logout" className="dropdown-item" onClick={() => logout()}>{__('Logout')}</Link></li>}
             {!user && <li><Link data-ek="login" to="login" className="dropdown-item" >{__('Login')}</Link></li>}
