@@ -21,20 +21,39 @@ axiosInstance.interceptors.request.use(request => {
 
 // Response interceptor to handle token expiration
 axiosInstance.interceptors.response.use(
-    response => response,
+    async response => {
+        const token = response.data?.access_token;
+        if (token) {
+            // console.log('token #1', token)
+            localStorage.setItem('accessToken', token);
+        }
+        return response
+    },
     async error => {
         const originalRequest = error.config;
-        if (error.response.status === 401 && !originalRequest._retry) {
+        const accessToken = localStorage.getItem('accessToken');
+
+        if (error.response.status === 401 && !originalRequest._retry && accessToken) {
             originalRequest._retry = true;
-            const refreshToken = localStorage.getItem('refreshToken');
+            // console.log(originalRequest)
             try {
                 // Attempt to refresh the token
-                const response = await axios.post(`${config.serverUrl}/refresh`, { refreshToken });
+                // console.log("Érvénytelen token, frissíjük ", `${config.serverUrl}refresh`)
+                // console.log("lejárt token", accessToken)
+                const response = await axios.get(`${config.serverUrl}refresh`, {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                })
                 if (response.status === 200) {
                     // Store new token and update the original request
-                    localStorage.setItem('accessToken', response.data.accessToken);
-                    axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`;
+                    const token = response.data?.access_token;
+                    // console.log('token #2', token)
+                    localStorage.setItem('accessToken', token);
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                     return axiosInstance(originalRequest);
+                } else {
+                    localStorage.removeItem('accessToken');
                 }
             } catch (e) {
                 console.log('Refresh token invalid', e);
