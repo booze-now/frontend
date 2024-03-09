@@ -1,8 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
-import ToggleTheme from "../components/ToggleTheme.jsx";
-import { useTranslation } from "../contexts/TranslationContext.js";
-import { useUser } from "../contexts/UserContext.js";
-import { useConfig } from "../contexts/ConfigContext.js";
+import ToggleTheme from "../../components/ToggleTheme.jsx";
+import { useTranslation } from "../../contexts/TranslationContext.js";
+import { useUser } from "../../contexts/UserContext.js";
+import { useConfig } from "../../contexts/ConfigContext.js";
 
 const TopNav = () => {
 
@@ -12,7 +12,7 @@ const TopNav = () => {
 
   return (
     <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-      <Link data-ek="brand" className="navbar-brand ps-3" href="index.html">Start Bootstrap</Link>
+      <Link data-ek="brand" className="navbar-brand ps-3" href="index.html">Admin|Booze Now</Link>
       <button className="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" onClick={() => { toggleConfig('sidebarOpened') }}><i className="fas fa-bars"></i></button>
       <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
         <div className="input-group">
@@ -37,10 +37,10 @@ const TopNav = () => {
           <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
             <li><Link data-ek="settings" className="dropdown-item" href="#!">{__('Settings')}</Link></li>
             <li><Link data-ek="activityLog" className="dropdown-item" href="#!">{__('Activity Log')}</Link></li>
-            {user && <li><NavLink data-ek="profile" className="dropdown-item" to="profile">{__('Profile')}</NavLink></li>}
+            {user && <li><NavLink data-ek="profile" className="dropdown-item" to="/admin/profile">{__('Profile')}</NavLink></li>}
             <li><hr className="dropdown-divider" /></li>
             {user && <li><Link data-ek="logout" className="dropdown-item" onClick={() => logout()}>{__('Logout')}</Link></li>}
-            {!user && <li><Link data-ek="login" to="login" className="dropdown-item" >{__('Login')}</Link></li>}
+            {!user && <li><Link data-ek="login" to="/admin/login" className="dropdown-item" >{__('Login')}</Link></li>}
           </ul>
         </li>
       </ul>

@@ -24,7 +24,7 @@ axiosInstance.interceptors.response.use(
     async response => {
         const token = response.data?.access_token;
         if (token) {
-            // console.log('token #1', token)
+            console.log('token #1', token)
             localStorage.setItem('accessToken', token);
         }
         return response
@@ -38,8 +38,8 @@ axiosInstance.interceptors.response.use(
             // console.log(originalRequest)
             try {
                 // Attempt to refresh the token
-                // console.log("Érvénytelen token, frissíjük ", `${config.serverUrl}refresh`)
-                // console.log("lejárt token", accessToken)
+                console.log("Érvénytelen token, frissíjük ", `${config.serverUrl}refresh`)
+                console.log("lejárt token", accessToken)
                 const response = await axios.get(`${config.serverUrl}refresh`, {
                     headers: {
                         'Authorization': `Bearer ${accessToken}`
@@ -48,7 +48,7 @@ axiosInstance.interceptors.response.use(
                 if (response.status === 200) {
                     // Store new token and update the original request
                     const token = response.data?.access_token;
-                    // console.log('token #2', token)
+                    console.log('token #2', token)
                     localStorage.setItem('accessToken', token);
                     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                     return axiosInstance(originalRequest);

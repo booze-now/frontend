@@ -1,9 +1,10 @@
+import './sbAdmin.css';
 import React from "react";
 import TopNav from "./TopNav.jsx";
 import SideNav from "./SideNav.jsx";
-import ContentArea from "./ContentArea.jsx";
+import ContentArea from "../ContentArea.jsx";
 
-const PageLayout = () => {
+const AdminPageLayout = () => {
   return (
     <>
       <TopNav />
@@ -12,11 +13,12 @@ const PageLayout = () => {
           <SideNav />
         </div>
         <div id="layoutSidenav_content">
-            <ContentArea />
+          {/* <div>Admin Page Layout</div> */}
+          <ContentArea />
         </div>
       </div>
     </>
   );
 };
 
-export default PageLayout;
+export default AdminPageLayout;

@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import { useTranslation } from "../contexts/TranslationContext.js";
-import { useUser } from "../contexts/UserContext.js";
-import { useConfig } from "../contexts/ConfigContext.js";
+import { useTranslation } from "../../contexts/TranslationContext.js";
+import { useUser } from "../../contexts/UserContext.js";
+import { useConfig } from "../../contexts/ConfigContext.js";
 
 
 const SideNav = () => {
@@ -25,19 +25,19 @@ const SideNav = () => {
       <div className="sb-sidenav-menu">
         <div className="nav">
           <div className="sb-sidenav-menu-heading">Core</div>
-          <NavLink className="nav-link" to="/">
+          <NavLink className="nav-link" to="/admin/">
             <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
             {__('Dashboard')}
           </NavLink>
-          <NavLink className="nav-link" to="login">
+          <NavLink className="nav-link" to="/admin/login">
             <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
             /login
           </NavLink>
-          <NavLink className="nav-link" to="/logout">
+          <NavLink className="nav-link" to="/admin/logout">
             <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
             /logout
           </NavLink>
-          <NavLink className="nav-link" to="/register">
+          <NavLink className="nav-link" to="/admin/register">
             <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
             /register
           </NavLink>
@@ -66,9 +66,9 @@ const SideNav = () => {
               </a>
               <div className="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                 <nav className="sb-sidenav-menu-nested nav">
-                  <NavLink className="nav-link" to="/login">{__('Login')}</NavLink>
-                  <NavLink className="nav-link" to="/register">{__('Register')}</NavLink>
-                  <NavLink className="nav-link" to="/password">{__('Forgot Password')}</NavLink>
+                  <NavLink className="nav-link" to="/admin/login">{__('Login')}</NavLink>
+                  <NavLink className="nav-link" to="/admin/register">{__('Register')}</NavLink>
+                  <NavLink className="nav-link" to="/admin/password">{__('Forgot Password')}</NavLink>
                 </nav>
               </div>
               <a className="nav-link collapsed" href="#!" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
