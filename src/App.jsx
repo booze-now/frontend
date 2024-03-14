@@ -16,13 +16,37 @@ function App() {
   const { user } = useUser();
   document.body.classList.add('sb-nav-fixed');
 
-  function checkStaffRoles(user, roles) {
+  function checkStaffRoles(user, roles, path) {
+    /**
+     * igaz feltételeket kell vaggyal (||) összekapcsolni.
+     */
 
-    return true;
+    let res = (roles.length === 0) //  Nincsenek szabályok (mindenki használhatja)
+      || (roles.includes('all')) //  Nincsenek szabályok (mindenki használhatja)
+      || (roles.includes('unauth') && !user) // ha nincs bejelentkezett user
+      || (roles.includes('auth') && user) // ha van belentkezett user (mindegy milyen szerep)
+      || (roles.includes('bartender') && user && user.role_id === 1) // ha van belentkezett user és az user bartender
+      || (roles.includes('waiter') && user && user.role_id === 0) // ha van belentkezett user és az user waiter
+      || (roles.includes('backoffice') && user && user.role_id === 2) // ha van belentkezett user és az user backoffice
+      || (roles.includes('admin') && user && user.role_id === 3) // ha van belentkezett user és az user admin
+
+    console.log('checkStaffRoles:', user, roles, path, res)
+    return res;
   }
-  function checkGuest(user, roles) {
 
-    return true;
+  function checkGuest(user, roles, path) {
+
+    /**
+     * igaz feltételeket kell vaggyal (||) összekapcsolni.
+     */
+
+    let res = (roles.length === 0) //  Nincsenek szabályok (mindenki használhatja)
+      || (roles.includes('all')) //  Nincsenek szabályok (mindenki használhatja)
+      || (roles.includes('unauth') && !user) // ha nincs bejelentkezett user
+      || (roles.includes('auth') && user) // ha van belentkezett user
+
+    console.log('checkGuestRoles:', user, roles, path, res)
+    return res;
   }
 
   return (
@@ -30,7 +54,7 @@ function App() {
       <Route path="/admin" element={<AdminPageLayout />}  >
         <Route index element={<Dashboard />} />
         {adminRoutes.map((route, index) => (
-          checkStaffRoles(user, route.roles) && <Route key={index} path={route.path} element={React.createElement(require(`./components/${route.component}`).default)} />
+          checkStaffRoles(user, route.roles, route.path) && <Route key={index} path={route.path} element={React.createElement(require(`./components/${route.component}`).default)} />
         ))}
         {user ? <Route path="*" element={<NoPage />} />
           : <Route path="*" element={<Login />} />}
@@ -38,7 +62,7 @@ function App() {
       <Route path="/" element={<PublicPageLayout />}  >
         <Route index element={<Dashboard />} />
         {publicRoutes.map((route, index) => (
-          checkGuest(user, route.roles) && <Route key={index} path={route.path} element={React.createElement(require(`./components/${route.component}`).default)} />
+          checkGuest(user, route.roles, route.path) && <Route key={index} path={route.path} element={React.createElement(require(`./components/${route.component}`).default)} />
         ))}
         {user ? <Route path="*" element={<NoPage />} />
           : <Route path="*" element={<Login />} />}
@@ -48,9 +72,9 @@ function App() {
 }
 
 export default App;
-        // {!user && <Route path="admin/login" element={<Login />} />}
-        // {user && <Route path="profile" element={<Profile />} />}
-        // {user && <Route path="logout" element={<Logout />} />}
-        // {!user && <Route path="register" element={<Register />} />}
-        // {user ? <Route path="*" element={<NoPage />} />
-        //   : <Route path="*" element={<Login />} />}
+// {!user && <Route path="admin/login" element={<Login />} />}
+// {user && <Route path="profile" element={<Profile />} />}
+// {user && <Route path="logout" element={<Logout />} />}
+// {!user && <Route path="register" element={<Register />} />}
+// {user ? <Route path="*" element={<NoPage />} />
+//   : <Route path="*" element={<Login />} />}
