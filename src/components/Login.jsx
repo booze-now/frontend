@@ -5,20 +5,21 @@ import { useTranslation } from "../contexts/TranslationContext";
 import { useUser } from "../contexts/UserContext";
 // import { useTheme } from '../contexts/ThemeContext';
 import { useMessages } from "../contexts/MessagesContext";
-import axiosService from "../models/axiosService.js";
 import { Button } from "react-bootstrap";
+import { useApi } from "../contexts/ApiContext.js";
 
 const Login = () => {
   const { __ } = useTranslation();
-  const { user, login,role /*, logout*/ } = useUser();
+  const { user, login, /* role, logout*/ } = useUser();
   const { addMessage } = useMessages();
+  const { post } = useApi();
   const navigate = useNavigate();
 
   // State variables to store email and password
   const [email, setEmail] = useState("StafAdmin@boozenow.hu");
   const [password, setPassword] = useState("StafAdminBo0ze-nOOOw!");
 
-  if (user ) {
+  if (user) {
     console.log(user.role_code);
     navigate("/");
     console.log("Nav");
@@ -33,15 +34,14 @@ const Login = () => {
     event.preventDefault();
     // Here you can perform validation, authentication, etc.
 
-    axiosService
-      .post("login", { email: email, password: password })
+    post("login", { email: email, password: password })
       .then((response) => {
         const user = response.data.user;
         console.log(user);
         login(user);
         setEmail("");
         setPassword("");
-        if (user && user.role_code ===0 || user.role_code ===1  || user.role_code ===2 || user.role_code ===3 ) {
+        if (user && user.role_code === 0 || user.role_code === 1 || user.role_code === 2 || user.role_code === 3) {
           navigate("/admin/");
         } else {
           navigate("/");

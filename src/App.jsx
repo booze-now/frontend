@@ -72,9 +72,3 @@ function App() {
 }
 
 export default App;
-// {!user && <Route path="admin/login" element={<Login />} />}
-// {user && <Route path="profile" element={<Profile />} />}
-// {user && <Route path="logout" element={<Logout />} />}
-// {!user && <Route path="register" element={<Register />} />}
-// {user ? <Route path="*" element={<NoPage />} />
-//   : <Route path="*" element={<Login />} />}
