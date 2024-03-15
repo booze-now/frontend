@@ -29,7 +29,12 @@ const adminRoutes = [
         "path": "/admin/profile",
         "component": "Profile",
         "roles": ["unauth"]
-    }
+    },
+    {
+        "path": "/admin/register",
+        "component": "admin/EmployeeRegister",
+        "roles": ["unauth"]
+    },
 ]
 
 export default adminRoutes

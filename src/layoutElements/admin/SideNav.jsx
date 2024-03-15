@@ -39,7 +39,7 @@ const SideNav = () => {
           </NavLink>
           <NavLink className="nav-link" to="/admin/register">
             <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
-            /register
+            Employees
           </NavLink>
           <div className="sb-sidenav-menu-heading">Interface</div>
           <a className="nav-link collapsed" href="#!" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">

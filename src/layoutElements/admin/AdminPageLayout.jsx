@@ -13,7 +13,7 @@ const AdminPageLayout = () => {
           <SideNav />
         </div>
         <div id="layoutSidenav_content">
-          {/* <div>Admin Page Layout</div> */}
+           <div>Admin Page Layout</div> 
           <ContentArea />
         </div>
       </div>
