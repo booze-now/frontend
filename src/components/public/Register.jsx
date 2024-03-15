@@ -114,7 +114,7 @@ export default function Register() {
     } catch (err) {
       if (!err?.response) {
         setErrMsg(__("No Server Response"));
-      } else if (err.response?.status === 409) {
+      } else if (err.response?.status === 422) {
         setErrMsg(__("Username Taken"));
       } else {
         setErrMsg(__("Registration Failed"));

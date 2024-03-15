@@ -32,6 +32,7 @@ export const TranslationProvider = ({ children }) => {
             'Password': 'Jelszó',
             'You have already logged in.': 'Már bejelentkeztél.',
             'Search for...': 'Keresés...',
+            'Password': 'Jelszó',
         }
     };
 
