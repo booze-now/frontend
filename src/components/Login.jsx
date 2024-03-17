@@ -10,7 +10,7 @@ import { Button } from "react-bootstrap";
 
 const Login = () => {
   const { __ } = useTranslation();
-  const { user, login,role /*, logout*/ } = useUser();
+  const { user, login,role_code /*, logout*/ } = useUser();
   const { addMessage } = useMessages();
   const navigate = useNavigate();
 

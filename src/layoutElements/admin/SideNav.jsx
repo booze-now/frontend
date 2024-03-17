@@ -89,9 +89,9 @@ const SideNav = () => {
             <div className="sb-nav-link-icon"><i className="fas fa-chart-area"></i></div>
             Charts
           </NavLink>
-          <NavLink className="nav-link" data-eventkey="tables.html">
-            <div className="sb-nav-link-icon"><i className="fas fa-table"></i></div>
-            Tables
+          <NavLink className="nav-link" data-eventkey="tables.html" to="/admin/table">
+            <div className="sb-nav-link-icon" ><i className="fas fa-table"></i></div>
+            {__('Tables')} 
           </NavLink>
         </div>
       </div>

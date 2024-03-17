@@ -16,6 +16,11 @@ const adminRoutes = [
         "roles": ["unauth"]
     },
     {
+        "path": "/admin/register",
+        "component": "admin/EmployeeRegister",
+        "roles": ["admin",'backoffice']
+    },
+    {
         "path": "/admin/login",
         "component": "Login",
         "roles": ["unauth"]
@@ -28,12 +33,12 @@ const adminRoutes = [
     {
         "path": "/admin/profile",
         "component": "Profile",
-        "roles": ["unauth"]
+        "roles": ["admin",'backoffice']
     },
     {
-        "path": "/admin/register",
-        "component": "admin/EmployeeRegister",
-        "roles": ["unauth"]
+        "path": "/admin/table",
+        "component": "admin/Table",
+        "roles": ["admin",'backoffice']
     },
 ]
 

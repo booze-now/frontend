@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useTranslation } from "../../contexts/TranslationContext.js";
 // import { useTheme } from '../contexts/ThemeContext';
@@ -22,7 +22,6 @@ const REGISTER_URL = "/register";
 
 export default function Register() {
   const { __ } = useTranslation();
-  const { addMessage } = useMessages();
   const navigate = useNavigate();
 
   const userRef = useRef();
