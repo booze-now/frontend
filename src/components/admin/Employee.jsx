@@ -77,6 +77,7 @@ export default function Employee(props) {
 
   const handleAddSubmit = async (event) => {
     event.preventDefault();
+    console.log(newUserData);
     try {
       // Send new user data to the backend
       const response = await axiosService.post("/employees", newUserData);
@@ -104,6 +105,7 @@ export default function Employee(props) {
     event.preventDefault();
     try {
       // Send edited user data to the backend
+      console.log(editedUserData);
       const response = await axiosService.put(
         `/employees/${selectedUser.id}`,
         editedUserData
@@ -238,7 +240,7 @@ export default function Employee(props) {
                 name="active"
                 label="Active"
                 checked={editedUserData.active}
-                onChange={handleInputChange}
+                onChange={handleCheckboxChange}
               />
             </Form.Group>
             <Button variant="secondary" onClick={handleEditModalClose}>
