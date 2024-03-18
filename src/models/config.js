@@ -11,11 +11,11 @@ const config = {
     baseURL: baseURL,
     user: null,
     guest: {
-        serverUrl: baseURL + 'guest/', // a záró / jel kell a végére
+        serverURL: baseURL + 'guest/', // a záró / jel kell a végére
         theme: 0, // 0 sötét, 1 világos
     },
     staff: {
-        serverUrl: baseURL + 'staff/', // a záró / jel kell a végére
+        serverURL: baseURL + 'staff/', // a záró / jel kell a végére
         sidebarOpened: true,
         theme: 1, // 0 sötét, 1 világos
     }

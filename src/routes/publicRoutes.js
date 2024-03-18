@@ -15,12 +15,12 @@
 const publicRoutes = [
     {
         "path": "/",
-        "component": "Login",
+        "component": "Dashboard",
         "roles": ["unauth"]
     },
     {
         "path": "/logout",
-        "component": "Dashboard",
+        "component": "Logout",
         "roles": ["unauth"]
     },
     {
@@ -44,5 +44,7 @@ const publicRoutes = [
         "roles": ["admin"]
     },
 ]
+
+
 
 export default publicRoutes

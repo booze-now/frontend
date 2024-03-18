@@ -16,8 +16,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   // State variables to store email and password
-  const [email, setEmail] = useState("StafAdmin@boozenow.hu");
-  const [password, setPassword] = useState("StafAdminBo0ze-nOOOw!");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   if (user) {
     console.log(user.role_code);
@@ -41,15 +41,16 @@ const Login = () => {
         login(user);
         setEmail("");
         setPassword("");
-        if (user && user.role_code === 0 || user.role_code === 1 || user.role_code === 2 || user.role_code === 3) {
+        if (user && [0, 1, 2, 3].includes(user.role_code)) {
           navigate("/admin/");
         } else {
           navigate("/");
         }
       })
       .catch((error) => {
-        // console.log(error.response.data);
+        console.log(error);
         // error.response.status == 401
+
         addMessage("danger", error.response.data.error);
       });
     // addMessage("info", "You have been logged in, :name", { name: email });
