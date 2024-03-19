@@ -17,8 +17,7 @@ const Profile = () => {
 
     get("me")
       .then((response) => {
-        const user = response.data //.user;
-        console.log(user);
+        const user = response.data[0] //.user;
         setDisplayUser(user);
       })
       .catch((error) => {
@@ -30,13 +29,12 @@ const Profile = () => {
       });
   };
 
-  //  console.log(user)
   return (
     <>
       {!displayUser
         ? <NoPage />
         : <><h2>{displayUser.name}</h2>
-          {Object.keys(displayUser).map((idx, key) => <div><b>{idx}</b> {displayUser[idx]}</div>)}
+          {Object.keys(displayUser).map((idx, key) => (<div key={key}><b>{idx}</b>{displayUser[idx]}</div>))}
           <button onClick={refresh}>Refresh me!</button>
         </>
       }
