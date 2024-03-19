@@ -11,7 +11,11 @@ const PublicPageLayout = () => {
   return (
     <>
       <TopNav />
-      <ContentArea />
+      <div id="layoutSidenav">
+        <div id="layoutSidenav_content">
+          <ContentArea />
+        </div>
+      </div>
     </>
   );
 };

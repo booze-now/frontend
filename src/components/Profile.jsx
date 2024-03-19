@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import { useUser } from "../contexts/UserContext.js";
 import NoPage from "./NoPage.jsx"
-import axiosService from "../models/axiosService.js";
 import { useMessages } from "../contexts/MessagesContext.js";
+import { useApi } from "../contexts/ApiContext.js";
+
 
 const Profile = () => {
 
   const { user } = useUser();
   const { addMessage } = useMessages();
+  const { get } = useApi();
 
   const [displayUser, setDisplayUser] = useState(user);
 
   const refresh = () => {
-    axiosService
-      .get("me")
+
+    get("me")
       .then((response) => {
         const user = response.data //.user;
         console.log(user);

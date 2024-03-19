@@ -28,7 +28,7 @@ const adminRoutes = [
     {
         "path": "/admin/profile",
         "component": "Profile",
-        "roles": ["unauth"]
+        "roles": ["auth"]
     }
 ]
 

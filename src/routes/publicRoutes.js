@@ -16,32 +16,32 @@ const publicRoutes = [
     {
         "path": "/",
         "component": "Dashboard",
-        "roles": ["unauth"]
+        "roles": []
     },
     {
         "path": "/logout",
         "component": "Logout",
-        "roles": ["unauth"]
+        "roles": ["auth"]
     },
     {
         "path": "/drinks",
         "component": "public/Drinks",
-        "roles": ["unauth"]
+        "roles": ["auth"]
     },
     {
         "path": "/drink/:id",
         "component": "public/Drink",
-        "roles": ["unauth"]
+        "roles": ["auth"]
     },
     {
         "path": "/profile",
         "component": "Profile",
-        "roles": ["admin"]
+        "roles": ["auth"],
     },
     {
         "path": "/register",
         "component": "public/Register",
-        "roles": ["admin"]
+        "roles": ["noauth"]
     },
 ]
 

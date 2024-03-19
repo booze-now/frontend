@@ -24,7 +24,7 @@ export const ConfigProvider = ({ children }) => {
                 items[key] = JSON.parse(lsItems)
             }
         });
-        console.log('items', items)
+        console.log('Items loaded from localStorage', items)
         return items ?? {};
     });
 
@@ -40,7 +40,6 @@ export const ConfigProvider = ({ children }) => {
         setRealm('guest')
     }
 
-
     const getConfig = (key, defaultValue = null) => {
         const ret = (realm ? (items.hasOwnProperty(realm) ? (items[realm][key] ?? null) : null) : null)
             ?? (realm ? (config.hasOwnProperty(realm) ? (config[realm][key] ?? null) : null) : null)
@@ -48,59 +47,74 @@ export const ConfigProvider = ({ children }) => {
 
         if (!realm) {
             console.warn('getConfig: no realm', key, ret)
-        // } else {
-        //     console.log('getConfig', realm, key, ret)
+            // } else {
+            //     console.log('getConfig', realm, key, ret)
         }
         return ret;
     }
 
     const setConfig = (key, newValue) => {
-        let newItems = { ...items };
+        setItems((prevItems) => {
+            const newItems = { ...prevItems }
+            // let o = '?'
+            if (realm) {
+                if (!newItems.hasOwnProperty(realm)) {
+                    if (newValue !== null) {
+                        newItems[realm] = { [key]: newValue };
+                        // o = '(updated)'
+                    }
+                } else {
+                    if (newValue !== null) {
+                        newItems[realm][key] = newValue;
+                        // o = '(appended)'
 
-        if (realm) {
-            if (!newItems.hasOwnProperty(realm)) {
-                newItems[realm] = {};
+                    } else {
+                        delete newItems[realm][key];
+                        // o = '(deleted)'
+                    }
+                }
+                // console.log('setConfig', realm, key, newValue, o);
+            } else {
+                // console.warn('setConfig: no realm', key, newValue, o);
             }
-            newItems[realm][key] = newValue;
-            // console.log('setConfig', newItems);
-        } else {
-            console.warn('setConfig: no realm', key, newValue);
-        }
-        setItems(newItems);
+            // console.log("setItems", items, newItems);
+            return newItems;
+        });
     }
 
     useEffect(() => {
-        console.log('saving to localStorage', items);
+        // console.log('saving to localStorage', items);
         Object.keys(CONFIG_KEYS).forEach((key) => {
             const lsKey = CONFIG_KEYS[key];
             const lsItems = items[key];
             if (lsItems != null) {
-                console.log("writing", lsKey, lsItems);
                 localStorage.setItem(lsKey, JSON.stringify(lsItems));
+                // console.log("- writing", lsKey, lsItems);
             } else {
                 localStorage.removeItem(lsKey);
-                console.log("writing?", key, items);
+                // console.log("- writing?", key, items);
             }
         });
     }, [configKey, items]);
 
     const toggleConfig = (key) => {
         const value = !getConfig(key)
-        console.log('toggle', key, value);
+        // console.log('toggle', key, value);
         setConfig(key, value);
     }
 
     const cleanupConfig = () => {
         let newItems = { ...items }
         delete newItems[realm]
-        console.log('cleanup #3', newItems)
+        // console.log('cleanup #3', newItems)
         setItems(newItems);
-        console.log('cleanup', realm, configKey)
+        // console.log('cleanup', realm, configKey)
     }
 
     const runMode = () => {
         return 'DEV';
     }
+
     return (
         <ConfigContext.Provider value={{ getConfig, setConfig, toggleConfig, cleanupConfig, realm, applyStaffRealm, applyGuestRealm, runMode }}>
             {children}

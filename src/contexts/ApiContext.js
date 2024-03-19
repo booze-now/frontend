@@ -2,6 +2,7 @@ import React, { createContext, useContext } from 'react';
 import axios from 'axios';
 import { useConfig } from './ConfigContext.js';
 
+const CONFIG_KEY_TOKEN = 'token';
 
 const ApiContext = createContext();
 
@@ -9,8 +10,8 @@ export const useApi = () => useContext(ApiContext);
 
 export const ApiProvider = ({ children }) => {
 
-  const { realm, getConfig } = useConfig();
-  console.log('realm', realm)
+  const { getConfig, setConfig } = useConfig();
+  // console.log('realm', realm)
   const baseUrl = getConfig('serverURL');
 
   const api = axios.create({
@@ -21,8 +22,8 @@ export const ApiProvider = ({ children }) => {
   api.interceptors.request.use(
     async (_config) => {
       // Here you would fetch and attach the token from storage or state
-      console.log('realm', realm)
-      const token = localStorage.getItem('accessToken');
+      // console.log('realm', realm)
+      const token = getConfig(CONFIG_KEY_TOKEN)
       _config.baseURL = baseUrl;
       if (token) {
         _config.headers.Authorization = `Bearer ${token}`;
@@ -34,39 +35,44 @@ export const ApiProvider = ({ children }) => {
 
   // Axios response interceptor to handle token expiration
   api.interceptors.response.use(
-    (response) => response,
+    async response => {
+      const token = response.data?.access_token;
+      if (token) {
+        // console.log('token #1', token)
+        setConfig(CONFIG_KEY_TOKEN, token);
+      }
+      return response
+    },
     async (error) => {
-      console.log(error)
+      // console.log(error)
       const originalRequest = error.config;
-      const accessToken = localStorage.getItem('accessToken');
+      const token = getConfig(CONFIG_KEY_TOKEN)
 
-      if (error.response.status === 401 && !originalRequest._retry && accessToken) {
+      if (error.response.status === 401 && !originalRequest._retry && token) {
         originalRequest._retry = true;
         // Handle token renewal here, e.g., fetch a new token and set it
-        const newToken = 'your_new_access_token';
-        axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-
+        originalRequest._retry = true;
         try {
           // Attempt to refresh the token
-          console.log("Érvénytelen token, frissíjük ", `${baseUrl}refresh`)
-          console.log("lejárt token", accessToken)
+          // console.log("Érvénytelen token, frissíjük ", `${baseUrl}refresh`)
+          // console.log("lejárt token", token)
           const response = await axios.get(`${baseUrl}refresh`, {
             headers: {
-              'Authorization': `Bearer ${accessToken}`
+              'Authorization': `Bearer ${token}`
             }
           })
           if (response.status === 200) {
             // Store new token and update the original request
             const token = response.data?.access_token;
-            console.log('token #2', token)
-            localStorage.setItem('accessToken', token);
+            // console.log('token #2', token)
+            setConfig(CONFIG_KEY_TOKEN, token);
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             return api(originalRequest);
           } else {
-            localStorage.removeItem('accessToken');
+            setConfig(CONFIG_KEY_TOKEN, null)
           }
         } catch (e) {
-          console.log('Refresh token invalid', e);
+          // console.log('Refresh token invalid', e);
           // Handle the case where the refresh token is also invalid (e.g., logout the user)
         }
       }
