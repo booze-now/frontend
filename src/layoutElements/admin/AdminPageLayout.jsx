@@ -1,10 +1,15 @@
 import './sbAdmin.css';
-import React from "react";
+import React, { useEffect } from "react";
 import TopNav from "./TopNav.jsx";
 import SideNav from "./SideNav.jsx";
 import ContentArea from "../ContentArea.jsx";
+import { useConfig } from '../../contexts/ConfigContext.js';
 
 const AdminPageLayout = () => {
+  const { applyStaffRealm } = useConfig();
+
+  useEffect(() => applyStaffRealm())
+
   return (
     <>
       <TopNav />
@@ -13,7 +18,6 @@ const AdminPageLayout = () => {
           <SideNav />
         </div>
         <div id="layoutSidenav_content">
-           <div>Admin Page Layout</div> 
           <ContentArea />
         </div>
       </div>

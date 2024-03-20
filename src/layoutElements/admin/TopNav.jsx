@@ -8,11 +8,11 @@ const TopNav = () => {
 
   const { __, language, languages, changeLanguage } = useTranslation();
   const { user, logout } = useUser();
-  const { toggleConfig } = useConfig();
+  const { toggleConfig, runMode } = useConfig();
 
   return (
     <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-      <Link data-ek="brand" className="navbar-brand ps-3" href="index.html">Admin|Booze Now</Link>
+      <Link data-ek="brand" className="navbar-brand ps-3" to="/admin/">Admin|Booze Now</Link>
       <button className="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" onClick={() => { toggleConfig('sidebarOpened') }}><i className="fas fa-bars"></i></button>
       <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
         <div className="input-group">
@@ -44,6 +44,9 @@ const TopNav = () => {
           </ul>
         </li>
       </ul>
+      {runMode() === 'DEV' && <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li className="nav-item"><Link className="nav-link" to="/">(pub)</Link></li>
+      </ul>}
     </nav>
   );
 };

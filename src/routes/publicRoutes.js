@@ -15,34 +15,36 @@
 const publicRoutes = [
     {
         "path": "/",
-        "component": "Login",
-        "roles": ["unauth"]
+        "component": "Dashboard",
+        "roles": []
     },
     {
         "path": "/logout",
-        "component": "Dashboard",
-        "roles": ["unauth"]
+        "component": "Logout",
+        "roles": ["auth"]
     },
     {
         "path": "/drinks",
         "component": "public/Drinks",
-        "roles": ["unauth"]
+        "roles": ["auth"]
     },
     {
         "path": "/drink/:id",
         "component": "public/Drink",
-        "roles": ["unauth"]
+        "roles": ["auth"]
     },
     {
         "path": "/profile",
         "component": "Profile",
-        "roles": ["admin"]
+        "roles": ["auth"],
     },
     {
         "path": "/register",
         "component": "public/Register",
-        "roles": ["admin"]
+        "roles": ["noauth"]
     },
 ]
+
+
 
 export default publicRoutes
