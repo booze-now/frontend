@@ -30,7 +30,7 @@ function App() {
       || (roles.includes('backoffice') && user && user.role_code === 2) // ha van belentkezett user és az user backoffice
       || (roles.includes('admin') && user && user.role_code === 3) // ha van belentkezett user és az user admin
 
-    console.log('checkStaffRoles:', user, roles, path, res)
+    // console.log('checkStaffRoles:', user, roles, path, res)
     return res;
   }
 
@@ -45,7 +45,7 @@ function App() {
       || (roles.includes('unauth') && !user) // ha nincs bejelentkezett user
       || (roles.includes('auth') && user) // ha van belentkezett user
 
-    console.log('checkGuestRoles:', user, roles, path, res)
+    // console.log('checkGuestRoles:', user, roles, path, res)
     return res;
   }
 
@@ -72,9 +72,3 @@ function App() {
 }
 
 export default App;
-// {!user && <Route path="admin/login" element={<Login />} />}
-// {user && <Route path="profile" element={<Profile />} />}
-// {user && <Route path="logout" element={<Logout />} />}
-// {!user && <Route path="register" element={<Register />} />}
-// {user ? <Route path="*" element={<NoPage />} />
-//   : <Route path="*" element={<Login />} />}

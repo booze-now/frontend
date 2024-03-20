@@ -1,0 +1,91 @@
+import React, { createContext, useContext } from 'react';
+import axios from 'axios';
+import { useConfig } from './ConfigContext.js';
+
+const CONFIG_KEY_TOKEN = 'token';
+
+const ApiContext = createContext();
+
+export const useApi = () => useContext(ApiContext);
+
+export const ApiProvider = ({ children }) => {
+
+  const { getConfig, setConfig } = useConfig();
+  // console.log('realm', realm)
+  const baseUrl = getConfig('serverURL');
+
+  const api = axios.create({
+    baseURL: baseUrl
+  });
+
+  // Axios request interceptor for token renewal
+  api.interceptors.request.use(
+    async (_config) => {
+      // Here you would fetch and attach the token from storage or state
+      // console.log('realm', realm)
+      const token = getConfig(CONFIG_KEY_TOKEN)
+      _config.baseURL = baseUrl;
+      if (token) {
+        _config.headers.Authorization = `Bearer ${token}`;
+      }
+      return _config;
+    },
+    (error) => Promise.reject(error)
+  );
+
+  // Axios response interceptor to handle token expiration
+  api.interceptors.response.use(
+    async response => {
+      const token = response.data?.access_token;
+      if (token) {
+        // console.log('token #1', token)
+        setConfig(CONFIG_KEY_TOKEN, token);
+      }
+      return response
+    },
+    async (error) => {
+      // console.log(error)
+      const originalRequest = error.config;
+      const token = getConfig(CONFIG_KEY_TOKEN)
+
+      if (error.response.status === 401 && !originalRequest._retry && token) {
+        originalRequest._retry = true;
+        // Handle token renewal here, e.g., fetch a new token and set it
+        originalRequest._retry = true;
+        try {
+          // Attempt to refresh the token
+          // console.log("Érvénytelen token, frissíjük ", `${baseUrl}refresh`)
+          // console.log("lejárt token", token)
+          const response = await axios.get(`${baseUrl}refresh`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          })
+          if (response.status === 200) {
+            // Store new token and update the original request
+            const token = response.data?.access_token;
+            // console.log('token #2', token)
+            setConfig(CONFIG_KEY_TOKEN, token);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            return api(originalRequest);
+          } else {
+            setConfig(CONFIG_KEY_TOKEN, null)
+          }
+        } catch (e) {
+          // console.log('Refresh token invalid', e);
+          // Handle the case where the refresh token is also invalid (e.g., logout the user)
+        }
+      }
+      return Promise.reject(error);
+    }
+  );
+
+  const contextValue = {
+    get: (url, config = {}) => api.get(url, config),
+    post: (url, data, config = {}) => api.post(url, data, config),
+    put: (url, data, config = {}) => api.put(url, data, config),
+    delete: (url, config = {}) => api.delete(url, config),
+  };
+
+  return <ApiContext.Provider value={contextValue}>{children}</ApiContext.Provider>;
+};

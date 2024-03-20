@@ -8,6 +8,7 @@ import { TranslationProvider } from "./contexts/TranslationContext";
 import { UserProvider } from "./contexts/UserContext";
 import { MessagesProvider } from "./contexts/MessagesContext.js";
 import { ConfigProvider } from './contexts/ConfigContext.js';
+import { ApiProvider } from './contexts/ApiContext.js';
 import App from './App';
 import "flag-icons/css/flag-icons.min.css";
 
@@ -16,15 +17,17 @@ root.render(
   <React.StrictMode>
     <ConfigProvider>
       <Router>
-        <TranslationProvider>
-          <UserProvider>
-            <ThemeProvider>
-              <MessagesProvider>
-                <App />
-              </MessagesProvider>
-            </ThemeProvider>
-          </UserProvider>
-        </TranslationProvider>
+        <ApiProvider>
+          <TranslationProvider>
+            <UserProvider>
+              <ThemeProvider>
+                <MessagesProvider>
+                  <App />
+                </MessagesProvider>
+              </ThemeProvider>
+            </UserProvider>
+          </TranslationProvider>
+        </ApiProvider>
       </Router>
     </ConfigProvider>
   </React.StrictMode>
