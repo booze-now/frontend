@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axiosService from "../../models/axiosService.js";
+import { useApi } from '../../contexts/ApiContext';
 import DataTable from "datatables.net-dt";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -8,10 +8,13 @@ import InputGroup from "react-bootstrap/InputGroup";
 import "./table.css"
 
 export default function Employee(props) {
+  const { post, put, deleteX } = useApi();
+
+
   let table = new DataTable('#myTable', {
     retrieve: true,
     responsive: true,
-});
+  });
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -80,7 +83,7 @@ export default function Employee(props) {
     console.log(newUserData);
     try {
       // Send new user data to the backend
-      const response = await axiosService.post("/employees", newUserData);
+      const response = await post("/employees", newUserData);
       console.log("New user added:", response.data);
       // Close modal after successful addition
       handleAddModalClose();
@@ -93,7 +96,7 @@ export default function Employee(props) {
 
   const handleDelete = async (userId) => {
     try {
-      await axiosService.delete(`/employees/${userId}`);
+      await deleteX(`/employees/${userId}`);
       // Set the flag to indicate user was edited
       setUserChanged(true);
     } catch (error) {
@@ -106,7 +109,7 @@ export default function Employee(props) {
     try {
       // Send edited user data to the backend
       console.log(editedUserData);
-      const response = await axiosService.put(
+      const response = await put(
         `/employees/${selectedUser.id}`,
         editedUserData
       );

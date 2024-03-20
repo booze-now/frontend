@@ -12,7 +12,7 @@ export const ConfigProvider = ({ children }) => {
     const [realm, setRealm] = useState(null);
 
     const configKey = CONFIG_KEYS[realm] ?? '';
-    console.log('configKey', configKey)
+    // console.log('configKey', configKey)
 
     const [items, setItems] = useState(() => {
         // LOAD
@@ -24,19 +24,19 @@ export const ConfigProvider = ({ children }) => {
                 items[key] = JSON.parse(lsItems)
             }
         });
-        console.log('Items loaded from localStorage', items)
+        // console.log('Items loaded from localStorage', items)
         return items ?? {};
     });
 
-    console.log('items', items)
+    // console.log('items', items)
 
     const applyStaffRealm = () => {
-        console.log('applyRealm', 'staff')
+        // console.log('applyRealm', 'staff')
         setRealm('staff')
     }
 
     const applyGuestRealm = () => {
-        console.log('applyRealm', 'guest')
+        // console.log('applyRealm', 'guest')
         setRealm('guest')
     }
 

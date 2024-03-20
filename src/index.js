@@ -8,7 +8,7 @@ import { TranslationProvider } from "./contexts/TranslationContext";
 import { UserProvider } from "./contexts/UserContext";
 import { MessagesProvider } from "./contexts/MessagesContext.js";
 import { ConfigProvider } from './contexts/ConfigContext.js';
-import { ApiProvider } from './contexts/ApiContext.js';
+import { ApiProvider } from './contexts/ApiContext';
 import App from './App';
 import "flag-icons/css/flag-icons.min.css";
 

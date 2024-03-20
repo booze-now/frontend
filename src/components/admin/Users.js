@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axiosService from "../../models/axiosService.js";
+import { useApi } from "../../contexts/ApiContext";
 import DataTable from "datatables.net-dt";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -10,6 +10,7 @@ import Employee from "./Employee.jsx";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
+  const { get } = useApi();
 
   useEffect(() => {
     getUser();
@@ -17,7 +18,7 @@ export default function Users() {
 
   const getUser = async () => {
     try {
-      const response = await axiosService.get("/employees");
+      const response = await get("/employees");
       setUsers(response.data);
       console.log(response.data.length);
     } catch (err) {

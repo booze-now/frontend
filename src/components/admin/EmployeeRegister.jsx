@@ -1,6 +1,6 @@
 import { useNavigate, Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import axiosService from "../../models/axiosService.js";
+import { useApi } from '../../contexts/ApiContext';
 import Employee from "./Employee.jsx";
 
 
@@ -15,7 +15,7 @@ export default function EmployeeRegister() {
       <h1>Employee Register</h1>
       <br />
       <Employees />
- 
+
       <div className="flexGrow">
         <button onClick={logout}>Sign Out</button>
       </div>
@@ -26,6 +26,7 @@ export default function EmployeeRegister() {
 
 function Employees() {
   const [users, setUsers] = useState([]);
+  const { get } = useApi();
 
   useEffect(() => {
     getUser();
@@ -33,7 +34,7 @@ function Employees() {
 
   const getUser = async () => {
     try {
-      const response = await axiosService.get("/employees");
+      const response = await get("/employees");
       setUsers(response.data);
 
     } catch (err) {

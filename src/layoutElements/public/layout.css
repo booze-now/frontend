@@ -1,0 +1,153 @@
+body {
+  text-align: center;
+  background: linear-gradient(
+    to right,
+    #aa840f,
+    #ffe448,
+    #aa840f,
+    #ffe448,
+    #aa840f,
+    #ffe448,
+    #aa840f,
+    #ffe448
+  );
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+article {
+  text-align: center;
+
+  color: black;
+  
+}
+
+.menu {
+  width: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  text-align: center;
+  background: linear-gradient(
+    to right,
+    #aa840f,
+    #ffe448,
+    #aa840f,
+    #ffe448,
+    #aa840f,
+    #ffe448,
+    #aa840f,
+    #ffe448
+  );
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.container{
+  background-color: black;
+
+}
+
+.logo {
+  height: 90px;
+  margin-bottom: 20px;
+}
+
+.custom-navbar {
+  display: flex;
+  background-color: black;
+}
+
+.nav-link {
+  font-size: larger;
+  text-align: center;
+  padding: 30px;
+  margin-bottom: 0;
+  text-decoration: none;
+  font-family: "Courier, monospace";
+  background: linear-gradient(
+    to right,
+    #aa840f,
+    #ffe448,
+    #aa840f,
+    #ffe448,
+    #aa840f,
+    #ffe448,
+    #aa840f,
+    #ffe448
+  );
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.nav-link:hover {
+  color: #ffee6f;
+}
+
+.custom-navbar .navbar-toggler-icon {
+  background-color: rgb(192, 181, 181);
+  border-radius: 3px;
+}
+.notification {
+  height: 40px;
+  background: linear-gradient(
+    to right,
+    #aa840f,
+    #ffe448,
+    #aa840f,
+    #ffe448,
+    #aa840f,
+    #ffe448,
+    #aa840f,
+    #ffe448
+  );
+  color: transparent;
+}
+
+.carousel-item {
+  background-color: #ffee6f;
+  position: relative;
+  background-position: center;
+  background-size: cover;
+}
+
+.carousel-item-container {
+  position: absolute;
+  bottom: 0;
+  padding: 30px;
+}
+
+@media screen and (min-width: 800px) {
+  .carousel-item {
+    height: 700px;
+  }
+}
+#accordionExample {
+  background-color: black;
+  color: white;
+}
+
+.accordion-item {
+  border-bottom: 1px solid white;
+  padding-bottom: 10px;
+  background-color: black;
+  color: white;
+}
+
+.accordion-button {
+  direction: none;
+  background-color: black;
+  color: white;
+}
+.accordion-button:not(.collapsed) {
+  background-color: black;
+  color: white;
+}
+
+.accordion-button::after {
+  background-color: black;
+  color: white;
+}
+.card {
+  margin: 20px;
+}
