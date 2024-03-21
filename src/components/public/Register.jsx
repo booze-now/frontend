@@ -141,8 +141,8 @@ export default function Register() {
 
           <h1>{__("Register")}</h1>
           <form onSubmit={handleSubmit}>
-            <div class="mb-3">
-              <label htmlFor="username" class="form-label">
+            <div className="mb-3">
+              <label htmlFor="username" className="form-label">
                 {" "}
                 {__("Username:")}
                 <span className={validName ? "valid" : "hide"}>
@@ -155,7 +155,7 @@ export default function Register() {
 
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 id="username"
                 ref={userRef}
                 autoComplete="off"
@@ -181,8 +181,8 @@ export default function Register() {
               </p>
             </div>
 
-            <div class="mb-3">
-              <label for="email" class="form-label">
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">
                 {" "}
                 {__("Email:")}
                 <span className={validEmail ? "valid" : "hide"}>
@@ -194,7 +194,7 @@ export default function Register() {
               </label>
               <input
                 type="email"
-                class="form-control"
+                className="form-control"
                 id="email"
                 ref={emailRef}
                 autoComplete="off"
@@ -221,8 +221,8 @@ export default function Register() {
               </p>
             </div>
 
-            <div class="mb-3">
-              <label for="passwword" class="form-label">
+            <div className="mb-3">
+              <label htmlFor="passwword" className="form-label">
                 {__(" Password:")}
                 <span className={validPwd ? "valid" : "hide"}>
                   <FontAwesomeIcon icon={faCheck} />
@@ -234,7 +234,7 @@ export default function Register() {
 
               <input
                 type="password"
-                class="form-control"
+                className="form-control"
                 id="password"
                 placeholder={__("Enter your password")}
                 onChange={(e) => setPwd(e.target.value)}
@@ -262,13 +262,13 @@ export default function Register() {
                 <span aria-label="percent">%</span>
               </p>
             </div>
-            <div class="mb-3">
-              <label for="confirm_pwd" class="form-label">
+            <div className="mb-3">
+              <label htmlFor="confirm_pwd" className="form-label">
                 {__(" Confirm Password:")}
               </label>
               <input
                 type="password"
-                class="form-control"
+                className="form-control"
                 id="confirm_pwd"
                 placeholder={__("Confirm Password")}
                 onChange={(e) => setMatchPwd(e.target.value)}
@@ -291,7 +291,7 @@ export default function Register() {
             </div>
             <button
               type="submit"
-              class="btn btn-primary"
+              className="btn btn-primary"
               disabled={!validName || !validPwd || !validMatch ? true : false}
             >
               {__("Sign Up")}
