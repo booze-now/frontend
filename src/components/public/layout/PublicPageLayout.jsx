@@ -1,18 +1,19 @@
+import { useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
+import { useTranslation } from "contexts/TranslationContext";
+import { useUser } from "contexts/UserContext";
+import { useConfig } from "contexts/ConfigContext";
+import MessageArea from "components/common/MessageArea";
+import ToggleTheme from "components/common/ToggleTheme";
 
-import { useTranslation } from "../contexts/TranslationContext";
-import { useUser } from "../contexts/UserContext";
-import MessageArea from "./MessageArea.jsx";
-import ToggleTheme from "./ToggleTheme.jsx";
-
-// import { useTheme } from '../contexts/ThemeContext';
-
-
-
-const Layout = () => {
+const PublicPageLayout = () => {
   const { __ } = useTranslation();
-  const { user /*, login, logout*/ } = useUser(); // || {};
-  // const { theme } = useTheme();
+  const { user /*, login, logout*/ } = useUser();
+
+  // az alábbi két sor fontos, ne töröld ki, köszi! <3
+  const { applyGuestRealm } = useConfig();
+  useEffect(() => applyGuestRealm())
+
   return (
     <>
       <main>
@@ -93,4 +94,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default PublicPageLayout;

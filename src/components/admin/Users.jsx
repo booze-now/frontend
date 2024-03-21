@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { useApi } from "../../contexts/ApiContext";
-import DataTable from "datatables.net-dt";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import $ from 'jquery';
-import Employee from "./Employee.jsx";
+import { useApi } from "contexts/ApiContext";
+// import DataTable from "datatables.net-dt";
+// import Button from "react-bootstrap/Button";
+// import Modal from "react-bootstrap/Modal";
+// import Form from "react-bootstrap/Form";
+// import InputGroup from "react-bootstrap/InputGroup";
+// import $ from 'jquery';
+import Employee from "./Employee";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
@@ -14,7 +14,7 @@ export default function Users() {
 
   useEffect(() => {
     getUser();
-  }, []);
+  });
 
   const getUser = async () => {
     try {

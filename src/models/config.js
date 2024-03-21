@@ -2,7 +2,7 @@
  * Alapbeállítások
  */
 
-import { chooseLanguage } from "./MiscHelper.js";
+import { chooseLanguage } from "./MiscHelper";
 
 const baseURL = 'http://localhost:8000/api/';
 

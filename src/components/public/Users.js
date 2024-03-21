@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import DisplayUser from "../../view/DisplayUser";
+import DisplayUser from "./DisplayUser";
+import { useApi } from "contexts/ApiContext";
 export default function Users() {
   const [users, setUsers] = useState([]);
-  const axiosPrivate = useAxiosPrivate();
+  const { get } = useApi();
 
   useEffect(() => {
     let isMounted = true;
@@ -11,7 +11,7 @@ export default function Users() {
 
     const getUser = async () => {
       try {
-        const response = await axiosPrivate.get("/employees", {
+        const response = await get("/employees", {
           signal: controller.signal,
         });
 

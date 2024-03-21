@@ -1,8 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
-import ToggleTheme from "../../components/ToggleTheme.jsx";
-import { useTranslation } from "../../contexts/TranslationContext.js";
-import { useUser } from "../../contexts/UserContext.js";
-import { useConfig } from "../../contexts/ConfigContext.js";
+import ToggleTheme from "components/common/ToggleTheme";
+import { useTranslation } from "contexts/TranslationContext";
+import { useUser } from "contexts/UserContext";
+import { useConfig } from "contexts/ConfigContext";
 
 const TopNav = () => {
 

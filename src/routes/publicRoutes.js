@@ -4,7 +4,7 @@
  * component:
  * a components mappában megtalálható komponens (kis/nagybetű érzékeny a neve!)
  * saját komponens lehet, ilyenkor az alkönyvtárat is bele lehet írni
- * pl: public/pages/Drinks
+ * pl: public/Drinks
  * roles:
  * "waiter"
  * "bartender"
@@ -15,33 +15,38 @@
 const publicRoutes = [
     {
         "path": "/",
-        "component": "Dashboard",
+        "component": "common/Dashboard",
         "roles": []
     },
     {
+        "path": "/login",
+        "component": "common/Login",
+        "roles": ["unauth"]
+    },
+    {
         "path": "/logout",
-        "component": "Logout",
+        "component": "common/Logout",
         "roles": ["auth"]
     },
     {
         "path": "/drinks",
-        "component": "public/pages/Drinks",
-        "roles": ["auth"]
+        "component": "public/Drinks",
+        "roles": ["auth","unauth"]
     },
     {
         "path": "/drink/:id",
-        "component": "public/pages/Drink",
+        "component": "public/Drink",
         "roles": ["auth"]
     },
     {
         "path": "/profile",
-        "component": "Profile",
+        "component": "common/Profile",
         "roles": ["auth"],
     },
     {
         "path": "/register",
-        "component": "public/pages/Register",
-        "roles": ["noauth"]
+        "component": "public/Register",
+        "roles": ["unauth"]
     },
 ]
 

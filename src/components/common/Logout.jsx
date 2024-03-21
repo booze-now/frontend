@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useTranslation } from '../contexts/TranslationContext';
-import { useUser } from '../contexts/UserContext';
-// import { useTheme } from '../contexts/ThemeContext';
+import { useTranslation } from 'contexts/TranslationContext';
+import { useUser } from 'contexts/UserContext';
+// import { useTheme } from 'contexts/ThemeContext';
 
 const Logout = () => {
   const { /* language, languages, */ __ /*, changeLanguage*/ } = useTranslation();

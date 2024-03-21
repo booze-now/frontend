@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useUser } from "../contexts/UserContext.js";
+import { useUser } from "contexts/UserContext";
 import NoPage from "./NoPage.jsx"
-import { useMessages } from "../contexts/MessagesContext.js";
-import { useApi } from "../contexts/ApiContext.js";
+import { useMessages } from "contexts/MessagesContext";
+import { useApi } from "contexts/ApiContext";
 
 
 const Profile = () => {
@@ -17,8 +17,9 @@ const Profile = () => {
 
     get("me")
       .then((response) => {
-        const user = response.data[0] //.user;
+        const user = response.data //.user;
         setDisplayUser(user);
+        console.log(user)
       })
       .catch((error) => {
         setDisplayUser(null);

@@ -1,4 +1,4 @@
-import { OrdersTable } from "../basics/OrdersTable";
+import { OrdersTable } from "components/public/basics/OrdersTable";
 
 
 export default function OrdersPage() {

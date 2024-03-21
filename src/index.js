@@ -3,32 +3,32 @@ import 'bootstrap/dist/js/bootstrap.js';
 import './index.css';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from "react-router-dom";
-import { ThemeProvider } from "./contexts/ThemeContext";
-import { TranslationProvider } from "./contexts/TranslationContext";
-import { UserProvider } from "./contexts/UserContext";
-import { MessagesProvider } from "./contexts/MessagesContext.js";
+import { ThemeProvider } from "contexts/ThemeContext";
+import { TranslationProvider } from "contexts/TranslationContext";
+import { UserProvider } from "contexts/UserContext";
+import { MessagesProvider } from "contexts/MessagesContext";
 import { ConfigProvider } from './contexts/ConfigContext.js';
 import { ApiProvider } from './contexts/ApiContext';
 import App from './App';
 import "flag-icons/css/flag-icons.min.css";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// <> React.StrictMode
+// </> React.StrictMode
 root.render(
-  <React.StrictMode>
-    <ConfigProvider>
-      <Router>
+  <ConfigProvider>
+    <Router>
+      <TranslationProvider>
         <ApiProvider>
-          <TranslationProvider>
-            <UserProvider>
-              <ThemeProvider>
-                <MessagesProvider>
-                  <App />
-                </MessagesProvider>
-              </ThemeProvider>
-            </UserProvider>
-          </TranslationProvider>
+          <UserProvider>
+            <ThemeProvider>
+              <MessagesProvider>
+                <App />
+              </MessagesProvider>
+            </ThemeProvider>
+          </UserProvider>
         </ApiProvider>
-      </Router>
-    </ConfigProvider>
-  </React.StrictMode>
+      </TranslationProvider>
+    </Router>
+  </ConfigProvider>
 );

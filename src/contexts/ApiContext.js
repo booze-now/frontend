@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from 'react';
 import axios from 'axios';
-import { useConfig } from './ConfigContext.js';
+import { useConfig } from 'contexts/ConfigContext';
+import { useTranslation } from 'contexts/TranslationContext';
 
 const CONFIG_KEY_TOKEN = 'token';
 
@@ -10,6 +11,7 @@ export const useApi = () => useContext(ApiContext);
 
 export const ApiProvider = ({ children }) => {
 
+  const { language } = useTranslation();
   const { getConfig, setConfig } = useConfig();
   // console.log('realm', realm)
   const baseUrl = getConfig('serverURL');
@@ -22,9 +24,10 @@ export const ApiProvider = ({ children }) => {
   api.interceptors.request.use(
     async (_config) => {
       // Here you would fetch and attach the token from storage or state
-      // console.log('realm', realm)
       const token = getConfig(CONFIG_KEY_TOKEN)
+      _config.params = { ..._config.params, lang: language }
       _config.baseURL = baseUrl;
+      _config.headers.setContentType('application/json', true)
       if (token) {
         _config.headers.Authorization = `Bearer ${token}`;
       }

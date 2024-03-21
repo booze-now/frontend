@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useApi } from '../../contexts/ApiContext';
-import DataTable from "datatables.net-dt";
+import { useApi } from 'contexts/ApiContext';
+// import DataTable from "datatables.net-dt";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
@@ -11,10 +11,10 @@ export default function Employee(props) {
   const { post, put, deleteX } = useApi();
 
 
-  let table = new DataTable('#myTable', {
-    retrieve: true,
-    responsive: true,
-  });
+  // let table = new DataTable('#myTable', {
+  //   retrieve: true,
+  //   responsive: true,
+  // });
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);

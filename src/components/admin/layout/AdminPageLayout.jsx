@@ -1,13 +1,14 @@
 import './sbAdmin.css';
 import React, { useEffect } from "react";
-import TopNav from "./TopNav.jsx";
-import SideNav from "./SideNav.jsx";
-import ContentArea from "../ContentArea.jsx";
-import { useConfig } from '../../contexts/ConfigContext.js';
+import TopNav from "./TopNav";
+import SideNav from "./SideNav";
+import ContentArea from "components/common/ContentArea";
+import { useConfig } from 'contexts/ConfigContext.js';
 
 const AdminPageLayout = () => {
-  const { applyStaffRealm } = useConfig();
 
+  // az alábbi két sor fontos, ne töröld ki, köszi! <3
+  const { applyStaffRealm } = useConfig();
   useEffect(() => applyStaffRealm())
 
   return (

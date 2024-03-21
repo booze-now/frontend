@@ -1,5 +1,5 @@
 import React from "react";
-import { useTranslation } from "../contexts/TranslationContext.js";
+import { useTranslation } from "contexts/TranslationContext";
 import { Link } from "react-router-dom";
 
 const NoPage = () => {

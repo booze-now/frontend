@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { useTranslation } from "../contexts/TranslationContext";
-import { useUser } from "../contexts/UserContext";
-// import { useTheme } from '../contexts/ThemeContext';
-import { useMessages } from "../contexts/MessagesContext";
+import { useTranslation } from "contexts/TranslationContext";
+import { useUser } from "contexts/UserContext";
+// import { useTheme } from 'contexts/ThemeContext';
+import { useMessages } from "contexts/MessagesContext";
 import { Button } from "react-bootstrap";
-import { useApi } from "../contexts/ApiContext.js";
+import { useApi } from "contexts/ApiContext";
 
 const Login = () => {
   const { __ } = useTranslation();
-  const { user, login,role_code /*, logout*/ } = useUser();
+  const { user, login, /*role_code , logout*/ } = useUser();
 //  const { user, login, /* role, logout*/ } = useUser();
   const { addMessage } = useMessages();
   const { post } = useApi();
@@ -91,7 +91,7 @@ const Login = () => {
                     type="password"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
-                    placeholder="Password"
+                    placeholder={__("Password")}
                   />
                   <label htmlFor="password">{__("Password")}</label>
                 </div>

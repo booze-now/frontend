@@ -1,16 +1,17 @@
 import "./App.css";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { useUser } from "./contexts/UserContext.js";
+import { useUser } from "contexts/UserContext";
 
-import Login from "./components/Login";
-import Dashboard from "./components/Dashboard";
-import PublicPageLayout from "./layoutElements/public/PublicPageLayout.jsx";
-import AdminPageLayout from "./layoutElements/admin/AdminPageLayout.jsx";
-import NoPage from "./components/NoPage";
+import Login from "components/common/Login";
+import Dashboard from "components/common/Dashboard";
+import PublicPageLayout from "components/public/layout/PublicPageLayout";
+import Home from "components/public/Home";
+import AdminPageLayout from "components/admin/layout/AdminPageLayout";
+import NoPage from "components/common/NoPage";
 
-import adminRoutes from "./routes/adminRoutes.js";
-import publicRoutes from "./routes/publicRoutes.js";
+import adminRoutes from "routes/adminRoutes";
+import publicRoutes from "routes/publicRoutes";
 
 function App() {
   const { user } = useUser();
@@ -39,7 +40,6 @@ function App() {
     /**
      * igaz feltételeket kell vaggyal (||) összekapcsolni.
      */
-
     let res = (roles.length === 0) //  Nincsenek szabályok (mindenki használhatja)
       || (roles.includes('all')) //  Nincsenek szabályok (mindenki használhatja)
       || (roles.includes('unauth') && !user) // ha nincs bejelentkezett user
@@ -54,15 +54,15 @@ function App() {
       <Route path="/admin" element={<AdminPageLayout />}  >
         <Route index element={<Dashboard />} />
         {adminRoutes.map((route, index) => (
-          checkStaffRoles(user, route.roles, route.path) && <Route key={index} path={route.path} element={React.createElement(require(`./components/${route.component}`).default)} />
+          checkStaffRoles(user, route.roles, route.path) && <Route key={index} path={route.path} element={React.createElement(require(`components/${route.component}`).default)} />
         ))}
         {user ? <Route path="*" element={<NoPage />} />
           : <Route path="*" element={<Login />} />}
       </Route>
       <Route path="/" element={<PublicPageLayout />}  >
-        <Route index element={<Dashboard />} />
+        <Route index element={<Home />} />
         {publicRoutes.map((route, index) => (
-          checkGuest(user, route.roles, route.path) && <Route key={index} path={route.path} element={React.createElement(require(`./components/${route.component}`).default)} />
+          checkGuest(user, route.roles, route.path) && <Route key={index} path={route.path} element={React.createElement(require(`components/${route.component}`).default)} />
         ))}
         {user ? <Route path="*" element={<NoPage />} />
           : <Route path="*" element={<Login />} />}

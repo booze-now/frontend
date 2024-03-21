@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import { useTranslation } from "../../contexts/TranslationContext.js";
-import { useUser } from "../../contexts/UserContext.js";
-import { useConfig } from "../../contexts/ConfigContext.js";
+import { useTranslation } from "contexts/TranslationContext";
+import { useUser } from "contexts/UserContext";
+import { useConfig } from "contexts/ConfigContext";
 
 
 const SideNav = () => {
@@ -91,7 +91,7 @@ const SideNav = () => {
           </NavLink>
           <NavLink className="nav-link" data-eventkey="tables.html" to="/admin/table">
             <div className="sb-nav-link-icon" ><i className="fas fa-table"></i></div>
-            {__('Tables')} 
+            {__('Tables')}
           </NavLink>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React from 'react';
-import { useTranslation } from '../contexts/TranslationContext';
-import { useUser } from '../contexts/UserContext';
-import { useTheme } from '../contexts/ThemeContext';
+import { useTranslation } from 'contexts/TranslationContext';
+import { useUser } from 'contexts/UserContext';
+import { useTheme } from 'contexts/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 
 

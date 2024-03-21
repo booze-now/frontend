@@ -1,18 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { useTranslation } from "../../contexts/TranslationContext.js";
-// import { useTheme } from '../contexts/ThemeContext';
-import { useMessages } from "../../contexts/MessagesContext";
+import { useTranslation } from "contexts/TranslationContext";
+import { useApi } from 'contexts/ApiContext';
+
 import "./register.css";
 
-import {
-  faCheck,
-  faTimes,
-  faInfoCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faTimes, faInfoCircle, } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axiosService from "../../models/axiosService.js";
+import { useConfig } from "contexts/ConfigContext";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PASSWORD_REGEX =
@@ -21,8 +17,10 @@ const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const REGISTER_URL = "/register";
 
 export default function Register() {
+
+  const { post } = useApi();
+  const { realm } = useConfig();
   const { __ } = useTranslation();
-  const navigate = useNavigate();
 
   const userRef = useRef();
   const emailRef = useRef();
@@ -88,7 +86,7 @@ export default function Register() {
       return;
     }
     try {
-      const response = await axiosService.post(
+      const response = await post(
         REGISTER_URL,
         {
           name: user,
@@ -126,9 +124,9 @@ export default function Register() {
     <>
       {success ? (
         <section>
-          <h1>Success!</h1>
+          <h1>{__('Success!')}</h1>
           <p>
-            <a href="#">{__("Sign In")}</a>
+            <Link to={realm + '/login'}>{__("Sign In")}</Link>
           </p>
         </section>
       ) : (
@@ -144,7 +142,7 @@ export default function Register() {
           <h1>{__("Register")}</h1>
           <form onSubmit={handleSubmit}>
             <div class="mb-3">
-              <label for="username" class="form-label">
+              <label htmlFor="username" class="form-label">
                 {" "}
                 {__("Username:")}
                 <span className={validName ? "valid" : "hide"}>
@@ -174,8 +172,12 @@ export default function Register() {
                   userFocus && user && !validName ? "instructions" : "offscreen"
                 }
               >
-                <FontAwesomeIcon icon={faInfoCircle} />4 to 24 characters.
-                Must begin with a letter. Letters, numbers, underscores, hyphens allowed.
+                <FontAwesomeIcon icon={faInfoCircle} />
+                {__('4 to 24 characters.')}
+                <br />
+                {__('Must begin with a letter.')}
+                <br />
+                {__('Letters, numbers, underscores, hyphens allowed.')}
               </p>
             </div>
 
@@ -213,8 +215,9 @@ export default function Register() {
                 }
               >
                 <FontAwesomeIcon icon={faInfoCircle} />
-                Please enter a valid email address in the format
-                Must begin with : example@example.com.
+                {__('Please enter a valid email address in the format')}
+                <br />
+                {__('Must begin with : example@example.com.')}
               </p>
             </div>
 
@@ -233,7 +236,7 @@ export default function Register() {
                 type="password"
                 class="form-control"
                 id="password"
-                placeholder="Enter your password"
+                placeholder={__("Enter your password")}
                 onChange={(e) => setPwd(e.target.value)}
                 value={pwd}
                 required
@@ -247,9 +250,10 @@ export default function Register() {
                 className={pwdFocus && !validPwd ? "instructions" : "offscreen"}
               >
                 <FontAwesomeIcon icon={faInfoCircle} />
-                8 to 24 characters.
-                Must include uppercase and lowercase letters, a number and a
-                special character.
+                {__('8 to 24 characters.')}
+                <br />
+                {__('Must include uppercase and lowercase letters, a number and a special character.')}
+                <br />
                 Allowed special characters:{" "}
                 <span aria-label="exclamation mark">!</span>{""}
                 <span aria-label="at symbol">@</span>{""}
@@ -266,7 +270,7 @@ export default function Register() {
                 type="password"
                 class="form-control"
                 id="confirm_pwd"
-                placeholder="Confirm Password"
+                placeholder={__("Confirm Password")}
                 onChange={(e) => setMatchPwd(e.target.value)}
                 value={matchPwd}
                 required
@@ -285,17 +289,6 @@ export default function Register() {
                 {__(" Must match the first password input field.")}
               </p>
             </div>
-            <div class="mb-3 form-check ">
-              <input
-                type="checkbox"
-                class="form-check-input"
-                id="exampleCheck1"
-              />
-              <label class="form-check-label check "  for="exampleCheck1">
-                {__("I am not a robot")}
-              </label>
-            </div>
-           
             <button
               type="submit"
               class="btn btn-primary"

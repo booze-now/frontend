@@ -1,9 +1,9 @@
 import React from "react";
 
-import { useTranslation } from "../contexts/TranslationContext";
-// import { useUser } from "../contexts/UserContext";
-// import { useTheme } from "../contexts/ThemeContext";
-import { useMessages } from "../contexts/MessagesContext";
+import { useTranslation } from "contexts/TranslationContext";
+// import { useUser } from "contexts/UserContext";
+// import { useTheme } from "contexts/ThemeContext";
+import { useMessages } from "contexts/MessagesContext";
 import { Alert, Fade } from "react-bootstrap";
 
 const MessageArea = () => {
