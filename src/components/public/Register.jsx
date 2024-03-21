@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
+
+import { useApi } from "../../contexts/ApiContext.js";
 import { useTranslation } from "../../contexts/TranslationContext.js";
 // import { useTheme } from '../contexts/ThemeContext';
 import { useMessages } from "../../contexts/MessagesContext";
@@ -12,7 +14,6 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axiosService from "../../models/axiosService.js";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PASSWORD_REGEX =
@@ -23,6 +24,7 @@ const REGISTER_URL = "/register";
 export default function Register() {
   const { __ } = useTranslation();
   const navigate = useNavigate();
+  const { post } = useApi();
 
   const userRef = useRef();
   const emailRef = useRef();
@@ -88,7 +90,7 @@ export default function Register() {
       return;
     }
     try {
-      const response = await axiosService.post(
+      const response = await post(
         REGISTER_URL,
         {
           name: user,
