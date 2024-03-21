@@ -11,41 +11,33 @@ body {
     #aa840f,
     #ffe448
   );
-  -webkit-background-clip: text;
+  --webkit-background-clip: text;
   color: transparent;
+  background-image: url('./BG1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 article {
   text-align: center;
-
-  color: black;
-  
 }
 
 .menu {
-  width: 700px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: black;
   text-align: center;
-  background: linear-gradient(
-    to right,
-    #aa840f,
-    #ffe448,
-    #aa840f,
-    #ffe448,
-    #aa840f,
-    #ffe448,
-    #aa840f,
-    #ffe448
-  );
-  -webkit-background-clip: text;
-  color: transparent;
 }
-.container{
-  background-color: black;
 
+.container {
+  background-color: black;
+  opacity: 0.8;
+  border-radius: 30px;
+  width: 80%; /* Default width */
+  max-width: 800px; /* Maximum width */
+  margin: 0 auto; /* Center align */
 }
 
 .logo {
@@ -76,7 +68,9 @@ article {
     #aa840f,
     #ffe448
   );
-  -webkit-background-clip: text;
+  
+  background-clip: text;
+  --webkit-background-clip: text;
   color: transparent;
 }
 
@@ -88,6 +82,7 @@ article {
   background-color: rgb(192, 181, 181);
   border-radius: 3px;
 }
+
 .notification {
   height: 40px;
   background: linear-gradient(
@@ -109,6 +104,12 @@ article {
   position: relative;
   background-position: center;
   background-size: cover;
+  color: white;
+}
+
+.carousel-item h1 {
+  color: white !important;
+
 }
 
 .carousel-item-container {
@@ -139,6 +140,7 @@ article {
   background-color: black;
   color: white;
 }
+
 .accordion-button:not(.collapsed) {
   background-color: black;
   color: white;
@@ -148,6 +150,7 @@ article {
   background-color: black;
   color: white;
 }
+
 .card {
   margin: 20px;
 }

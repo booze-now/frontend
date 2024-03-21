@@ -48,6 +48,16 @@ const publicRoutes = [
         "component": "public/Register",
         "roles": ["unauth"]
     },
+    {
+        "path": "/orders",
+        "component": "public/Orders",
+        "roles": ["auth","unauth"]
+    },
+    {
+        "path": "/order/:id",
+        "component": "public/Order",
+        "roles": ["auth"]
+    },
 ]
 
 

@@ -23,14 +23,14 @@ export default function Drink({ match }) {
           setDrink(drink);
         })
         .catch((error) => {
-          setDrink(null);
+          //setDrink(null);
           console.log(error.response.data);
           // error.response.status == 401
           console.warn(error)
           addMessage("danger", error.response.data.error);
         });
     }
-  }) // addMessage, get, drink, id
+  }, [realm, drink]) // , [addMessage, get, drink, id]
 
   if (!drink) {
     return <div>{__('Please wait')}</div>;

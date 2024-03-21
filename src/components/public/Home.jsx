@@ -1,6 +1,8 @@
 import React from "react";
 import { Carousel, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
+
 
 const Home = () => {
   return (
@@ -15,7 +17,7 @@ const Home = () => {
           <Carousel.Caption>
             <h1>Our finest champagne!</h1>
             <p>20% off until March 31st</p>
-            <Button variant="dark">Order this!</Button>
+          <Link to="/drink/15">  <Button  variant="dark">Order this!</Button></Link>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>

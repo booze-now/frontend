@@ -28,7 +28,7 @@ export default function Users() {
       isMounted = false;
       controller.abort();
     };
-  }, []);
+  });
 
   return (
     <article>
