@@ -1,38 +1,23 @@
 import React, { createContext, useContext } from 'react';
 import { useConfig } from './ConfigContext.js';
+// import translations from 'lang/hu.js';
+import translations_hu from 'lang/hu.js';
 
 const CONFIG_KEY_LANGUAGE = 'language'
 const TranslationContext = createContext();
 
 export const TranslationProvider = ({ children }) => {
     //const [language, setLanguage] = useState('en');
-    const {getConfig, setConfig} = useConfig();
+    const { getConfig, setConfig } = useConfig();
     const language = getConfig(CONFIG_KEY_LANGUAGE, 'en');
 
     const languages = {
-        "en": {name: "English", code: "gb"},
-        "hu": {name: "Hungarian", code: "hu"}
+        "en": { name: "English", code: "gb" },
+        "hu": { name: "Hungarian", code: "hu" }
     }
 
     const translations = {
-        'hu': {
-            'Context API Sample app with user, translation, and theme handling': 'Context API példa alkalmazás felhasználó-, fordítás és témakezeléssel',
-            'Welcome :name!': 'Üdvözöllek, :name!',
-            'Please log in.': 'Kérlek jelentkezz be.',
-            'Login': 'Belépés',
-            'Logout': 'Kilépés',
-            'Change language to :lang': 'Váltás :lang nyelvre',
-            'Toggle Theme': 'Téma váltása',
-            'English': 'angol',
-            'Hungarian': 'magyar',
-            'Dashboard': 'Kezelőpult',
-            'Log in': 'Belépés',
-            'Register': 'Regisztrálás',
-            'Email': 'Email',
-            'Password': 'Jelszó',
-            'You have already logged in.': 'Már bejelentkeztél.',
-            'Search for...': 'Keresés...'
-        }
+        'hu': translations_hu
     };
 
     function changeLanguage(newLang) {
@@ -44,9 +29,16 @@ export const TranslationProvider = ({ children }) => {
     function __(text, replace = {}) {
         if (language !== 'en') {
             text = translations[language][text] ?? text
-            // if (!translations[language][text]) {
-            //     console.warn(`No translation for: "${text}"`)
-            // }
+            if (!translations[language][text]) {
+                const existing = localStorage.getItem('missing_translations')
+                let missing = existing ? JSON.parse(existing) : [];
+                // fs.appendFile('./logs/error_log.txt', text);
+                if (!missing.includes(text)) {
+                    missing.push(text);
+                    localStorage.setItem('missing_translations', JSON.stringify(missing))
+                }
+                // console.warn(`No translation for: "${text}"`)
+            }
         }
         if (replace) {
             return Object.keys(replace).reduce((carry, current) => carry.replace(new RegExp(`:${current}\\b`, 'g'), replace[current]), text);

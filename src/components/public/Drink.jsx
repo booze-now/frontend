@@ -30,7 +30,7 @@ export default function Drink({ match }) {
           addMessage("danger", error.response.data.error);
         });
     }
-  }, [get, id, realm])
+  }, [get, id, realm, addMessage])
 
   if (!drink) {
     return <div>{__('Please wait')}</div>;
