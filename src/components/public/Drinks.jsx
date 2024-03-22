@@ -7,7 +7,7 @@ import { useApi } from "contexts/ApiContext";
 import { useTranslation } from "contexts/TranslationContext";
 import { useConfig } from "contexts/ConfigContext";
 
-export default function DrinksPage() {
+export default function Drinks() {
   const [drinks, setDrinks] = useState(null);
   const { get } = useApi();
   const { __ } = useTranslation();

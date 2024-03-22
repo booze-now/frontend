@@ -19,7 +19,7 @@ export default function Drink({ match }) {
       get(`drinks/${id}`)
         .then((response) => {
           const drink = response.data //.user;
-          console.log('drink:', drink);
+          // console.log('drink:', drink);
           setDrink(drink);
         })
         .catch((error) => {
@@ -30,12 +30,12 @@ export default function Drink({ match }) {
           addMessage("danger", error.response.data.error);
         });
     }
-  }, [realm, drink]) // , [addMessage, get, drink, id]
+  }, [get, id, realm])
 
   if (!drink) {
     return <div>{__('Please wait')}</div>;
   }
-  console.log('drink', drink)
+  // console.log('drink', drink)
   return (
     (!drink === null) ? <div>Nem nyert</div>
       :

@@ -1,4 +1,4 @@
-export default function ShoppingCartPage(){
+export default function ShoppingCart() {
     return (
         <h1>Shopping Cart</h1>
     )
