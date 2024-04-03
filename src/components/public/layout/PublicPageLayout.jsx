@@ -6,7 +6,10 @@ import { useConfig } from "contexts/ConfigContext";
 const PublicPageLayout = () => {
   const { applyGuestRealm } = useConfig();
 
-  useEffect(() => applyGuestRealm())
+  useEffect(() => {
+    applyGuestRealm()
+    import('bootstrap/dist/css/bootstrap.min.css');
+  });
 
   return (
     <>

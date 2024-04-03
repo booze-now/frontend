@@ -1,14 +1,20 @@
-import "./sbAdmin.css";
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import TopNav from "./TopNav";
 import SideNav from "./SideNav";
 import ContentArea from "components/common/ContentArea";
-import { useConfig } from "contexts/ConfigContext.js";
+import { useConfig } from "contexts/ConfigContext";
+import { useTranslation } from "contexts/TranslationContext";
 
 const AdminPageLayout = () => {
   // az alábbi két sor fontos, ne töröld ki, köszi! <3
   const { applyStaffRealm } = useConfig();
-  useEffect(() => applyStaffRealm());
+  const { __ } = useTranslation();
+
+  useEffect(() => {
+    applyStaffRealm();
+    import('./sbAdmin.css');
+  });
 
   return (
     <>
@@ -22,11 +28,11 @@ const AdminPageLayout = () => {
           <footer>
             <div className="container-fluid px-4">
               <div className="d-flex align-items-center justify-content-between small">
-                <div>Copyright &copy; Your Website 2023</div>
+                <div>Copyright &copy; Booze Now {new Date().getFullYear()}</div>
                 <div>
-                  <a href="#">Privacy Policy</a>
+                  <Link to="/privacy">{__('Privacy Policy')}</Link>
                   &middot;
-                  <a href="#">Terms &amp; Conditions</a>
+                  <Link to="/terms">{__('Terms &amp; Conditions')}</Link>
                 </div>
               </div>
             </div>

@@ -18,6 +18,31 @@ const publicRoutes = [
         "component": "common/Dashboard",
         "roles": []
     },
+    { // regisztráció
+        "path": "/register",
+        "component": "public/Register",
+        "roles": ["unauth"]
+    },
+    { // regisztráció megerősítése
+        "path": "/confirm-registration/:id/:guid",
+        "component": "public/ConfirmRegistration",
+        "roles": ["unauth"]
+    },
+    { // regisztráció megerősítési email újraküldése
+        "path": "/resend-registration/",
+        "component": "public/ResendRegistration",
+        "roles": ["unauth"]
+    },
+    { // elfelejtett jelszó form
+        "path": "/password",
+        "component": "public/Password",
+        "roles": ["unauth"]
+    },
+    { // elfelejtett jelszó megváltoztatása
+        "path": "/reset-password/:id/:guid",
+        "component": "public/ResetPassword",
+        "roles": ["unauth"]
+    },
     {
         "path": "/login",
         "component": "common/Login",
@@ -29,6 +54,11 @@ const publicRoutes = [
         "roles": ["auth"]
     },
     {
+        "path": "/profile",
+        "component": "common/Profile",
+        "roles": ["auth"],
+    },
+    {
         "path": "/drinks",
         "component": "public/Drinks",
         "roles": ["auth","unauth"]
@@ -37,16 +67,6 @@ const publicRoutes = [
         "path": "/drink/:id",
         "component": "public/Drink",
         "roles": ["auth"]
-    },
-    {
-        "path": "/profile",
-        "component": "common/Profile",
-        "roles": ["auth"],
-    },
-    {
-        "path": "/register",
-        "component": "public/Register",
-        "roles": ["unauth"]
     },
     {
         "path": "/orders",

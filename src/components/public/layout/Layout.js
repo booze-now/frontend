@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./layout.css";
 
 const Layout = () => {

@@ -203,7 +203,7 @@ const SideNav = () => {
             {user.name}
           </>
         ) : (
-          <div>{__("Not logged is")}</div>
+          <div>{__("Not logged in")}</div>
         )}
       </div>
     </nav>

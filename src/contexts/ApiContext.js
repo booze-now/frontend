@@ -47,38 +47,57 @@ export const ApiProvider = ({ children }) => {
       return response
     },
     async (error) => {
-      // console.log(error)
-      const originalRequest = error.config;
-      const token = getConfig(CONFIG_KEY_TOKEN)
+      if (axios.isAxiosError(error)) {
+        console.log('AxiosError', error)
+        switch (error.code) {
+          case 'ERR_NETWORK':
+            error.statusText = error.message
+            error.statusCode = 0
+            console.log('AxiosError', 'NETWORK ERROR')
+            break;
+          case 'ERR_BAD_REQUEST':
+            console.log(error.response.data);
 
-      if (error.response.status === 401 && !originalRequest._retry && token) {
-        originalRequest._retry = true;
-        // Handle token renewal here, e.g., fetch a new token and set it
-        originalRequest._retry = true;
-        try {
-          // Attempt to refresh the token
-          // console.log("Érvénytelen token, frissíjük ", `${baseUrl}refresh`)
-          // console.log("lejárt token", token)
-          const response = await axios.get(`${baseUrl}refresh`, {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          })
-          if (response.status === 200) {
-            // Store new token and update the original request
-            const token = response.data?.access_token;
-            // console.log('token #2', token)
-            setConfig(CONFIG_KEY_TOKEN, token);
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            return api(originalRequest);
-          } else {
-            setConfig(CONFIG_KEY_TOKEN, null)
-          }
-        } catch (e) {
-          // console.log('Refresh token invalid', e);
-          // Handle the case where the refresh token is also invalid (e.g., logout the user)
+            error.statusText = error.response.data.message
+            error.statusCode = '*'+error.request.status
+            console.log('AxiosError', 'Bad request')
+            break;
+          default: break;
         }
+        const originalRequest = error.config;
+        const token = getConfig(CONFIG_KEY_TOKEN)
+
+        if (error.code === 'ERR_BAD_REQUEST' && error.response.status === 401 && !originalRequest._retry && token) {
+          // Handle token renewal here, e.g., fetch a new token and set it
+          originalRequest._retry = true;
+          try {
+            // Attempt to refresh the token
+            // console.log("Érvénytelen token, frissíjük ", `${baseUrl}refresh`)
+            // console.log("lejárt token", token)
+            const response = await axios.get(`${baseUrl}refresh`, {
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            })
+            if (response.status === 200) {
+              // Store new token and update the original request
+              const token = response.data?.access_token;
+              // console.log('token #2', token)
+              setConfig(CONFIG_KEY_TOKEN, token);
+              axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+              return api(originalRequest);
+            } else {
+              setConfig(CONFIG_KEY_TOKEN, null)
+            }
+          } catch (e) {
+            console.warn('Refresh token invalid', e);
+            // Handle the case where the refresh token is also invalid (e.g., logout the user)
+          }
+        }
+      } else {
+        console.log('Other Axios Error', error)
       }
+
       return Promise.reject(error);
     }
   );
