@@ -24,7 +24,7 @@ export default function ShoppingCart() {
             <tr key={index}>
               <td>{index + 1}</td>
               <td>
-                {item.drink} <br /> id cause i cant reach name
+                {item.name} <br /> id cause i cant reach name
               </td>
               <td>i cant reach</td>
               <td>

@@ -23,22 +23,36 @@ export const CartProvider = ({ children }) => {
     if (realm) {
       try {
         console.log("load #1");
-        const response = await get("menu-tree");
+        const response = await get("menu-tree")
         const drinks = response.data;
-        console.log(drinks);
-        //          setDrinks(drinks);
+        setMenu(drinks);
         updateDrinkList(drinks);
         console.log("load #2");
-        return drinks;
       } catch (error) {
         console.log("load #3");
-        //setDrinks(null);
-        console.log(error);
         // error.response.status == 401
         console.warn(error);
         // addMessage("danger", error.response.data.error);
       }
     }
+  };
+
+  const updateDrinkList = (drinks) => {
+    const drinkList = {};
+    // console.log('drinks', drinks)
+
+    Object.keys(drinks ?? {}).forEach((key) => {
+      const item = drinks[key];
+      console.log(item)
+      drinkList[item.id] = item;
+      Object.keys(item.subcategory.drinks ?? {}).forEach((key2) => {
+        const item2 = item.subcategory.drinks[key2]
+        drinkList[item2.id] = item2;
+      });
+    });
+
+    setDrinkList(drinkList);
+    return drinkList;
   };
 
   const getMenu = () => {
@@ -90,31 +104,17 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem(CART_KEY, JSON.stringify(newCartItems));
   };
 
-  const updateDrinkList = (drinks) => {
-    const drinkList = {};
-    // console.log('drinks', drinks)
-
-    Object.keys(drinks ?? {}).forEach((key) => {
-      const item = drinks[key];
-      console.log(item)
-      drinkList[item.id] = item;
-      Object.keys(item.subcategory.drinks ?? {}).forEach((key2) => {
-        const item2 = item.subcategory.drinks[key2]
-        drinkList[item2.id] = item2;
-      });
-    });
-    console.log(drinkList);
-    setMenu(drinks);
-    setDrinkList(drinkList);
-  };
-
   const detailedCartItems = () => {
+    
+    const drinkList = updateDrinkList()
+ //   console.log(drinkList)
+
     return Object.entries(cartItems).map(([key, quantity]) => {
       const [drink_id, amount, unit] = key.split("|");
 
       return {
         id: drink_id,
-        name,
+        name: drinkList[drink_id]?.name ?? 'N/A',
         amount,
         unit,
         quantity,
