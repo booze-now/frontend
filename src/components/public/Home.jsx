@@ -16,7 +16,7 @@ const Home = () => {
           <Carousel.Caption>
             <h1>Our finest champagne!</h1>
             <p>20% off until March 31st</p>
-          <Link to="/drink/15">  <Button  variant="dark">Order this!</Button></Link>
+          <Link to="/drink/80">  <Button  variant="dark">Order this!</Button></Link>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
@@ -28,7 +28,7 @@ const Home = () => {
           <Carousel.Caption>
             <h1>The strongest beer in the city</h1>
             <p>Be careful with this!</p>
-            <Button variant="dark">I will taste it!</Button>
+            <Link to="/drink/55"> <Button variant="dark">I will taste it!</Button></Link>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
@@ -43,7 +43,7 @@ const Home = () => {
               What's better than a glass of wine? Two glasses for the price of
               one.
             </p>
-            <Button variant="dark">I want this!</Button>
+            <Link to="/drink/76">  <Button variant="dark">I want this!</Button></Link>
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>

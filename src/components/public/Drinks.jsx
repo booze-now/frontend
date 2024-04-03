@@ -2,46 +2,33 @@
 import { Link } from "react-router-dom";
 import "./drinks.css";
 import { Button, Card } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useApi } from "contexts/ApiContext";
 import { useTranslation } from "contexts/TranslationContext";
 import { useConfig } from "contexts/ConfigContext";
+import { useCart } from "contexts/CartContext";
+import CounterInput from "react-bootstrap-counter";
 
 export default function Drinks() {
-  const [drinks, setDrinks] = useState(null);
+//  const [drinks, setDrinks] = useState(null);
   const { get } = useApi();
   const { __ } = useTranslation();
   const { realm } = useConfig();
+  const { getMenu, updateDrinkList } = useCart();
 
-  useEffect(() => {
-    if (realm) {
-      get('menu-tree')
-        .then((response) => {
-          const drinks = response.data
-          // console.log(drinks)
-          setDrinks(drinks);
-        })
-        .catch((error) => {
-          setDrinks(null);
-          console.log(error.response.data);
-          // error.response.status == 401
-          console.warn(error)
-          // addMessage("danger", error.response.data.error);
-        });
-    }
-
-  }, [realm, get])
-  return (
-    (drinks === null) ? <div>{__('Please wait...')}</div>
-      :
-      <div className="menu">
-        <h2>Drinks</h2>
-        <div className="accordion" id="accordionExample">
-          {drinks instanceof Object && Object.keys(drinks).map((category, i) => (
-            <DrinkMainCategory key={i} category={drinks[category]} />
+  const menu = getMenu();
+  return menu === null ? (
+    <div>{__("Please wait...")}</div>
+  ) : (
+    <div className="menu">
+      <h2>Drinks</h2>
+      <div className="accordion" id="accordionExample">
+        {menu instanceof Object &&
+          Object.keys(menu).map((category, i) => (
+            <DrinkMainCategory key={i} category={menu[category]} />
           ))}
-        </div>
       </div>
+    </div>
   );
 }
 
@@ -99,7 +86,6 @@ function DrinkSubCategory(props) {
     </>
   );
 }
-
 // function Drink(props) {
 //   return (
 //     <>
@@ -112,31 +98,59 @@ function DrinkSubCategory(props) {
 // }
 
 // function DrinkUnit(props) {
+//   const { __ } = useTranslation();
 //   return (
 //     <div>
-//       {props.unit.amount} {props.unit.unit ?? "pohár"} {props.unit.unit_price}
+//       {props.unit.amount} {props.unit.unit ?? __("glass")} {props.unit.unit_price}
 //     </div>
 //   );
 // }
 
 function DrinkCard(props) {
-  const { name, /*description,*/ units } = props.drink;
-  const price = units[0].unit_price;
+  const { name, units } = props.drink;
+  const [selectedUnit, setSelectedUnit] = useState(units[0]);
+  const { __ } = useTranslation();
+  const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCart();
+
+  const handleUnitSelect = (unit) => {
+    setSelectedUnit(unit);
+  };
 
   return (
-    <Card style={{ width: "18rem" }}>
+    <Card style={{ width: "80%" }}>
       <Card.Body>
         <Card.Title>{name}</Card.Title>
-        <Card.Text>Price: ${price}</Card.Text>
-        <Link
-          to={{
-            pathname: `/drink/${props.drink.id}`,
-            state: { drinks: props.drinks },
-          }}
-        >
-          <Button variant="light">View</Button>
+        <div className="d-flex flex-wrap align-items-center">
+          {units.map((unit, index) => (
+            <React.Fragment key={index}>
+              <Button
+                variant={selectedUnit === unit ? "primary" : "light"}
+                onClick={() => handleUnitSelect(unit)}
+                className="m-1"
+              >
+                {unit.amount} {unit.unit ?? __("glass")} {unit.unit_price} Ft
+              </Button>
+              <CounterInput
+                min={1}
+                value={quantity}
+                onChange={(value) => setQuantity(value)}
+              />
+              <Button
+                variant="light"
+                onClick={() => {
+                  addToCart(props.drink.id, unit.amount, unit.unit, quantity);
+                }}
+                className="m-1"
+              >
+                {__("Add to Cart")}
+              </Button>
+            </React.Fragment>
+          ))}
+        </div>
+        <Link to={`/drink/${props.drink.id}`}>
+          <Button variant="light">{__("View")}</Button>
         </Link>
-        <Button variant="light">Add to Cart</Button>
       </Card.Body>
     </Card>
   );
