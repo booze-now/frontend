@@ -8,6 +8,7 @@ import { useMessages } from "contexts/MessagesContext";
 import { Button } from "react-bootstrap";
 import { useApi } from "contexts/ApiContext";
 
+
 const Login = () => {
   const { __ } = useTranslation();
   const { user, login, /*role_code , logout*/ } = useUser();
@@ -111,7 +112,7 @@ const Login = () => {
             </div>
             <div className="card-footer text-center py-3">
               <div className="small">
-                <a href="register.html">{__("Need an account? Sign up!")}</a>
+              <Link to="/register">{__("Need an account? Sign up!")}</Link>
               </div>
             </div>
           </div>

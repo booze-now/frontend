@@ -2,12 +2,12 @@ import { Link, NavLink } from "react-router-dom";
 import ToggleTheme from "components/common/ToggleTheme.jsx";
 import { useTranslation } from "contexts/TranslationContext.js";
 import { useUser } from "contexts/UserContext.js";
-import { useConfig } from "contexts/ConfigContext.js";
+// import { useConfig } from "contexts/ConfigContext.js";
 
 const TopNav = () => {
   const { __, language, languages, changeLanguage } = useTranslation();
   const { user, logout } = useUser();
-  const { toggleConfig } = useConfig();
+  // const { toggleConfig } = useConfig();
 
   return (
     <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -18,7 +18,7 @@ const TopNav = () => {
       <li className="nav-item dropdown">
         <a
           className="nav-link dropdown-toggle"
-          href="#"
+          href="#?"
           id="navbarDropdown"
           role="button"
           data-bs-toggle="dropdown"

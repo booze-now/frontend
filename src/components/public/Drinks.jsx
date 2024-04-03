@@ -1,44 +1,31 @@
 // import Cards from "../components/basics/Cards";
 import { Link } from "react-router-dom";
 import "./drinks.css";
-import { Button, Card, Form } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { Button, Card } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
 import { useApi } from "contexts/ApiContext";
 import { useTranslation } from "contexts/TranslationContext";
 import { useConfig } from "contexts/ConfigContext";
+import { useCart } from "contexts/CartContext";
+import CounterInput from "react-bootstrap-counter";
 
 export default function Drinks() {
-  const [drinks, setDrinks] = useState(null);
+//  const [drinks, setDrinks] = useState(null);
   const { get } = useApi();
   const { __ } = useTranslation();
   const { realm } = useConfig();
+  const { getMenu, updateDrinkList } = useCart();
 
-  useEffect(() => {
-    if (realm) {
-      get("menu-tree")
-        .then((response) => {
-          const drinks = response.data;
-          // console.log(drinks)
-          setDrinks(drinks);
-        })
-        .catch((error) => {
-          setDrinks(null);
-          console.log(error.response.data);
-          // error.response.status == 401
-          console.warn(error);
-          // addMessage("danger", error.response.data.error);
-        });
-    }
-  }, [realm, get]);
-  return drinks === null ? (
+  const menu = getMenu();
+  return menu === null ? (
     <div>{__("Please wait...")}</div>
   ) : (
     <div className="menu">
       <h2>Drinks</h2>
       <div className="accordion" id="accordionExample">
-        {drinks instanceof Object &&
-          Object.keys(drinks).map((category, i) => (
-            <DrinkMainCategory key={i} category={drinks[category]} />
+        {menu instanceof Object &&
+          Object.keys(menu).map((category, i) => (
+            <DrinkMainCategory key={i} category={menu[category]} />
           ))}
       </div>
     </div>
@@ -99,55 +86,70 @@ function DrinkSubCategory(props) {
     </>
   );
 }
+// function Drink(props) {
+//   return (
+//     <>
+//       <h5>{props.drink.name}</h5>
+//       {Object.keys(props.drink.units).map((idx, i) => (
+//         <DrinkUnit key={i} unit={props.drink.units[idx]} />
+//       ))}
+//     </>
+//   );
+// }
 
-
-function DrinkUnit(props) {
-  return (
-    <div>
-      {props.unit.amount} {props.unit.unit ?? "pohár"} {props.unit.unit_price}
-    </div>
-  );
-}
+// function DrinkUnit(props) {
+//   const { __ } = useTranslation();
+//   return (
+//     <div>
+//       {props.unit.amount} {props.unit.unit ?? __("glass")} {props.unit.unit_price}
+//     </div>
+//   );
+// }
 
 function DrinkCard(props) {
   const { name, units } = props.drink;
   const [selectedUnit, setSelectedUnit] = useState(units[0]);
+  const { __ } = useTranslation();
+  const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCart();
 
   const handleUnitSelect = (unit) => {
     setSelectedUnit(unit);
   };
 
-  const addToCart = () => {
-    const cartItem = { ...props.drink, quantity: `${selectedUnit.amount} ${selectedUnit.unit}`, unit_price: selectedUnit.unit_price };
-    const updatedCart = JSON.parse(localStorage.getItem("cart")) || [];
-    updatedCart.push(cartItem);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-    alert(`Added ${selectedUnit.amount} ${selectedUnit.unit} of ${name} to cart`);
-  };
-  
-  
-
   return (
-    <Card style={{ width: "18rem" }}>
+    <Card style={{ width: "80%" }}>
       <Card.Body>
         <Card.Title>{name}</Card.Title>
-        <div className="d-flex flex-wrap">
+        <div className="d-flex flex-wrap align-items-center">
           {units.map((unit, index) => (
-            <Button
-              key={index}
-              variant={selectedUnit === unit ? "primary" : "light"}
-              onClick={() => handleUnitSelect(unit)}
-              className="m-1"
-            >
-              {unit.amount} {unit.unit ?? "pohár"} {unit.unit_price} Ft
-            </Button>
+            <React.Fragment key={index}>
+              <Button
+                variant={selectedUnit === unit ? "primary" : "light"}
+                onClick={() => handleUnitSelect(unit)}
+                className="m-1"
+              >
+                {unit.amount} {unit.unit ?? __("glass")} {unit.unit_price} Ft
+              </Button>
+              <CounterInput
+                min={1}
+                value={quantity}
+                onChange={(value) => setQuantity(value)}
+              />
+              <Button
+                variant="light"
+                onClick={() => {
+                  addToCart(props.drink.id, unit.amount, unit.unit, quantity);
+                }}
+                className="m-1"
+              >
+                {__("Add to Cart")}
+              </Button>
+            </React.Fragment>
           ))}
         </div>
-        <Button variant="light" onClick={addToCart}>
-          Add to Cart
-        </Button>
         <Link to={`/drink/${props.drink.id}`}>
-          <Button variant="light">View</Button>
+          <Button variant="light">{__("View")}</Button>
         </Link>
       </Card.Body>
     </Card>
