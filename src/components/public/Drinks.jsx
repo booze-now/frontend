@@ -1,7 +1,7 @@
 // import Cards from "../components/basics/Cards";
 import { Link } from "react-router-dom";
 import "./drinks.css";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Form } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useApi } from "contexts/ApiContext";
 import { useTranslation } from "contexts/TranslationContext";
@@ -15,9 +15,9 @@ export default function Drinks() {
 
   useEffect(() => {
     if (realm) {
-      get('menu-tree')
+      get("menu-tree")
         .then((response) => {
-          const drinks = response.data
+          const drinks = response.data;
           // console.log(drinks)
           setDrinks(drinks);
         })
@@ -25,23 +25,23 @@ export default function Drinks() {
           setDrinks(null);
           console.log(error.response.data);
           // error.response.status == 401
-          console.warn(error)
+          console.warn(error);
           // addMessage("danger", error.response.data.error);
         });
     }
-
-  }, [realm, get])
-  return (
-    (drinks === null) ? <div>{__('Please wait...')}</div>
-      :
-      <div className="menu">
-        <h2>Drinks</h2>
-        <div className="accordion" id="accordionExample">
-          {drinks instanceof Object && Object.keys(drinks).map((category, i) => (
+  }, [realm, get]);
+  return drinks === null ? (
+    <div>{__("Please wait...")}</div>
+  ) : (
+    <div className="menu">
+      <h2>Drinks</h2>
+      <div className="accordion" id="accordionExample">
+        {drinks instanceof Object &&
+          Object.keys(drinks).map((category, i) => (
             <DrinkMainCategory key={i} category={drinks[category]} />
           ))}
-        </div>
       </div>
+    </div>
   );
 }
 
@@ -100,43 +100,55 @@ function DrinkSubCategory(props) {
   );
 }
 
-// function Drink(props) {
-//   return (
-//     <>
-//       <h5>{props.drink.name}</h5>
-//       {Object.keys(props.drink.units).map((idx, i) => (
-//         <DrinkUnit key={i} unit={props.drink.units[idx]} />
-//       ))}
-//     </>
-//   );
-// }
 
-// function DrinkUnit(props) {
-//   return (
-//     <div>
-//       {props.unit.amount} {props.unit.unit ?? "pohár"} {props.unit.unit_price}
-//     </div>
-//   );
-// }
+function DrinkUnit(props) {
+  return (
+    <div>
+      {props.unit.amount} {props.unit.unit ?? "pohár"} {props.unit.unit_price}
+    </div>
+  );
+}
 
 function DrinkCard(props) {
-  const { name, /*description,*/ units } = props.drink;
-  const price = units[0].unit_price;
+  const { name, units } = props.drink;
+  const [selectedUnit, setSelectedUnit] = useState(units[0]);
+
+  const handleUnitSelect = (unit) => {
+    setSelectedUnit(unit);
+  };
+
+  const addToCart = () => {
+    const cartItem = { ...props.drink, quantity: `${selectedUnit.amount} ${selectedUnit.unit}`, unit_price: selectedUnit.unit_price };
+    const updatedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    updatedCart.push(cartItem);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    alert(`Added ${selectedUnit.amount} ${selectedUnit.unit} of ${name} to cart`);
+  };
+  
+  
 
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Body>
         <Card.Title>{name}</Card.Title>
-        <Card.Text>Price: ${price}</Card.Text>
-        <Link
-          to={{
-            pathname: `/drink/${props.drink.id}`,
-            state: { drinks: props.drinks },
-          }}
-        >
+        <div className="d-flex flex-wrap">
+          {units.map((unit, index) => (
+            <Button
+              key={index}
+              variant={selectedUnit === unit ? "primary" : "light"}
+              onClick={() => handleUnitSelect(unit)}
+              className="m-1"
+            >
+              {unit.amount} {unit.unit ?? "pohár"} {unit.unit_price} Ft
+            </Button>
+          ))}
+        </div>
+        <Button variant="light" onClick={addToCart}>
+          Add to Cart
+        </Button>
+        <Link to={`/drink/${props.drink.id}`}>
           <Button variant="light">View</Button>
         </Link>
-        <Button variant="light">Add to Cart</Button>
       </Card.Body>
     </Card>
   );

@@ -36,7 +36,7 @@ const publicRoutes = [
     {
         "path": "/drink/:id",
         "component": "public/Drink",
-        "roles": ["auth"]
+        "roles": ["auth", "unauth"]
     },
     {
         "path": "/profile",
@@ -49,14 +49,24 @@ const publicRoutes = [
         "roles": ["unauth"]
     },
     {
+        "path": "/shopping-cart",
+        "component": "public/ShoppingCart",
+        "roles": ["auth","unauth"]
+    },
+    {
         "path": "/orders",
         "component": "public/Orders",
-        "roles": ["auth","unauth"]
+        "roles": ["auth"]
     },
     {
         "path": "/order/:id",
         "component": "public/Order",
         "roles": ["auth"]
+    },
+    {
+        "path": "/about-us",
+        "component": "public/AboutUs",
+        "roles": ["auth","unauth"]
     },
 ]
 
