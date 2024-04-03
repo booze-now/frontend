@@ -24,20 +24,15 @@ const Login = () => {
   if (user) {
     console.log(user.role_code);
     navigate("/");
-    console.log("Nav");
-  } else {
-    console.log("No user");
   }
 
-  // const { toggleTheme } = useTheme();
-
-  // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Here you can perform validation, authentication, etc.
 
     post("login", { email: email, password: password })
       .then((response) => {
+        console.log('success', response)
         const user = response.data.user;
         console.log(user);
         login(user);
@@ -53,7 +48,8 @@ const Login = () => {
         console.log(error);
         // error.response.status == 401
 
-        addMessage("danger", error.response.data.error);
+        addMessage("danger", error.statusText);
+        // addMessage("danger", error.response.data.error);
       });
     // addMessage("info", "You have been logged in, :name", { name: email });
 
@@ -63,7 +59,6 @@ const Login = () => {
 
   return (
     <div className="container">
-      {user}
       <div className="row justify-content-center">
         <div className="col-lg-5">
           <div className="card shadow-lg border-0 rounded-lg mt-5">
@@ -112,7 +107,7 @@ const Login = () => {
             </div>
             <div className="card-footer text-center py-3">
               <div className="small">
-              <Link to="/register">{__("Need an account? Sign up!")}</Link>
+                <Link to="/register">{__("Need an account? Sign up!")}</Link>
               </div>
             </div>
           </div>

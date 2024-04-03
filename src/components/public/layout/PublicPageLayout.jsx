@@ -6,7 +6,11 @@ import { CartProvider } from "contexts/CartContext";
 
 const PublicPageLayout = () => {
   const { applyGuestRealm } = useConfig();
-  useEffect(() => applyGuestRealm())
+
+  useEffect(() => {
+    applyGuestRealm()
+    import('bootstrap/dist/css/bootstrap.min.css');
+  });
 
   return (
     <CartProvider>
