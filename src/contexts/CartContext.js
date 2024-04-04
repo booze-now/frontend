@@ -101,19 +101,23 @@ export const CartProvider = ({ children }) => {
   };
 
   const detailedCartItems = () => {
-
     const drinkList = getDrinkList()
 
     return Object.entries(cartItems).map(([key, quantity]) => {
       const [drink_id, amount, unit] = key.split("|");
+      const drink = drinkList[drink_id];
+      const unitData = drink?.units.filter((u) => u.amount === Number(amount) && u.unit === unit)
+      const unitPrice = unitData !== undefined && unitData.length? unitData[0].unit_price : undefined;
 
-      return {
+      const ret = {
         id: drink_id,
-        name: drinkList[drink_id]?.name ?? 'N/A',
+        name: drink?.name ?? `Drink #${drink_id}`,
         amount,
-        unit,
+        unit: unit ?? 'glass',
+        unitPrice: unitPrice,
         quantity,
       };
+      return ret;
     });
   };
 
