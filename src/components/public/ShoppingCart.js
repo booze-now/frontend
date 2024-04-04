@@ -3,7 +3,6 @@ import { useCart } from "contexts/CartContext";
 import CounterInput from "react-bootstrap-counter";
 export default function ShoppingCart() {
   const { detailedCartItems, removeFromCart, addToCart } = useCart();
-  console.log(detailedCartItems())
   return (
     <div>
       <h1>Shopping Cart</h1>
@@ -33,10 +32,10 @@ export default function ShoppingCart() {
               <td>
                 <CounterInput
                 min={1}
-                  value={item.quantity} 
+                  value={item.quantity}
                   onChange={(value) =>
                     addToCart(item.id, item.amount, item.unit, value)
-                  } 
+                  }
                 />
               </td>
               <td>i cant count</td>

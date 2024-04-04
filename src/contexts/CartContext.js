@@ -61,19 +61,12 @@ export const CartProvider = ({ children }) => {
   };
 
   const getMenu = () => {
-    const empty = menu === null || Object.keys(menu).length === 0
-
-    if (empty) {
-      return loadDrinks();
-    }
-
+    loadDrinks();
     return menu;
   };
 
   const getDrinkList = () => {
-    if (!drinkList) {
-      loadDrinks();
-    }
+    loadDrinks();
     return drinkList;
   };
 
