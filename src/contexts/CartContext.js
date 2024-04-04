@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { useConfig } from "./ConfigContext";
 import { useApi } from "./ApiContext";
+import { useMessages } from "./MessagesContext.js";
 
 const CartContext = createContext();
 
@@ -12,6 +13,7 @@ export const CartProvider = ({ children }) => {
   const [drinkList, setDrinkList] = useState([]);
   const { get } = useApi();
   const { realm } = useConfig();
+  const { addMessage } = useMessages();
 
   const [cartItems, setCartItems] = useState(() => {
     // LOAD
@@ -23,22 +25,18 @@ export const CartProvider = ({ children }) => {
 
 
   const loadDrinks = async () => {
-    console.log('loadDrinks called')
     if (!loaded && realm) {
       try {
-        console.log("load #1");
         const response = await get("menu-tree")
         const drinks = response.data;
         const drinkList = updateDrinkList(drinks);
         setMenu(drinks);
         setDrinkList(drinkList);
         setLoaded(true)
-        console.log("load #2");
       } catch (error) {
-        console.log("load #3");
         // error.response.status == 401
+        addMessage("danger", error.statusText);
         console.warn(error);
-        // addMessage("danger", error.response.data.error);
       }
     }
   };
@@ -51,7 +49,7 @@ export const CartProvider = ({ children }) => {
         const drink = outCat.drinks[key]
         drinkList[drink.id] = drink;
       });
-      Object.keys(outCat.subcategory ?? {}).forEach((key2) => { // alkategóriáK
+      Object.keys(outCat.subcategory ?? {}).forEach((key2) => { // alkategóriák
         const inCat = outCat.subcategory[key2]
         Object.keys(inCat.drinks ?? {}).forEach((key) => { // főkategóris italok
           const drink = inCat.drinks[key]
