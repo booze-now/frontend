@@ -104,10 +104,11 @@ export const CartProvider = ({ children }) => {
     const drinkList = getDrinkList()
 
     return Object.entries(cartItems).map(([key, quantity]) => {
-      const [drink_id, amount, unit] = key.split("|");
+      const [drink_id, amount, keyUnit] = key.split("|");
+      const unit = keyUnit === 'null'? null: keyUnit;
       const drink = drinkList[drink_id];
-      const unitData = drink?.units.filter((u) => u.amount === Number(amount) && u.unit === unit)
-      const unitPrice = unitData !== undefined && unitData.length? unitData[0].unit_price : undefined;
+      const unitData = drink?.units.filter((u) => u.amount === Number(amount) && (u.unit === unit))
+      const unitPrice = unitData !== undefined && unitData.length ? unitData[0].unit_price : undefined;
 
       const ret = {
         id: drink_id,
