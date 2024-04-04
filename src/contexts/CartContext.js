@@ -111,7 +111,7 @@ export const CartProvider = ({ children }) => {
       const unitPrice = unitData !== undefined && unitData.length ? unitData[0].unit_price : undefined;
 
       const ret = {
-        id: drink_id,
+        id: Number(drink_id),
         name: drink?.name ?? `Drink #${drink_id}`,
         amount,
         unit: unit ?? 'glass',
