@@ -14,7 +14,7 @@ export default function Drinks() {
   const { get } = useApi();
   const { __ } = useTranslation();
   const { realm } = useConfig();
-  const { getMenu, updateDrinkList } = useCart();
+  const { getMenu } = useCart();
 
   const menu = getMenu();
   return menu === null ? (
@@ -22,7 +22,7 @@ export default function Drinks() {
   ) : (
     <div className="menu">
       <h2>Drinks</h2>
-      <div className="accordion" id="accordionExample">
+      <div className="accordion" id="accordionDrinks">
         {menu instanceof Object &&
           Object.keys(menu).map((category, i) => (
             <DrinkMainCategory key={i} category={menu[category]} />
@@ -56,7 +56,7 @@ function DrinkMainCategory(props) {
         <div
           id={"collapseDrink" + props.category.id}
           className="accordion-collapse collapse"
-          data-bs-parent="#accordionExample"
+          data-bs-parent="#accordionDrinks"
         >
           <div className="accordion-body">
             {props.category.drinks.map((drink, i) => (

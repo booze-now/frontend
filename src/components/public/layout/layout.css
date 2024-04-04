@@ -68,7 +68,7 @@ article {
     #aa840f,
     #ffe448
   );
-  
+
   background-clip: text;
   --webkit-background-clip: text;
   color: transparent;
@@ -123,7 +123,7 @@ article {
     height: 700px;
   }
 }
-#accordionExample {
+#accordionDrinks {
   background-color: black;
   color: white;
 }

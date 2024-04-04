@@ -8,6 +8,7 @@ const CART_KEY = "cart";
 
 export const CartProvider = ({ children }) => {
   const [menu, setMenu] = useState([]);
+  const [loaded, setLoaded] = useState(false);
   const [drinkList, setDrinkList] = useState([]);
   const { get } = useApi();
   const { realm } = useConfig();
@@ -19,14 +20,19 @@ export const CartProvider = ({ children }) => {
     // console.log('Cart loaded from localStorage', items)
     return items;
   });
-  const load = async () => {
-    if (realm) {
+
+
+  const loadDrinks = async () => {
+    console.log('loadDrinks called')
+    if (!loaded && realm) {
       try {
         console.log("load #1");
         const response = await get("menu-tree")
         const drinks = response.data;
+        const drinkList = updateDrinkList(drinks);
         setMenu(drinks);
-        updateDrinkList(drinks);
+        setDrinkList(drinkList);
+        setLoaded(true)
         console.log("load #2");
       } catch (error) {
         console.log("load #3");
@@ -39,19 +45,20 @@ export const CartProvider = ({ children }) => {
 
   const updateDrinkList = (drinks) => {
     const drinkList = {};
-    // console.log('drinks', drinks)
-
-    Object.keys(drinks ?? {}).forEach((key) => {
-      const item = drinks[key];
-      console.log(item)
-      drinkList[item.id] = item;
-      Object.keys(item.subcategory.drinks ?? {}).forEach((key2) => {
-        const item2 = item.subcategory.drinks[key2]
-        drinkList[item2.id] = item2;
+    Object.keys(drinks ?? {}).forEach((key) => { // főkategóriák
+      const outCat = drinks[key];
+      Object.keys(outCat.drinks ?? {}).forEach((key) => { // főkategóris italok
+        const drink = outCat.drinks[key]
+        drinkList[drink.id] = drink;
       });
+      Object.keys(outCat.subcategory ?? {}).forEach((key2) => { // alkategóriáK
+        const inCat = outCat.subcategory[key2]
+        Object.keys(inCat.drinks ?? {}).forEach((key) => { // főkategóris italok
+          const drink = inCat.drinks[key]
+          drinkList[drink.id] = drink;
+        });
+      })
     });
-
-    setDrinkList(drinkList);
     return drinkList;
   };
 
@@ -59,17 +66,15 @@ export const CartProvider = ({ children }) => {
     const empty = menu === null || Object.keys(menu).length === 0
 
     if (empty) {
-      console.log("getMenu #1");
-      return load();
+      return loadDrinks();
     }
-    console.log("getMenu #2", menu);
 
     return menu;
   };
 
   const getDrinkList = () => {
     if (!drinkList) {
-      load();
+      loadDrinks();
     }
     return drinkList;
   };
@@ -105,9 +110,8 @@ export const CartProvider = ({ children }) => {
   };
 
   const detailedCartItems = () => {
-    
-    const drinkList = updateDrinkList()
- //   console.log(drinkList)
+
+    const drinkList = getDrinkList()
 
     return Object.entries(cartItems).map(([key, quantity]) => {
       const [drink_id, amount, unit] = key.split("|");
@@ -131,7 +135,6 @@ export const CartProvider = ({ children }) => {
         addToCart,
         removeFromCart,
         getDrinkList,
-        updateDrinkList,
       }}
     >
       {children}
