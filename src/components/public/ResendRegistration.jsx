@@ -7,18 +7,17 @@ import './register.css';
 import { useApi } from 'contexts/ApiContext.js';
 import { useMessages } from 'contexts/MessagesContext.js';
 import { validateEmail } from "models/MiscHelper.js";
-
-
+import { useConfig } from 'contexts/ConfigContext.js';
 
 const ResendRegistration = () => {
     // const { Navigate } = useNavigate();
     const { __ } = useTranslation();
     const { post } = useApi();
     const { addMessage } = useMessages();
+    const { realm_path } = useConfig();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState({ value: '', msg: '', touched: false, valid: false });
-
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -118,7 +117,7 @@ const ResendRegistration = () => {
                         </Card.Body>
                         <Card.Footer className="text-center py-3">
                             <div className="small">
-                                <Link to="/register">{__('Need an account? Sign up!')}</Link>
+                                <Link to={realm_path + "/register"}>{__('Need an account? Sign up!')}</Link>
                             </div>
                         </Card.Footer>
                     </Card>

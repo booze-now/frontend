@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import "./Register.2.css";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "contexts/TranslationContext";
 import { Button, Form, Row } from "react-bootstrap";
 import { useApi } from "contexts/ApiContext.js";

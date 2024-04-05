@@ -7,12 +7,16 @@ import { Button, Form, Row } from "react-bootstrap";
 import { useApi } from "contexts/ApiContext.js";
 import { useMessages } from "contexts/MessagesContext.js";
 import { validatePassword } from "models/MiscHelper.js";
+import { useConfig } from "contexts/ConfigContext.js";
+
 
 const ResetPassword = () => {
 
   const { addMessage } = useMessages();
   const { __ } = useTranslation();
   const { post } = useApi();
+  const { realm_path } = useConfig();
+
 
   const [validated, setValidated] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
@@ -170,7 +174,7 @@ const ResetPassword = () => {
               </Form>
             </div>
             <div className="card-footer text-center py-3">
-              <div className="small"><Link to="/login">{__('Have an account? Go to login')}</Link></div>
+              <div className="small"><Link to={realm_path + "/login"}>{__('Have an account? Go to login')}</Link></div>
             </div>
           </div>
         </div>
