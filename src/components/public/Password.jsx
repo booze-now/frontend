@@ -21,7 +21,7 @@ const Password = () => {
     // Your submit logic here
     post('verify/resend', { email: email.value })
       .then((response) => {
-        addMessage("info", response.message);
+        addMessage("info", response.data.message);
         Navigate('/login')
       })
       .catch((error) => {

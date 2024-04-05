@@ -56,28 +56,20 @@ export const ConfigProvider = ({ children }) => {
     const setConfig = (key, newValue) => {
         setItems((prevItems) => {
             const newItems = { ...prevItems }
-            // let o = '?'
             if (realm) {
                 if (!newItems.hasOwnProperty(realm)) {
                     if (newValue !== null) {
                         newItems[realm] = { [key]: newValue };
-                        // o = '(updated)'
                     }
                 } else {
                     if (newValue !== null) {
                         newItems[realm][key] = newValue;
-                        // o = '(appended)'
 
                     } else {
                         delete newItems[realm][key];
-                        // o = '(deleted)'
                     }
                 }
-                // console.log('setConfig', realm, key, newValue, o);
-            } else {
-                // console.warn('setConfig: no realm', key, newValue, o);
             }
-            // console.log("setItems", items, newItems);
             return newItems;
         });
     }

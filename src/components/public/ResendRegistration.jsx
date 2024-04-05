@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "contexts/TranslationContext";
 import './register.css';
 import { useApi } from 'contexts/ApiContext.js';
@@ -9,22 +9,24 @@ import { useMessages } from 'contexts/MessagesContext.js';
 import { validateEmail } from "models/MiscHelper.js";
 
 
-const ResendRegistration = () => {
 
+const ResendRegistration = () => {
+    // const { Navigate } = useNavigate();
     const { __ } = useTranslation();
     const { post } = useApi();
     const { addMessage } = useMessages();
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState({ value: '', msg: '', touched: false, valid: false });
 
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Your submit logic here
         post('verify/resend', { email: email.value })
             .then((response) => {
-                addMessage("info", response.message);
-                // Navigate('/login')
+                console.log(response)
+                addMessage("info", response.data.message);
+                navigate('/login')
             })
             .catch((error) => {
                 console.warn(error);

@@ -15,10 +15,12 @@ export const MessagesProvider = ({ children }) => {
             error: "danger",
             warn: "warning",
         };
-        type = typeMappings[type]?typeMappings[type]: type;
+        type = typeMappings[type] ? typeMappings[type] : type;
 
         const guid = shortid.generate();
-        setMessages({ ...messages, [guid]: { type, message, args, options } });
+        setMessages((prevItems) => {
+            return { ...prevItems, [guid]: { type, message, args, options } };
+        });
     };
 
     const removeMessage = (key) => {

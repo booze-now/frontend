@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import "./Register.2.css";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useTranslation } from "contexts/TranslationContext";
 import { Button, Form, Row } from "react-bootstrap";
 import { useApi } from "contexts/ApiContext.js";
@@ -8,6 +8,7 @@ import { useMessages } from "contexts/MessagesContext.js";
 import { validatePassword, validateEmail } from "models/MiscHelper.js";
 
 export default function Register() {
+  const navigate = useNavigate();
   const { addMessage } = useMessages();
   const { __ } = useTranslation();
   const { post } = useApi();
@@ -34,17 +35,17 @@ export default function Register() {
     // if (form.checkValidity() === false) {
     //   event.preventDefault();
     //   event.stopPropagation();
-    // }Í
+    // }
     post('register',
       {
         first_name: firstName.value,
         last_name: lastName.value,
         email: email.value,
         password: password.value,
-        password_confirmation: passwordConfirm.value,
       })
       .then((response) => {
-        Navigate('/login')
+        addMessage("success", response.data.message);
+        navigate('/login')
       })
       .catch((error) => {
         console.warn(error);
@@ -250,8 +251,8 @@ export default function Register() {
               </Form>
             </div>
             <div className="card-footer text-center py-3">
-            <div className="small"><Link to="/login">{__('Have an account? Go to login')}</Link></div>
-            <div className="small"><Link to="/resend-registration">{__('Confirmation email missing? Resend it now')}</Link></div>
+              <div className="small"><Link to="/login">{__('Have an account? Go to login')}</Link></div>
+              <div className="small"><Link to="/resend-registration">{__('Confirmation email missing? Resend it now')}</Link></div>
             </div>
           </div>
         </div>
