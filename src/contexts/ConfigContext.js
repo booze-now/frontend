@@ -6,6 +6,10 @@ const CONFIG_KEYS = {
     'guest': 'config',
     'staff': 'config-staff'
 };
+const REALM_PATHS = {
+    'guest': '',
+    'staff': '/admin'
+};
 
 export const ConfigProvider = ({ children }) => {
 
@@ -107,8 +111,9 @@ export const ConfigProvider = ({ children }) => {
         return 'DEV';
     }
 
+    const realm_path = REALM_PATHS[realm] ?? undefined;
     return (
-        <ConfigContext.Provider value={{ getConfig, setConfig, toggleConfig, cleanupConfig, realm, applyStaffRealm, applyGuestRealm, runMode }}>
+        <ConfigContext.Provider value={{ getConfig, setConfig, toggleConfig, cleanupConfig, realm, realm_path, applyStaffRealm, applyGuestRealm, runMode }}>
             {children}
         </ConfigContext.Provider>
     );

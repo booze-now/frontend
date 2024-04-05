@@ -56,7 +56,7 @@ function App() {
         {adminRoutes.map((route, index) => (
           checkStaffRoles(user, route.roles, route.path) && <Route key={index} path={route.path} element={React.createElement(require(`components/${route.component}`).default)} />
         ))}
-        {user ? <Route path="*" element={<NoPage />} />
+        {user ? <Route path="*" element={<NoPage redir="/admin/" />} />
           : <Route path="*" element={<Login />} />}
       </Route>
       <Route path="/" element={<PublicPageLayout />}  >
@@ -64,7 +64,7 @@ function App() {
         {publicRoutes.map((route, index) => (
           checkGuest(user, route.roles, route.path) && <Route key={index} path={route.path} element={React.createElement(require(`components/${route.component}`).default)} />
         ))}
-        {user ? <Route path="*" element={<NoPage />} />
+        {user ? <Route path="*" element={<NoPage redir="/" />} />
           : <Route path="*" element={<Login />} />}
       </Route>
     </Routes>

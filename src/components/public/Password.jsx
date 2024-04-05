@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "contexts/TranslationContext";
 import './register.css';
 import { useApi } from 'contexts/ApiContext.js';
 import { useMessages } from 'contexts/MessagesContext.js';
 import { validateEmail } from "models/MiscHelper.js";
+import { useConfig } from 'contexts/ConfigContext.js';
+
 
 
 const Password = () => {
+  const navigate = useNavigate();
   const { __ } = useTranslation();
   const { post } = useApi();
   const { addMessage } = useMessages();
+  const { realm, realm_path } = useConfig();
 
   const [email, setEmail] = useState({ value: '', msg: '', touched: false, valid: false });
 
@@ -19,10 +23,10 @@ const Password = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Your submit logic here
-    post('verify/resend', { email: email.value })
+    post('forgot-password', { email: email.value })
       .then((response) => {
         addMessage("info", response.data.message);
-        Navigate('/login')
+        navigate(realm_path + '/login')
       })
       .catch((error) => {
         console.warn(error);
@@ -105,18 +109,20 @@ const Password = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
                 <div className="d-flex align-items-center justify-content-between mt-4 mb-0">
-                  <Link className="small" to="/login">
+                  <Link className="small" to={realm_path + "/login"}>
                     {__('Return to login')}
                   </Link>
                   <Button variant="primary" type="submit" {...(formIsValid ? {} : { disabled: true })} className="btn-block" >{__('Reset Password')}</Button>
                 </div>
               </Form>
             </Card.Body>
+            {realm === 'guest' &&
             <Card.Footer className="text-center py-3">
               <div className="small">
-                <Link to="/register">{__('Need an account? Sign up!')}</Link>
+                  <Link to="/register">{__('Need an account? Sign up!')}</Link>
               </div>
             </Card.Footer>
+            }
           </Card>
         </Col>
       </Row>

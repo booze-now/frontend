@@ -30,16 +30,26 @@ const adminRoutes = [
         "component": "common/Dashboard",
         "roles": ["unauth"]
     },
+    { // elfelejtett jelszó form
+        "path": "/admin/password",
+        "component": "public/Password",
+        "roles": ["unauth"]
+    },
+    { // elfelejtett jelszó megváltoztatása
+        "path": "/admin/reset-password/:id/:guid",
+        "component": "public/ResetPassword",
+        "roles": ["unauth"]
+    },
     {
         "path": "/admin/profile",
         "component": "common/Profile",
         "roles": ["admin", 'backoffice']
     },
-    {
-        "path": "/admin/table",
-        "component": "admin/Table",
-        "roles": ["admin", 'backoffice']
-    },
+    // {
+    //     "path": "/admin/table",
+    //     "component": "admin/Table",
+    //     "roles": ["admin", 'backoffice']
+    // },
 ]
 
 export default adminRoutes

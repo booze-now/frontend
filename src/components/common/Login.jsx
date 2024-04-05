@@ -5,17 +5,18 @@ import { useTranslation } from "contexts/TranslationContext";
 import { useUser } from "contexts/UserContext";
 // import { useTheme } from 'contexts/ThemeContext';
 import { useMessages } from "contexts/MessagesContext";
-import { Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import { useApi } from "contexts/ApiContext";
-
+import { useConfig } from "contexts/ConfigContext";
 
 const Login = () => {
   const { __ } = useTranslation();
   const { user, login, /*role_code , logout*/ } = useUser();
-//  const { user, login, /* role, logout*/ } = useUser();
+  //  const { user, login, /* role, logout*/ } = useUser();
   const { addMessage } = useMessages();
   const { post } = useApi();
   const navigate = useNavigate();
+  const { realm, realm_path } = useConfig();
 
   // State variables to store email and password
   const [email, setEmail] = useState("");
@@ -36,84 +37,64 @@ const Login = () => {
         const user = response.data.user;
         console.log(user);
         login(user);
-        setEmail("");
-        setPassword("");
-        if (user && [0, 1, 2, 3].includes(user.role_code)) {
-          navigate("/admin/");
-        } else {
-          navigate("/");
-        }
+        navigate(realm_path + "/admin");
       })
       .catch((error) => {
-        console.log(error);
-        // error.response.status == 401
-
+        console.warn(error);
         addMessage("danger", error.statusText);
-        // addMessage("danger", error.response.data.error);
       });
-    // addMessage("info", "You have been logged in, :name", { name: email });
-
-    // console.log("Submitted:", { email, password });
-    // Reset the form fields after submission
   };
 
   return (
-    <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-lg-5">
-          <div className="card shadow-lg border-0 rounded-lg mt-5">
-            <div className="card-header">
+    <Container>
+      <Row className="justify-content-center">
+        <Col lg={5}>
+          <Card className="shadow-lg border-0 rounded-lg mt-5">
+            <Card.Header>
               <h3 className="text-center font-weight-light my-4">
                 {__("Login")}
               </h3>
-            </div>
-            <div className="card-body">
-              <form onSubmit={handleSubmit}>
-                <div className="form-floating mb-3">
-                  <input
-                    className="form-control"
-                    id="email"
+            </Card.Header>
+            <Card.Body>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3" controlId="email">abc
+                  <Form.Control
                     type="email"
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
-                    placeholder="name@example.com"
+                    placeholder={__("Email address")}
                   />
-                  <label htmlFor="email">{__("Email address")}</label>
-                </div>
-                <div className="form-floating mb-3">
-                  <input
-                    className="form-control"
-                    id="password"
+                  <Form.Label>{__("Email address")}</Form.Label>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="password">
+                  <Form.Control
                     type="password"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
                     placeholder={__("Password")}
                   />
-                  <label htmlFor="password">{__("Password")}</label>
-                </div>
-                {/* <div className="form-check mb-3">
-                            <input className="form-check-input" id="rememberPassword" type="checkbox" value="" />
-                            <label className="form-check-label" htmlFor="rememberPassword">Remember Password</label>
-                        </div> */}
+                  <Form.Label>{__("Password")}</Form.Label>
+                </Form.Group>
                 <div className="d-flex align-items-center justify-content-between mt-4 mb-0">
-                  <Link className="small" to="/password">
+                  <Link className="small" to={`${realm_path}/password`}>
                     {__("Forgot Password?")}
                   </Link>
-                  <Button type="submit" variant="primary">
-                    {__("Login")}
-                  </Button>
+                  <Button type="submit" variant="primary">{__("Login")}</Button>
                 </div>
-              </form>
-            </div>
-            <div className="card-footer text-center py-3">
-              <div className="small">
-                <Link to="/register">{__("Need an account? Sign up!")}</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+              </Form>
+            </Card.Body>
+            {realm === 'guest' &&
+              <Card.Footer className="card-footer text-center py-3">
+                <div className="small">
+                  <Link to={realm_path + "/register"}>{__("Need an account? Sign up!")}</Link>
+                </div>
+              </Card.Footer>
+            }
+
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

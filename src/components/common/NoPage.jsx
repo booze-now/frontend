@@ -2,8 +2,10 @@ import React from "react";
 import { useTranslation } from "contexts/TranslationContext";
 import { Link } from "react-router-dom";
 
-const NoPage = () => {
+const NoPage = (props) => {
   const { __ } = useTranslation();
+  const redir = props.redir ?? '/'
+
   return (
     <>
       <div id="layoutError">
@@ -18,7 +20,7 @@ const NoPage = () => {
                     <a href="index.html">
                       <i className="fas fa-arrow-left me-1"></i>
                       {/* <Link to="login">{__('Log in')}</Link> */}
-                      <Link to="/">{__('Return to Dashboard')}</Link>
+                      <Link to={redir}>{__('Return to Dashboard')}</Link>
 
                     </a>
                   </div>
