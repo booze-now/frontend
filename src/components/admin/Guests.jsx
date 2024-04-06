@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useApi } from "contexts/ApiContext";
 import { Spinner } from "react-bootstrap";
 import TableComponent from "./TableComponent";
-
-
-export default function EmployeeRegister() {
-  const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Added loading state
+export default function Guests() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [guests, setGuests] = useState([]);
   const { get } = useApi();
   const columns = [
     { label: "ID", type: "text", field: "id", hide: false, modal: true },
@@ -31,7 +29,27 @@ export default function EmployeeRegister() {
       hide: false,
       modal: true,
     },
-    { label: "Email", type: "email", field: "email", hide: false, modal: true },
+    {
+      label: "Table",
+      type: "number",
+      field: "table",
+      hide: false,
+      modal: true,
+    },
+    {
+      label: "Reservee",
+      type: "checkbox",
+      field: "reservee",
+      hide: false,
+      modal: true,
+    },
+    {
+      label: "Picture",
+      type: "text",
+      field: "picture",
+      hide: false,
+      modal: true,
+    },
     {
       label: "Active",
       type: "checkbox",
@@ -39,35 +57,19 @@ export default function EmployeeRegister() {
       hide: false,
       modal: true,
     },
-    { label: "Role", type: "text", field: "role_code", hide: false, modal: true },
     {
-      field: "password",
-      label: "Password",
-      type: "password",
-      hide: true,
-      modal: true,
-    },
-    {
-      field: "confirmPassword",
-      label: "Confirm Password",
-      type: "password",
-      hide: true,
-      modal: true,
-    },
-    {
-      label: "Created_at",
+      label: "Created at",
       type: "date",
       field: "created_at",
-      hide: false,
+      hide: true,
       modal: false,
     },
   ];
-  const apiEndpoint = "/employees";
-
-  const getUser = async () => {
+  const apiEndpoint = "/guests";
+  const getGuests = async () => {
     try {
       const response = await get(apiEndpoint);
-      setUsers(response.data);
+      setGuests(response.data);
       setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -76,9 +78,8 @@ export default function EmployeeRegister() {
   };
 
   useEffect(() => {
-    getUser();
+    getGuests();
   }, []);
-
   return (
     <div className="container-fluid px-4">
       <h1 className="mt-4">Employee Registration</h1>
@@ -88,8 +89,7 @@ export default function EmployeeRegister() {
         </li>
         <li className="breadcrumb-item active">Employees</li>
       </ol>
-      <div className="card mb-4">
-      </div>
+      <div className="card mb-4"></div>
       <div className="card mb-4">
         <div className="card-header">
           <i className="fas fa-table me-1"></i>
@@ -97,8 +97,8 @@ export default function EmployeeRegister() {
         </div>
         {isLoading ? (
           <Spinner />
-        ) : users?.length ? (
-          /* <Employee data={users} getUser={getUser} /> */
+        ) : guests?.length ? (
+          /* <Employee data={users} getGuests={getGuests} /> */
           <TableComponent columns={columns} apiEndpoint={apiEndpoint} />
         ) : (
           <p>No users to display</p>

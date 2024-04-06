@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useApi } from "contexts/ApiContext";
 import { Spinner } from "react-bootstrap";
 import TableComponent from "./TableComponent";
-
-
-export default function EmployeeRegister() {
+export default function Receipts() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Added loading state
   const { get } = useApi();
+
   const columns = [
     { label: "ID", type: "text", field: "id", hide: false, modal: true },
     {
@@ -39,46 +38,8 @@ export default function EmployeeRegister() {
       hide: false,
       modal: true,
     },
-    { label: "Role", type: "text", field: "role_code", hide: false, modal: true },
-    {
-      field: "password",
-      label: "Password",
-      type: "password",
-      hide: true,
-      modal: true,
-    },
-    {
-      field: "confirmPassword",
-      label: "Confirm Password",
-      type: "password",
-      hide: true,
-      modal: true,
-    },
-    {
-      label: "Created_at",
-      type: "date",
-      field: "created_at",
-      hide: false,
-      modal: false,
-    },
   ];
   const apiEndpoint = "/employees";
-
-  const getUser = async () => {
-    try {
-      const response = await get(apiEndpoint);
-      setUsers(response.data);
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getUser();
-  }, []);
-
   return (
     <div className="container-fluid px-4">
       <h1 className="mt-4">Employee Registration</h1>
@@ -88,8 +49,7 @@ export default function EmployeeRegister() {
         </li>
         <li className="breadcrumb-item active">Employees</li>
       </ol>
-      <div className="card mb-4">
-      </div>
+      <div className="card mb-4"></div>
       <div className="card mb-4">
         <div className="card-header">
           <i className="fas fa-table me-1"></i>

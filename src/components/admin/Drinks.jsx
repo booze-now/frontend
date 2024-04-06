@@ -1,37 +1,40 @@
 import React, { useState, useEffect } from "react";
+import { useConfig } from "contexts/ConfigContext";
+import { useTranslation } from "contexts/TranslationContext";
 import { useApi } from "contexts/ApiContext";
-import { Spinner } from "react-bootstrap";
 import TableComponent from "./TableComponent";
+import { Spinner } from "react-bootstrap";
 
-
-export default function EmployeeRegister() {
-  const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Added loading state
+export default function Drinks() {
+  const [isLoading, setIsLoading] = useState(true);
+  const { __ } = useTranslation();
+  const { realm } = useConfig();
+  const [drinks, setDrinks] = useState([]);
   const { get } = useApi();
   const columns = [
     { label: "ID", type: "text", field: "id", hide: false, modal: true },
+
     {
-      label: "First Name",
+      label: "Name",
       type: "text",
-      field: "first_name",
+      field: "name",
       hide: false,
       modal: true,
     },
     {
-      label: "Middle Name",
+      label: "Category",
       type: "text",
-      field: "middle_name",
+      field: "category_id",
       hide: false,
       modal: true,
     },
     {
-      label: "Last Name",
+      label: "Picture",
       type: "text",
-      field: "last_name",
+      field: "picture",
       hide: false,
       modal: true,
     },
-    { label: "Email", type: "email", field: "email", hide: false, modal: true },
     {
       label: "Active",
       type: "checkbox",
@@ -39,35 +42,20 @@ export default function EmployeeRegister() {
       hide: false,
       modal: true,
     },
-    { label: "Role", type: "text", field: "role_code", hide: false, modal: true },
     {
-      field: "password",
-      label: "Password",
-      type: "password",
-      hide: true,
-      modal: true,
-    },
-    {
-      field: "confirmPassword",
-      label: "Confirm Password",
-      type: "password",
-      hide: true,
-      modal: true,
-    },
-    {
-      label: "Created_at",
+      label: "Created at",
       type: "date",
       field: "created_at",
-      hide: false,
+      hide: true,
       modal: false,
     },
   ];
-  const apiEndpoint = "/employees";
+  const apiEndpoint = "/drinks";
 
-  const getUser = async () => {
+  const getDrinks = async () => {
     try {
       const response = await get(apiEndpoint);
-      setUsers(response.data);
+      setDrinks(response.data);
       setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -76,7 +64,7 @@ export default function EmployeeRegister() {
   };
 
   useEffect(() => {
-    getUser();
+    getDrinks();
   }, []);
 
   return (
@@ -88,8 +76,7 @@ export default function EmployeeRegister() {
         </li>
         <li className="breadcrumb-item active">Employees</li>
       </ol>
-      <div className="card mb-4">
-      </div>
+      <div className="card mb-4"></div>
       <div className="card mb-4">
         <div className="card-header">
           <i className="fas fa-table me-1"></i>
@@ -97,8 +84,8 @@ export default function EmployeeRegister() {
         </div>
         {isLoading ? (
           <Spinner />
-        ) : users?.length ? (
-          /* <Employee data={users} getUser={getUser} /> */
+        ) : drinks?.length ? (
+          /* <Employee data={users} getDrinks={getDrinks} /> */
           <TableComponent columns={columns} apiEndpoint={apiEndpoint} />
         ) : (
           <p>No users to display</p>

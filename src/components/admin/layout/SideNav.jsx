@@ -31,24 +31,44 @@ const SideNav = () => {
             </div>
             {__("Dashboard")}
           </NavLink>
-          <NavLink className="nav-link" to="/admin/login">
-            <div className="sb-nav-link-icon">
-              <i className="fas fa-tachometer-alt"></i>
-            </div>
-            /login
-          </NavLink>
-          <NavLink className="nav-link" to="/admin/logout">
-            <div className="sb-nav-link-icon">
-              <i className="fas fa-tachometer-alt"></i>
-            </div>
-            /logout
-          </NavLink>
           {user && (user.role_code === 2 || user.role_code === 3) && (
             <NavLink className="nav-link" to="/admin/register">
               <div className="sb-nav-link-icon">
                 <i className="fas fa-tachometer-alt"></i>
               </div>
               Employees
+            </NavLink>
+          )}
+          {user && (user.role_code === 2 || user.role_code === 3) && (
+            <NavLink className="nav-link" to="/admin/drinks">
+              <div className="sb-nav-link-icon">
+                <i className="fas fa-tachometer-alt"></i>
+              </div>
+              Drinks
+            </NavLink>
+          )}
+          {user && (user.role_code === 2 || user.role_code === 3) && (
+            <NavLink className="nav-link" to="/admin/guests">
+              <div className="sb-nav-link-icon">
+                <i className="fas fa-tachometer-alt"></i>
+              </div>
+              Guests
+            </NavLink>
+          )}
+          {user && (user.role_code === 404 || user.role_code === 404) && (
+            <NavLink className="nav-link" to="/admin/receipts">
+              <div className="sb-nav-link-icon">
+                <i className="fas fa-tachometer-alt"></i>
+              </div>
+              Receipts
+            </NavLink>
+          )}
+          {user && (user.role_code === 0 || user.role_code === 1 ) && (
+            <NavLink className="nav-link" to="/admin/receipts">
+              <div className="sb-nav-link-icon">
+                <i className="fas fa-tachometer-alt"></i>
+              </div>
+              Orders
             </NavLink>
           )}
 
