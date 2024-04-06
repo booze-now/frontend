@@ -36,7 +36,7 @@ const adminRoutes = [
         "roles": ["unauth"]
     },
     { // elfelejtett jelszó megváltoztatása
-        "path": "/admin/reset-password/:id/:guid",
+        "path": "/admin/reset-password/:id/:token",
         "component": "public/ResetPassword",
         "roles": ["unauth"]
     },

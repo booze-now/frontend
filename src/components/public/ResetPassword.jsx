@@ -1,13 +1,12 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import React, { useState } from "react";
 import "./Register.2.css";
-import { Link, Navigate } from "react-router-dom";
 import { useTranslation } from "contexts/TranslationContext";
 import { Button, Form, Row } from "react-bootstrap";
 import { useApi } from "contexts/ApiContext.js";
 import { useMessages } from "contexts/MessagesContext.js";
 import { validatePassword } from "models/MiscHelper.js";
-import { useConfig } from "contexts/ConfigContext.js";
+//import { useConfig } from "contexts/ConfigContext.js";
 
 
 const ResetPassword = () => {
@@ -15,7 +14,10 @@ const ResetPassword = () => {
   const { addMessage } = useMessages();
   const { __ } = useTranslation();
   const { post } = useApi();
-  const { realm_path } = useConfig();
+
+  const navigate = useNavigate();
+
+  //const { realm_path } = useConfig();
 
 
   const [validated, setValidated] = useState(false);
@@ -25,7 +27,7 @@ const ResetPassword = () => {
   const [password, setPassword] = useState({ value: '', msg: '', touched: false, valid: false });
   const [passwordConfirm, setPasswordConfirm] = useState({ value: '', msg: '', touched: false, valid: false });
 
-  const { id, guid } = useParams();
+  const { id, token } = useParams();
 
   const toggleShowPasswords = (event) => {
     setShowPasswords((prev) => {
@@ -37,11 +39,11 @@ const ResetPassword = () => {
     post('reset-password',
       {
         id: id,
-        guid: guid,
+        token: token,
         password: password.value
       })
       .then((response) => {
-        Navigate('/login')
+        navigate('/login')
       })
       .catch((error) => {
         console.warn(error);
@@ -129,7 +131,7 @@ const ResetPassword = () => {
               <div>
                 <br />
                 <p>id: {id}</p>
-                <p>guid: #{guid}</p>
+                <p>token: #{token}</p>
               </div>
               <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Row className="mb-3">
@@ -169,13 +171,13 @@ const ResetPassword = () => {
                   </div>
                 </Row>
                 <div className="mt-4 mb-0">
-                  <div className="d-grid"><Button {...(formIsValid ? {} : { disabled: true })} type="submit" className=" btn-primary btn-block" >{__('Create Account')}</Button></div>
+                  <div className="d-grid"><Button {...(formIsValid ? {} : { disabled: true })} type="submit" className=" btn-primary btn-block" >{__('Reset Password')}</Button></div>
                 </div>
               </Form>
             </div>
-            <div className="card-footer text-center py-3">
+            {/* <div className="card-footer text-center py-3">
               <div className="small"><Link to={realm_path + "/login"}>{__('Have an account? Go to login')}</Link></div>
-            </div>
+            </div> */}
           </div>
         </div>
       </Row>

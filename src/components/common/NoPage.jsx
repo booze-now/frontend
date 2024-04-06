@@ -17,12 +17,9 @@ const NoPage = (props) => {
                   <div className="text-center mt-4">
                     <img className="mb-4 img-error" src="/assets/img/error-404-monochrome.svg" alt="404" />
                     <p className="lead">{__('This requested URL was not found on this server.')}</p>
-                    <a href="index.html">
+                    <Link to={redir}>
                       <i className="fas fa-arrow-left me-1"></i>
-                      {/* <Link to="login">{__('Log in')}</Link> */}
-                      <Link to={redir}>{__('Return to Dashboard')}</Link>
-
-                    </a>
+                      {__('Return to Main Page')}</Link>
                   </div>
                 </div>
               </div>

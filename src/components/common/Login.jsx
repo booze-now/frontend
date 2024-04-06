@@ -37,7 +37,7 @@ const Login = () => {
         const user = response.data.user;
         console.log(user);
         login(user);
-        navigate(realm_path + "/admin");
+        navigate(realm_path + "/");
       })
       .catch((error) => {
         console.warn(error);

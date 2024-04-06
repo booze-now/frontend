@@ -9,8 +9,19 @@ const PublicPageLayout = () => {
 
   useEffect(() => {
     applyGuestRealm()
-    import('bootstrap/dist/css/bootstrap.min.css');
+
+    const link = document.createElement('link');
+    link.href = '/assets/css/bootstrap.min.css';
+    link.type = 'text/css';
+    link.rel = 'stylesheet';
+
+    document.head.appendChild(link);
+
+    return () => {
+      document.head.removeChild(link);
+    };
   });
+
 
   return (
     <CartProvider>

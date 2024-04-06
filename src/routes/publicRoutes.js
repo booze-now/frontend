@@ -24,7 +24,7 @@ const publicRoutes = [
         "roles": ["unauth"]
     },
     { // regisztráció megerősítése
-        "path": "/confirm-registration/:id/:guid",
+        "path": "/confirm-registration/:id/:token",
         "component": "public/ConfirmRegistration",
         "roles": ["unauth"]
     },
@@ -39,7 +39,7 @@ const publicRoutes = [
         "roles": ["unauth"]
     },
     { // elfelejtett jelszó megváltoztatása
-        "path": "/reset-password/:id/:guid",
+        "path": "/reset-password/:id/:token",
         "component": "public/ResetPassword",
         "roles": ["unauth"]
     },

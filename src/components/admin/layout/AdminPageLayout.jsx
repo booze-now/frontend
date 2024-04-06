@@ -13,7 +13,17 @@ const AdminPageLayout = () => {
 
   useEffect(() => {
     applyStaffRealm();
-    import('./sbAdmin.css');
+
+    const link = document.createElement('link');
+    link.href = '/assets/css/sbAdmin.css';
+    link.type = 'text/css';
+    link.rel = 'stylesheet';
+
+    document.head.appendChild(link);
+
+    return () => {
+      document.head.removeChild(link);
+    };
   });
 
   return (

@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 
 const ConfirmRegistration = () => {
 
-    const { id, guid } = useParams();
+    const { id, token } = useParams();
     const { post } = useApi();
     const [confirmed, setConfirmed] = useState(false);
     const [error, setError] = useState('');
@@ -17,7 +17,7 @@ const ConfirmRegistration = () => {
 
     useEffect(() => {
         if (realm && !confirmed && !error) {
-            let data = { id: id, guid: guid }
+            let data = { id: id, token: token }
             post('/confirm-registration', data)
                 .then((response) => {
                     setConfirmed(true);
@@ -33,7 +33,7 @@ const ConfirmRegistration = () => {
         <div>
             <h2>Registration Confirmed!</h2>
             <p>Id: #{id}</p>
-            <p>guid: #{guid}</p>
+            <p>token: #{token}</p>
             {!confirmed ? <p>{__('Finalizing registration, please wait.')}</p> : <p>{__('Now you can log in.')}</p>}
         </div>
     )
