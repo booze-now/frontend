@@ -47,7 +47,7 @@ const TopNav = () => {
     </ul>
   
       <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-        <div className="input-group">
+      <div className="input-group" style={{ maxWidth: "300px", paddingTop: "10px" }}>
           <input
             className="form-control"
             type="text"

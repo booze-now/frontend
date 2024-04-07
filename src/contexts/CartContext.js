@@ -70,27 +70,6 @@ export const CartProvider = ({ children }) => {
     return drinkList;
   };
 
-  const addToCart = (drink_id, amount, unit, quantity) => {
-    const key = `${drink_id}|${amount}|${unit}`;
-    const cartItemsCopy = { ...cartItems };
-    // if (cartItemsCopy.hasOwnProperty(key)) {
-    //   // van már italunk
-    //   cartItemsCopy[key] = quantity;
-    // } else {
-    cartItemsCopy[key] = quantity;
-    // }
-
-    if (cartItemsCopy[key] < 1) {
-      delete cartItemsCopy[key];
-    }
-
-    setCartItems(cartItemsCopy);
-    localStorage.setItem(CART_KEY, JSON.stringify(cartItemsCopy));
-
-    // alert(
-    //   `Added ${amount} ${unit} of ${drinkList[id]} to cart`
-    // );
-  };
 
   const removeFromCart = (drink_id, amount, unit) => {
     const key = `${drink_id}|${amount}|${unit}`;
@@ -100,27 +79,69 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem(CART_KEY, JSON.stringify(newCartItems));
   };
 
+  const addToCart = (drink_id, amount, unit, quantityToAdd) => {
+    const key = `${drink_id}|${amount}|${unit}`;
+    const currentQuantity = cartItems[key] || 0;
+    const newQuantity = currentQuantity + quantityToAdd;
+  
+    const cartItemsCopy = { ...cartItems };
+    cartItemsCopy[key] = newQuantity;
+  
+    if (cartItemsCopy[key] <= 0) {
+      delete cartItemsCopy[key];
+    }
+  
+    setCartItems(cartItemsCopy);
+    localStorage.setItem(CART_KEY, JSON.stringify(cartItemsCopy));
+  
+    const drink = drinkList[drink_id];
+    if (drink) {
+      const parsedAmount = parseFloat(amount);
+      const selectedUnit = drink.units.find(
+        (u) => parseFloat(u.amount) === parsedAmount && u.unit === unit
+      );
+      if (selectedUnit) {
+        const unitPrice = selectedUnit.unit_price;
+        addMessage("success", `Added ${drink.name} to cart`);
+      } else {
+        addMessage("warning", `Selected unit not found for drink_id: ${drink_id}, amount: ${amount}, unit: ${unit}`);
+      }
+    } else {
+      addMessage("warning", `Drink not found for drink_id: ${drink_id}`);
+    }
+  };
+  
   const detailedCartItems = () => {
-    const drinkList = getDrinkList()
-
+    const drinkList = getDrinkList();
+  
     return Object.entries(cartItems).map(([key, quantity]) => {
       const [drink_id, amount, keyUnit] = key.split("|");
-      const unit = keyUnit === 'null'? null: keyUnit;
+      const unit = keyUnit === 'null' ? null : keyUnit;
       const drink = drinkList[drink_id];
-      const unitData = drink?.units.filter((u) => u.amount === Number(amount) && (u.unit === unit))
-      const unitPrice = unitData !== undefined && unitData.length ? unitData[0].unit_price : undefined;
-
-      const ret = {
-        id: Number(drink_id),
-        name: drink?.name ?? `Drink #${drink_id}`,
-        amount,
-        unit: unit ?? 'glass',
-        unitPrice: unitPrice,
-        quantity,
-      };
-      return ret;
-    });
+      if (drink) {
+        const parsedAmount = parseFloat(amount);
+        const selectedUnit = drink.units.find(
+          (u) => parseFloat(u.amount) === parsedAmount && u.unit === unit
+        );
+        if (selectedUnit) {
+          const unitPrice = selectedUnit.unit_price;
+          return {
+            id: Number(drink_id),
+            name: drink.name || `Drink #${drink_id}`,
+            amount,
+            unit: unit || 'glass',
+            unitPrice,
+            quantity,
+          };
+        } else {
+          return null; 
+        }
+      } else {
+        return null;
+      }
+    }).filter((item) => item !== null); 
   };
+  
 
   return (
     <CartContext.Provider

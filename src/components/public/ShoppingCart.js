@@ -1,6 +1,8 @@
 import { Table, Button } from "react-bootstrap";
 import { useCart } from "contexts/CartContext";
 import CounterInput from "react-bootstrap-counter";
+import './drinks.css'
+
 export default function ShoppingCart() {
   const { detailedCartItems, removeFromCart, addToCart } = useCart();
   return (
@@ -22,21 +24,22 @@ export default function ShoppingCart() {
           {detailedCartItems().map((item, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>
-                {item.name} <br /> id cause i cant reach name
-              </td>
-              <td>i cant reach</td>
+              <td>{item.name}</td>
+              <td>{item.unitPrice} </td>
               <td>
                 {item.amount} {item.unit}
               </td>
               <td>
-                <CounterInput
-                min={1}
-                  value={item.quantity}
-                  onChange={(value) =>
-                    addToCart(item.id, item.amount, item.unit, value)
-                  }
-                />
+                <div className="counter-input-wrapper">
+                  <CounterInput
+                    min={1}
+                    max={99}
+                    value={item.quantity}
+                    onChange={(value) =>
+                      addToCart(item.id, item.amount, item.unit, value)
+                    }
+                  />
+                </div>
               </td>
               <td>i cant count</td>
               <td>

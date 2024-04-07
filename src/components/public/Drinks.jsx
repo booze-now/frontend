@@ -2,21 +2,16 @@
 import { Link } from "react-router-dom";
 import "./drinks.css";
 import { Button, Card } from "react-bootstrap";
-import React, { useEffect, useState } from "react";
-import { useApi } from "contexts/ApiContext";
 import { useTranslation } from "contexts/TranslationContext";
-import { useConfig } from "contexts/ConfigContext";
 import { useCart } from "contexts/CartContext";
-import CounterInput from "react-bootstrap-counter";
+import "./drinks.css";
 
 export default function Drinks() {
-//  const [drinks, setDrinks] = useState(null);
-  const { get } = useApi();
+  
   const { __ } = useTranslation();
-  const { realm } = useConfig();
   const { getMenu } = useCart();
-
   const menu = getMenu();
+
   return menu === null ? (
     <div>{__("Please wait...")}</div>
   ) : (
@@ -108,50 +103,34 @@ function DrinkSubCategory(props) {
 
 function DrinkCard(props) {
   const { name, units } = props.drink;
-  const [selectedUnit, setSelectedUnit] = useState(units[0]);
-  const { __ } = useTranslation();
-  const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
 
-  const handleUnitSelect = (unit) => {
-    setSelectedUnit(unit);
+  const handleAddToCart = (unit) => {
+    addToCart(props.drink.id, unit.amount, unit.unit, 1); // Mindig csak 1 ital kerül a kosárba
   };
 
   return (
-    <Card style={{ width: "80%" }}>
-      <Card.Body>
-        <Card.Title>{name}</Card.Title>
-        <div className="d-flex flex-wrap align-items-center">
-          {units.map((unit, index) => (
-            <React.Fragment key={index}>
-              <Button
-                variant={selectedUnit === unit ? "primary" : "light"}
-                onClick={() => handleUnitSelect(unit)}
-                className="m-1"
-              >
-                {unit.amount} {unit.unit ?? __("glass")} {unit.unit_price} Ft
-              </Button>
-              <CounterInput
-                min={1}
-                value={quantity}
-                onChange={(value) => setQuantity(value)}
-              />
-              <Button
-                variant="light"
-                onClick={() => {
-                  addToCart(props.drink.id, unit.amount, unit.unit, quantity);
-                }}
-                className="m-1"
-              >
-                {__("Add to Cart")}
-              </Button>
-            </React.Fragment>
-          ))}
-        </div>
-        <Link to={`/drink/${props.drink.id}`}>
-          <Button variant="light">{__("View")}</Button>
-        </Link>
-      </Card.Body>
-    </Card>
+    <>
+      {units.map((unit, index) => (
+        <Card style={{ width: "80%", marginBottom: "10px" }} key={index}>
+          <Card.Body>
+            <Card.Title>{name}</Card.Title>
+            <div>
+              {unit.amount} {unit.unit ?? "glass"} {unit.unit_price} Ft
+            </div>
+            <Button
+              variant="light"
+              onClick={() => handleAddToCart(unit)}
+              className="m-1"
+            >
+              Add to Cart
+            </Button>
+            <Link to={`/drink/${props.drink.id}`}>
+              <Button variant="light">View</Button>
+            </Link>
+          </Card.Body>
+        </Card>
+      ))}
+    </>
   );
 }
