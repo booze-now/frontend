@@ -106,7 +106,7 @@ function DrinkCard(props) {
   const { addToCart } = useCart();
 
   const handleAddToCart = (unit) => {
-    addToCart(props.drink.id, unit.amount, unit.unit, 1); // Mindig csak 1 ital kerül a kosárba
+    addToCart(props.drink.id, unit.amount, unit.unit, 1, "add"); // Mindig csak 1 ital kerül a kosárba
   };
 
   return (
