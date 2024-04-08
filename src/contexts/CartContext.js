@@ -83,11 +83,11 @@ export const CartProvider = ({ children }) => {
 
   const removeFromCart = (drink_id, amount, unit) => {
     amount = Number(amount);
-    const key = `${drink_id}|${amount}|${unit}`;
+    const key = `${drink_id}|${amount}|${unit ?? ""}`;
     const newCartItems = { ...cartItems };
     delete newCartItems[key];
     setCartItems(newCartItems);
-    console.log("removeFromCart:", key, "removed");
+    // console.log("removeFromCart:", key, "removed");
     localStorage.setItem(CART_KEY, JSON.stringify(newCartItems));
   };
 
@@ -181,14 +181,15 @@ export const CartProvider = ({ children }) => {
     Object.entries(cartItems).forEach(([key, value]) => {
       const { drink_id, amount, unit } = parseKey(key);
       const drink = drinkList[drink_id];
-      let unitPrice = 0;
-      const selectedUnit = drink.units.find(
-        (u) => parseFloat(u.amount) === amount && u.unit === unit
-      );
-      if (selectedUnit) {
-        unitPrice = selectedUnit.unit_price;
-      } else {
-        unitPrice = NaN; // ez itt hiba
+      // console.log(drink, key);
+      let unitPrice = NaN;
+      if (drink) {
+        const selectedUnit = drink.units.find(
+          (u) => parseFloat(u.amount) === amount && u.unit === unit
+        );
+        if (selectedUnit) {
+          unitPrice = selectedUnit.unit_price;
+        }
       }
 
       // console.log("cartItem", key, value, "*", drink, "total:", grandTotal);
