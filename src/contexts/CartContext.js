@@ -3,6 +3,7 @@ import { useConfig } from "./ConfigContext";
 import { useApi } from "./ApiContext";
 import { useMessages } from "./MessagesContext.js";
 import { useTranslation } from "./TranslationContext";
+import { useUser } from "./UserContext";
 
 const CartContext = createContext();
 
@@ -16,6 +17,8 @@ export const CartProvider = ({ children }) => {
   const { realm } = useConfig();
   const { addMessage } = useMessages();
   const { __ } = useTranslation();
+  const { user } = useUser();
+  const { post } = useApi();
 
   const [cartItems, setCartItems] = useState(() => {
     // LOAD
@@ -24,6 +27,34 @@ export const CartProvider = ({ children }) => {
     // console.log('Cart loaded from localStorage', items)
     return items;
   });
+
+  const postCartItem = async (userId, cartData) => {
+    console.log(cartData, userId);
+    try {
+      const response = await post(`/users/${userId}/cart`, cartData);
+      console.log("CartItem posted successfully:", response.data);
+      clearCartLocally();
+      addMessage("success", "Cart items posted successfully!");
+    } catch (error) {
+      console.error("Error posting cart item:", error);
+      addMessage("danger", "Failed to post cart items.");
+    }
+  };
+
+  const clearCartLocally = () => {
+    localStorage.removeItem(CART_KEY);
+    setCartItems({});
+  };
+
+  const handleOrder = () => {
+    if (!user) {
+      addMessage("warning", "Please log in to place an order.");
+    } else {
+      const userId = user.id;
+      const cartData = { cartItems };
+      postCartItem(userId, cartData);
+    }
+  };
 
   const loadDrinks = async () => {
     if (!loaded && realm) {
@@ -121,12 +152,13 @@ export const CartProvider = ({ children }) => {
       const selectedUnit = drink.units.find(
         (u) => parseFloat(u.amount) === parsedAmount && u.unit === unit
       );
+     
       if (selectedUnit) {
         if (mode === "add" && quantityToAdd > 0) {
-          addMessage("success", "Added :drink to cart", { drink: drink.name });
+          addMessage("success", __("Added :drink to cart"), { drink: drink.name });
         }
         if (mode === "add" && quantityToAdd < 0) {
-          addMessage("success", "Removed :drink from cart", {
+          addMessage("success", __("Removed :drink from cart"), {
             drink: drink.name,
           });
         }
@@ -137,7 +169,7 @@ export const CartProvider = ({ children }) => {
         );
       }
     } else {
-      addMessage("warning", `Drink not found for drink_id: ${drink_id}`);
+      addMessage("warning", __(`Drink not found for drink_id: ${drink_id}`));
     }
   };
 
@@ -203,6 +235,7 @@ export const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         getMenu,
+        handleOrder,
         cartItems,
         detailedCartItems,
         calculateCartTotal,

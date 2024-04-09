@@ -1,11 +1,24 @@
 import { Table, Button } from "react-bootstrap";
-import { useCart } from "contexts/CartContext";
+import { useCart } from "contexts/CartContext"; // Az elérési útvonalat javítottam
 import CounterInput from "react-bootstrap-counter";
 import "./drinks.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function ShoppingCart() {
-  const { detailedCartItems, removeFromCart, addToCart, calculateCartTotal } = useCart();
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const {
+    detailedCartItems,
+    removeFromCart,
+    addToCart,
+    calculateCartTotal,
+    handleOrder    
+  } = useCart();
+
+  const handleCheckboxChange = (e) => {
+    setTermsAccepted(e.target.checked);
+  };
+
   return (
     <div>
       <h1>Shopping Cart</h1>
@@ -25,7 +38,9 @@ export default function ShoppingCart() {
           {detailedCartItems().map((item, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>#{item.id} {item.name}</td>
+              <td>
+                #{item.id} {item.name}
+              </td>
               <td>{item.unitPrice} Ft</td>
               <td>
                 {item.amount} {item.unit}
@@ -56,20 +71,28 @@ export default function ShoppingCart() {
           ))}
         </tbody>
       </Table>
+      <div>
+        <h3 style={{ color: "red" }}>
+          Attention! You have to log in to place orders!
+        </h3>
+      </div>
       <p>
-        Total Price: {calculateCartTotal()}
+        <label>
+          <input
+            type="checkbox"
+            checked={termsAccepted}
+            onChange={handleCheckboxChange}
+          />{" "}
+          I have read the <Link to="/terms-of-use">Terms of Use</Link>
+        </label>
       </p>
       <Button
         variant="secondary"
-        //onClick={() => order()}
+        onClick={() => handleOrder()}
+        disabled={!termsAccepted}
       >
-        Order for ___ Ft !
+        Order for {calculateCartTotal()} Ft !
       </Button>
-      <p>
-        {" "}
-        <Link to="/terms-of-use">{`Felhasználási feltételek`}</Link>et
-        elolvastam
-      </p>
     </div>
   );
 }

@@ -12,8 +12,6 @@ export default function AboutUs(){
       <p>
         Project GitHub: <a href="https://github.com/your-username/your-repository">BoozeNow GitHub</a>
       </p>
-
-      {/* You can add additional styling or Bootstrap classes for the footer */}
       <footer className="mt-5">
         <p>&copy; 2023 BoozeNow Project</p>
       </footer>

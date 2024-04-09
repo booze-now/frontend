@@ -7,10 +7,11 @@ import { useApi } from "contexts/ApiContext";
 const Profile = () => {
   const { user } = useUser();
   const { addMessage } = useMessages();
-  const { get, delete: deleteApi } = useApi(); // Renamed delete to deleteApi because 'delete' is a reserved keyword
-
+  const { get, deleteX, post} = useApi(); // Renamed delete to deleteApi because 'delete' is a reserved keyword
   const [displayUser, setDisplayUser] = useState(user);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  //edit mód state, jelszónál kérje régit, middlenem nem minden mas kell 
 
   const refresh = () => {
     get("me")
@@ -25,7 +26,7 @@ const Profile = () => {
   };
 
   const handleDeleteConfirmation = () => {
-    deleteApi("me")
+    deleteX("me")
       .then(() => {
         // Handle success, you may want to redirect or show a message
         console.log("User deleted successfully");
@@ -49,7 +50,7 @@ const Profile = () => {
           <h2>{displayUser.name}</h2>
           <div className="row">
             <div className="col-md-6">
-              <UserInfo label="Name" value={`${displayUser.first_name} ${displayUser.last_name}`} />
+              <UserInfo label="Name" value={`${displayUser.first_name}  ${displayUser.middle_name ?? ""} ${displayUser.last_name}`} />
               <UserInfo label="Email" value={displayUser.email} />
               <UserInfo label="Table" value={displayUser.table} />
               <UserInfo label="Adress" value={displayUser.adress} />
@@ -60,7 +61,7 @@ const Profile = () => {
             Delete
           </button>
         </div>
-      )}
+      )} 
 
       {/* Delete confirmation modal */}
       {showDeleteModal && (

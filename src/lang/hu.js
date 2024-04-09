@@ -50,6 +50,8 @@ const translations_hu = {
     'The :field is invalid': 'A(z) :field érvénytelen',
     'The :field needs to be match Password': 'A(z) :field mezőnek egyeznie kell a Jelszóval',
     'Show Passwords': 'Jelszavak megjelenítése',
+    'Added :field to cart':'Hozáadva :field a kosárhoz',
+    'Drinks':'Itallap',
 }
 
 export default translations_hu;
