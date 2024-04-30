@@ -1,6 +1,6 @@
 // import Cards from "../components/basics/Cards";
 import { Link } from "react-router-dom";
-import "./drinks.css";
+
 import { Button, Card } from "react-bootstrap";
 import { useTranslation } from "contexts/TranslationContext";
 import { useCart } from "contexts/CartContext";

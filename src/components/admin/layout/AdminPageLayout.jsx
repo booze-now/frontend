@@ -24,7 +24,7 @@ const AdminPageLayout = () => {
     return () => {
       document.head.removeChild(link);
     };
-  });
+  },[]);
 
   return (
     <>
@@ -49,6 +49,7 @@ const AdminPageLayout = () => {
           </footer>
         </div>
       </div>
+
     </>
   );
 };

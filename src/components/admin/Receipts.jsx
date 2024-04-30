@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useApi } from "contexts/ApiContext";
 import { Spinner } from "react-bootstrap";
 import TableComponent from "./TableComponent";
+
 export default function Receipts() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Added loading state

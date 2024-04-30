@@ -29,9 +29,9 @@ export const CartProvider = ({ children }) => {
   });
 
   const postCartItem = async (userId, cartData) => {
-    console.log(cartData, userId);
+    console.log(JSON.stringify(cartData), userId);
     try {
-      const response = await post(`/users/${userId}/cart`, cartData);
+      const response = await post(`/${userId}/cart`, cartData);
       console.log("CartItem posted successfully:", response.data);
       clearCartLocally();
       addMessage("success", "Cart items posted successfully!");

@@ -2,9 +2,10 @@
     color: white;
 }
 
-.form-control {
+/* .form-control {
     text-align: center;
-  }
+  } */
+  
   .notification {
     position: fixed;
     bottom: 20px;

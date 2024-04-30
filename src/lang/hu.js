@@ -52,6 +52,12 @@ const translations_hu = {
     'Show Passwords': 'Jelszavak megjelenítése',
     'Added :field to cart':'Hozáadva :field a kosárhoz',
     'Drinks':'Itallap',
+    'Orders':'Rendelés ',
+    'Ordered at':'Rendelés ideje ',
+    'Table':'Asztal',
+    'Status':'Rendelés állapota ',
+    'Served':'Kiszolgálva',
+    'Details':'Részletek',
 }
 
 export default translations_hu;

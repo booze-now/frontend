@@ -15,7 +15,7 @@ export default function EmployeeRegister() {
       type: "text",
       field: "first_name",
       hide: false,
-      modal: true,
+      modal: false,
     },
     {
       label: "Middle Name",

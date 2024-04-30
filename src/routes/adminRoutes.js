@@ -16,6 +16,11 @@ const adminRoutes = [
         "roles": ["unauth"]
     },
     {
+        "path": "/admin/orders/",
+        "component": "admin/Orders",
+        "roles": ["admin", 'backoffice']
+    },
+    {
         "path": "/admin/register",
         "component": "admin/EmployeeRegister",
         "roles": ["admin", 'backoffice']

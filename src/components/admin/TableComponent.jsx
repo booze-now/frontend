@@ -4,7 +4,6 @@ import ModalComponent from "./ModalComponent";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { BsPlus } from "react-icons/bs";
-import './table.css'
 
 const TableComponent = ({ columns, apiEndpoint }) => {
   const [data, setData] = useState([]);

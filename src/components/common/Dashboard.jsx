@@ -14,12 +14,7 @@ const Dashboard = () => {
   return (
     <>
       <div className="container">
-        <h1>{__('Context API Sample app with user, translation, and theme handling')}</h1>
-        {Object.keys(languages).map((e, i) => {
-          return e !== language && <button className="btn btn-sm btn-primary" key={i} onClick={() => { changeLanguage(e) }}>{__('Change language to :lang', { lang: __(languages[e].name) })}</button>
-        })}{" "}
-        <button className="btn btn-sm btn-info" onClick={user ? logout : () => {navigate('login')}}>{user ? __('Logout') : __('Login')}</button>{" "}
-        <button className="btn btn-sm btn-info" onClick={toggleTheme}>{__('Toggle Theme')}</button>
+        <h1>{__('Welcome to the admin page!!!')}</h1>
         <div>
           <p>{user ? __('Welcome :name!', { 'name': user.name }) : __('Please log in.')}</p>
         </div>
