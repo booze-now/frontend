@@ -26,6 +26,11 @@ const adminRoutes = [
         "roles": ["admin", 'backoffice']
     },
     {
+        "path": "/admin/charts",
+        "component": "admin/layout/Chart",
+        "roles": ["admin", 'backoffice']
+    },
+    {
         "path": "/admin/drinks",
         "component": "admin/Drinks",
         "roles": ["admin", 'backoffice']

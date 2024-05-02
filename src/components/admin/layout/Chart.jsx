@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useApi } from "contexts/ApiContext";
-import Chart from "chart.js/auto"; // Import Chart.js
+import Chart from "chart.js/auto";
+import { Doughnut } from "react-chartjs-2";
 import { useTranslation } from "contexts/TranslationContext";
 import { useConfig } from "contexts/ConfigContext.js";
+import { Card, Spinner } from "react-bootstrap";
 
 export default function PieChart() {
   const { get } = useApi();
@@ -11,7 +13,7 @@ export default function PieChart() {
   const { __ } = useTranslation();
   const { realm } = useConfig();
 
-  const apiEndpoint = "/ordersnumber";
+  const apiEndpoint = "/ordersnumber?date=2024-04-28";
   const fetchData = async () => {
     try {
       setIsLoading(true);
@@ -29,74 +31,57 @@ export default function PieChart() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (Object.keys(pieData).length > 0) {
-      renderPieChart();
-    }
-  }, [pieData]);
-
-  const renderPieChart = () => {
-    var ctx = document.getElementById("myPieChart");
-    var myPieChart = new Chart(ctx, {
-      type: "doughnut",
-      data: {
-        labels: [
-          __("Recorded"),
-          __("In Progress"),
-          __("Served"),
-          __("Late Served"),
-        ],
-        datasets: [
-          {
-            data: [
-              pieData.recorded,
-              pieData.in_progress,
-              pieData.served,
-              pieData.late_served,
-            ],
-            backgroundColor: ["#4e73df", "#1cc88a", "#36b9cc", "#ff6384"], // Adjust colors as needed
-            hoverBackgroundColor: ["#2e59d9", "#17a673", "#2c9faf", "#cc5a5f"],
-            hoverBorderColor: "rgba(234, 236, 244, 1)",
-          },
-        ],
-      },
-      options: {
-        maintainAspectRatio: false,
-        tooltips: {
-          backgroundColor: "rgb(255,255,255)",
-          bodyFontColor: "#858796",
-          borderColor: "#dddfeb",
-          borderWidth: 1,
-          xPadding: 15,
-          yPadding: 15,
-          displayColors: false,
-          caretPadding: 10,
-        },
-        legend: {
-          display: false,
-        },
-        cutoutPercentage: 80,
-      },
-    });
-  };
-
   return (
     <div>
       {isLoading ? (
-        <p>Loading...</p>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
       ) : (
-        <div className="col-xl-4 col-lg-5">
-          <div className="card shadow mb-4">
-            <div className="card-header py-3">
-              <h6 className="m-0 font-weight-bold text-primary">Donut Chart</h6>
-            </div>
-            <div className="card-body">
-              <div className="chart-pie pt-4">
-                <canvas id="myPieChart"></canvas>
-              </div>
-              <hr />
-            </div>
-          </div>
+        <div className="container-fluid" style={{ top: '18rem', padding:'15px',display:'block'}}>
+        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+          <Card border="dark">
+          <Card.Title>
+          <h1 className="mt-4 mb-4"> {__("Daily order status")}</h1>
+         
+          </Card.Title>
+          <Card.Body>
+            <Doughnut
+              data={{
+                labels: [
+                  __("Recorded"),
+                  __("In Progress"),
+                  __("Served"),
+                  __("Late Served"),
+                ],
+                datasets: [
+                  {
+                    data: [
+                      pieData.recorded,
+                      pieData.in_progress,
+                      pieData.served,
+                      pieData.late_served,
+                    ],
+                    backgroundColor: [
+                      "#4e73df",
+                      "#1cc88a",
+                      "#36b9cc",
+                      "#ff6384",
+                    ],
+                    hoverBackgroundColor: [
+                      "#2e59d9",
+                      "#17a673",
+                      "#2c9faf",
+                      "#cc5a5f",
+                    ],
+                    hoverBorderColor: "rgba(234, 236, 244, 1)",
+                  },
+                ],
+              }}
+            />
+            </Card.Body>
+          </Card>
+        </div>
         </div>
       )}
     </div>

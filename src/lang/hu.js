@@ -51,17 +51,23 @@ const translations_hu = {
     'The :field needs to be match Password': 'A(z) :field mezőnek egyeznie kell a Jelszóval',
     'Show Passwords': 'Jelszavak megjelenítése',
     'Added :field to cart':'Hozáadva :field a kosárhoz',
-    'Drinks':'Itallap',
     'Orders':'Rendelés ',
     'Ordered at':'Rendelés ideje ',
     'Table':'Asztal',
     'Status':'Rendelés állapota ',
-    'Served':'Kiszolgálva',
+    'Served':'Felszólgálva',
     'Details':'Részletek',
     'Recorded':'Rögzített',
-    'In progress':'Folyamatban',
-    'Served':'Teljesített',
-    'Late served':'Késve teljesített',
+    'In Progress':'Folyamatban',
+    'Late Served':'Késve teljesített',
+    'Prices/Promos':'Árak/Akciók',
+    'Prices':'Árak',
+    'Promotions':'Akciók',
+    'Employees':'Alkalmazottak',
+    'Base Data':'Törzsadatok',
+    'Guests':'Vendégek',
+    'Drinks':'Italok',
+    
 }
 
 export default translations_hu;
