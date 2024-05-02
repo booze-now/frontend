@@ -6,6 +6,7 @@ import ContentArea from "components/common/ContentArea";
 import { useConfig } from "contexts/ConfigContext";
 import { useTranslation } from "contexts/TranslationContext";
 
+
 const AdminPageLayout = () => {
   // az alábbi két sor fontos, ne töröld ki, köszi! <3
   const { applyStaffRealm } = useConfig();

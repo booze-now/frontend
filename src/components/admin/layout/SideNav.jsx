@@ -10,7 +10,7 @@ const SideNav = () => {
   const { user } = useUser();
   const { getConfig } = useConfig();
 
-  console.log(user);
+ // console.log(user);
 
   if (getConfig("sidebarOpened", true)) {
     console.log("sidebar opened");

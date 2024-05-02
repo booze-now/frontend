@@ -58,6 +58,10 @@ const translations_hu = {
     'Status':'Rendelés állapota ',
     'Served':'Kiszolgálva',
     'Details':'Részletek',
+    'Recorded':'Rögzített',
+    'In progress':'Folyamatban',
+    'Served':'Teljesített',
+    'Late served':'Késve teljesített',
 }
 
 export default translations_hu;

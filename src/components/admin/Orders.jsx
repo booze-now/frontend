@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useApi } from "contexts/ApiContext";
 import { Card, Button, Spinner, Collapse, Table } from "react-bootstrap";
 import { useTranslation } from "contexts/TranslationContext";
-
+import { useUser } from "contexts/UserContext";
 const Orders = () => {
+  const { user } = useUser();
   const { __ } = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
   const [orders, setOrders] = useState([]);
@@ -24,12 +25,14 @@ const Orders = () => {
 
     fetchOrders();
   }, [get]);
-
+ 
   const handleServeOrder = async (orderId, guest_id) => {
     try {
       const response = await put(`/order-update/${orderId}`, {
-        status: "served",
+        //status: "served",
         guest_id: guest_id,
+        served_by: user.id,
+        served_at: new Date(),
       }); // Valós API hívás
       console.log("Order status updated:", response);
       // Frissítsük a megfelelő order állapotát a UI-ban
