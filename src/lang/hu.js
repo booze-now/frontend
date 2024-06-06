@@ -66,8 +66,18 @@ const translations_hu = {
     'Employees':'Alkalmazottak',
     'Base Data':'Törzsadatok',
     'Guests':'Vendégek',
-    'Drinks':'Italok',
-    
+    'All Drinks':'Italok',
+    'Our finest champagne!': 'A legfinomabb pezsgőnk',
+    '20% off until July 15': '20% kedvezmény Július 15-ig',
+    'Welcome here!':'Üdv itt!',
+    'Order this!': 'Rendeld meg!',
+    'The strongest beers in the city': 'A legerősebb sörök a városban',
+    'Be careful with this!': 'Légy óvatos ezzel!',
+    'I will taste it!': 'Megkóstolom!',
+    'WINE HOUR!': 'BORÓRA!',
+    'What\'s better than a glass of wine? Two glasses for the price of one.': 'Mi lehet jobb egy pohár bornál? Két pohár egy áráért.',
+    'I want this!': 'Ezt akarom!',
+    'Check out the other drinks!':'Nézd meg a többi italunkat is',
 }
 
 export default translations_hu;

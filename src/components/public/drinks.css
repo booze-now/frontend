@@ -1,35 +1,63 @@
 .menu {
-    color: white;
+  color: white;
 }
 
-/* .form-control {
-    text-align: center;
-  } */
-  
-  .notification {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #28a745;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    z-index: 9999;
-    animation: fadeOut 3s ease-in-out;
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #28a745;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 9999;
+  animation: fadeOut 3s ease-in-out;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
   }
-  
-  @keyframes fadeOut {
-    0% {
-      opacity: 1;
-    }
-    90% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
+  90% {
+    opacity: 1;
   }
-  
-  .counter-input-wrapper {
-    width: 80px;
+  100% {
+    opacity: 0;
   }
+}
+
+.counter-input-wrapper {
+  width: 80px;
+}
+.menu {
+  text-align: center;
+}
+.accordion-body {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card-custom {
+  margin: 50px;
+  width: 400px;
+}
+
+.card-custom img {
+  max-width: 250px;
+  height: auto;
+  display: block;
+  margin: 0 auto 10px;
+}
+
+@media (max-width: 600px) {
+  .menu {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card-custom {
+    width: 100%;
+    max-width: 200px;
+  }
+}

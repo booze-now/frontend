@@ -1,26 +1,83 @@
+.home {
+  text-align: center;
+}
+.home-carousel {
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+}
+
 .carousel-item {
   position: relative;
   background-position: center;
   background-size: cover;
-  max-height: 600px;
+  max-height: 800px;
+}
+
+.carousel {
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  width: 90%;
+}
+
+.carousel-item img {
+  object-fit: cover;
+  object-position: center top; /* A kép felfelé tolása */
+}
+
+.carousel-inner {
+  border-radius: 20px;
 }
 
 .carousel-caption {
   position: absolute;
   border-radius: 10px;
-  background-color: rgba(100, 100, 100, 0.7); /* Átlátszó szürke háttér */
+  background-color: rgba(100, 100, 100, 0.7);
   padding: 20px;
   color: white;
 }
 
-.carousel-caption h1,
+.carousel-caption h1 {
+  color: white;
+}
 .carousel-caption p {
+  font-size: x-large;
   color: white;
 }
 
+.carousel-caption a .btn {
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 15px 30px;
+  background-color: #d4af37;
+  border: none;
+  border-radius: 5px;
+  color: black;
+  transition: background-color 0.3s, transform 0.3s;
+}
 
-@media screen and (min-width: 800px) {
-  .carousel-item {
-    height: 700px;
+.carousel-caption a .btn:hover {
+  background-color: #d1990c;
+  transform: scale(1.05);
+}
+
+@media screen and (max-width: 800px) {
+  .carousel {
+    width: 100%;
+  }
+  .carousel-caption a .btn {
+    font-size: 1rem;
+    font-weight: 600;
+
+    background-color: #d4af37;
+    border: none;
+    border-radius: 5px;
+    color: black;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  .carousel-caption p {
+    font-size: medium;
+    color: white;
   }
 }

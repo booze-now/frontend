@@ -1,0 +1,32 @@
+.cards {
+    display: inline-block;
+    width: 23%; /* adjust the width to fit 4 cards in a row */
+    margin: 50px;
+    vertical-align: top;
+    max-height: 350px;
+  }
+  
+  .card-custom {
+    display: flex;
+    flex-direction: column;
+    height: 350px; /* adjust the height to your liking */
+  }
+  
+  .card-custom .card-body {
+    flex: 1;
+  }
+  
+  .card-custom img {
+    max-width: 250px;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+  }
+  
+  
+  @media (max-width: 600px) {
+    .cards {
+      width: 100%; /* make the card full-width */
+      margin: 20px; /* adjust the margin to your liking */
+    }
+  }

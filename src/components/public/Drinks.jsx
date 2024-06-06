@@ -1,13 +1,10 @@
-// import Cards from "../components/basics/Cards";
 import { Link } from "react-router-dom";
-
 import { Button, Card } from "react-bootstrap";
 import { useTranslation } from "contexts/TranslationContext";
 import { useCart } from "contexts/CartContext";
 import "./drinks.css";
 
 export default function Drinks() {
-  
   const { __ } = useTranslation();
   const { getMenu } = useCart();
   const menu = getMenu();
@@ -16,7 +13,7 @@ export default function Drinks() {
     <div>{__("Please wait...")}</div>
   ) : (
     <div className="menu">
-      <h2>Drinks</h2>
+      <h2 style={{ margin: "50px" }}>{__("All Drinks")}</h2>
       <div className="accordion" id="accordionDrinks">
         {menu instanceof Object &&
           Object.keys(menu).map((category, i) => (
@@ -28,59 +25,60 @@ export default function Drinks() {
 }
 
 function DrinkMainCategory(props) {
-  /*
-  state függő osztályok:
-  button collapsed (kitörölni, ha kinyitott)
-  accordion show (kitörölni, ha összecsukott)
-  */
-  return (
-    <>
-      <div className="accordion-item">
-        <h2 className="accordion-header">
-          <button
-            className="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target={"#collapseDrink" + props.category.id}
-            aria-expanded="true"
-            aria-controls={"collapseDrink" + props.category.id}
-          >
-            {props.category.name}
-          </button>
-        </h2>
-        <div
-          id={"collapseDrink" + props.category.id}
-          className="accordion-collapse collapse"
-          data-bs-parent="#accordionDrinks"
-        >
-          <div className="accordion-body">
-            {props.category.drinks.map((drink, i) => (
-              <DrinkCard key={i} drink={drink} />
-            ))}
+  const { drinks, subcategory } = props.category;
 
-            {Object.keys(props.category.subcategory).map((subCategoryId, i) => (
+  // Minden italt egy listába gyűjtünk
+  const allDrinks = [
+    ...drinks,
+    ...Object.values(subcategory).flatMap((subCat) => subCat.drinks),
+  ];
+
+  return (
+    <div className="accordion-item">
+      <h2 className="accordion-header">
+        <button
+          className="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target={"#collapseDrink" + props.category.id}
+          aria-expanded="true"
+          aria-controls={"collapseDrink" + props.category.id}
+        >
+          {props.category.name}
+        </button>
+      </h2>
+      <div
+        id={"collapseDrink" + props.category.id}
+        className="accordion-collapse collapse"
+        data-bs-parent="#accordionDrinks"
+      >
+        <div className="accordion-body">
+          {allDrinks.map((drink, i) => (
+            <DrinkCard key={i} drink={drink} />
+          ))}
+          {/* {Object.keys(props.category.subcategory).map((subCategoryId, i) => (
               <DrinkSubCategory
                 key={i}
                 subCategory={props.category.subcategory[subCategoryId]}
               />
-            ))}
-          </div>
+            ))}  */}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
-function DrinkSubCategory(props) {
-  return (
-    <>
-      <h4>{props.subCategory.name}</h4>
-      {props.subCategory.drinks.map((drink, i) => (
-        <DrinkCard key={i} drink={drink} />
-      ))}
-    </>
-  );
-}
+// function DrinkSubCategory(props) {
+//   return (
+//     <>
+//       <h4>{props.subCategory.name}</h4>
+//       {props.subCategory.drinks.map((drink, i) => (
+//         <DrinkCard key={i} drink={drink} />
+//       ))}
+//     </>
+//   );
+// }
+
 // function Drink(props) {
 //   return (
 //     <>
@@ -112,12 +110,13 @@ function DrinkCard(props) {
   return (
     <>
       {units.map((unit, index) => (
-        <Card style={{ width: "80%", marginBottom: "10px" }} key={index}>
+        <Card className="card-custom" key={index}>
           <Card.Body>
             <Card.Title>{name}</Card.Title>
             <div>
               {unit.amount} {unit.unit ?? "glass"} {unit.unit_price} Ft
             </div>
+            <Card.Img src={props.drink.image_url} />
             <Button
               variant="light"
               onClick={() => handleAddToCart(unit)}
