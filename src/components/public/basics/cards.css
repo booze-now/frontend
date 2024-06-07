@@ -1,32 +1,80 @@
 .cards {
-    display: inline-block;
-    width: 23%; /* adjust the width to fit 4 cards in a row */
-    margin: 50px;
-    vertical-align: top;
-    max-height: 350px;
-  }
-  
-  .card-custom {
-    display: flex;
-    flex-direction: column;
-    height: 350px; /* adjust the height to your liking */
-  }
-  
-  .card-custom .card-body {
-    flex: 1;
-  }
-  
-  .card-custom img {
-    max-width: 250px;
-    height: auto;
+  display: inline-block;
+  width: 20%;
+  margin: 30px;
+  vertical-align: top;
+  min-height: 400px;
+}
+
+.card-custom {
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  margin: 20px;
+}
+
+.card-custom.card-body {
+  flex: 1;
+}
+
+.card-custom img {
+  max-width: 220px;
+  height: auto;
+  display: block;
+  padding: 10px;
+}
+
+.radio-container {
+  height: 70px;
+}
+
+.radio-wrapper {
+  margin: 10px;
+  padding: 2px;
+}
+
+.custom-radio {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  accent-color: gray;
+}
+
+@media (max-width: 600px) {
+  .cards {
+    min-height: 500px !important;
+    margin: 20px;
     display: block;
-    margin: 0 auto 10px;
   }
-  
-  
-  @media (max-width: 600px) {
-    .cards {
-      width: 100%; /* make the card full-width */
-      margin: 20px; /* adjust the margin to your liking */
-    }
+  .card-custom {
+    min-width: 300px !important;
+    height: 100% !important;
+    margin-bottom: 60px !important;
+    padding: 0px;
   }
+  .card-custom img {
+    max-width: 40px;
+    height: auto;
+    padding: 10px;
+  }
+  .radio-container {
+    height: auto;
+    overflow-y: auto;
+  }
+  .radio-wrapper {
+    margin: 5px;
+    padding: 2px;
+  }
+}
+
+@keyframes goldChase {
+  0% {
+    border-color: #ffd700; 
+  }
+  50% {
+    border-color: #f1ad2f; 
+  }
+  100% {
+    border-color: #ffd700; 
+  }
+}

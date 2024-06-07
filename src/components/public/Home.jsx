@@ -59,7 +59,7 @@ const Home = () => {
       </Carousel>
     </div>
     <div className="home-cards">
-    <h1 style={{ margin: "20px" }}>{__("Check out the other drinks!")}</h1>
+    <h1 style={{ margin: "20px", paddingTop:"20px" }}>{__("Check out the other drinks!")}</h1>
     <Cards /></div>
    </div>
   );

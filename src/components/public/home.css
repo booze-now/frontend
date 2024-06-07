@@ -23,7 +23,6 @@
 
 .carousel-item img {
   object-fit: cover;
-  object-position: center top; /* A kép felfelé tolása */
 }
 
 .carousel-inner {
@@ -58,7 +57,7 @@
 }
 
 .carousel-caption a .btn:hover {
-  background-color: #d1990c;
+  background-color: #f1ad2f;
   transform: scale(1.05);
 }
 
@@ -70,7 +69,7 @@
     font-size: 1rem;
     font-weight: 600;
 
-    background-color: #d4af37;
+    background-color: #ffd700;
     border: none;
     border-radius: 5px;
     color: black;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useCart } from "contexts/CartContext";
@@ -9,35 +9,82 @@ export default function Cards() {
   const { __ } = useTranslation();
   const { getMenu } = useCart();
   const menu = getMenu();
+  const [loadedDrinks, setLoadedDrinks] = useState([]);
+  const [drinkOffset, setDrinkOffset] = useState(0);
 
-  return (
-    menu === null ? (
-      <div>{__("Please wait...")}</div>
-    ) : (
-      <div>
-        {menu instanceof Object &&
-          Object.keys(menu).map((category, i) => (
-            <DrinkMainCategory key={i} category={menu[category]} />
-          ))}
-      </div>
-    )
-  );
-}
+  useEffect(() => {
+    const allDrinks =
+      menu instanceof Object
+        ? Object.keys(menu).flatMap((category) => {
+            const { drinks, subcategory } = menu[category];
+            return [
+              ...drinks,
+              ...Object.values(subcategory).flatMap((subCat) => subCat.drinks),
+            ];
+          })
+        : [];
+    const initialDrinks = allDrinks.slice(0, 4);
+    setLoadedDrinks(initialDrinks);
+    setDrinkOffset(4); // Set initial offset after loading first 4 drinks
+  }, [menu]);
 
-function DrinkMainCategory(props) {
-  const { drinks, subcategory } = props.category;
+  const handleLoadMore = () => {
+    const allDrinks =
+      menu instanceof Object
+        ? Object.keys(menu).flatMap((category) => {
+            const { drinks, subcategory } = menu[category];
+            return [
+              ...drinks,
+              ...Object.values(subcategory).flatMap((subCat) => subCat.drinks),
+            ];
+          })
+        : [];
+    const nextDrinks = allDrinks.slice(drinkOffset, drinkOffset + 4);
+    if (nextDrinks.length > 0) {
+      setLoadedDrinks([...loadedDrinks, ...nextDrinks]);
+      setDrinkOffset(drinkOffset + 4);
+    }
+  };
 
-  const allDrinks = [
-    ...drinks,
-    ...Object.values(subcategory).flatMap((subCat) => subCat.drinks),
-  ];
-
-  return (
-    <>
-      {allDrinks.map((drink, i) => (
+  return menu === null ? (
+    <div>{__("Please wait...")}</div>
+  ) : (
+    <div>
+      {loadedDrinks.map((drink, i) => (
         <DrinkCard key={i} drink={drink} />
       ))}
-    </>
+      <div style={{ textAlign: "center" }}>
+        <Button
+          variant="light"
+          onClick={handleLoadMore}
+          style={{
+            fontSize: "30px",
+            padding: "15px 15px",
+            margin: "20px",
+            backgroundColor: "#d4af37",
+            border: "none",
+            borderRadius: "5px",
+          }}
+        >
+          Load More
+        </Button>
+        <Link to="/drinks">
+          <Button
+            variant="light"
+            style={{
+              fontSize: "30px",
+              padding: "15px 15px",
+              margin: "20px",
+              backgroundColor: "#d4af37",
+              border: "none",
+              borderRadius: "5px",
+            }}
+          >
+            View All Drinks
+          </Button>
+        </Link>
+      </div>
+    </div>
   );
 }
 
@@ -53,22 +100,31 @@ function DrinkCard(props) {
 
   return (
     <div className="cards">
-      <Card className="card-custom">
+      <Card
+        className="card-custom"
+        style={{
+          animation: "goldChase 3s infinite",
+        }}
+      >
         <Card.Body>
-          <Card.Title>{name}</Card.Title>
+          <Card.Title style={{ fontWeight: "bold", fontSize: "30px" }}>
+            {name}
+          </Card.Title>
           <Card.Img src={props.drink.image_url} />
-          <div>
+          <div className="radio-container">
             {units.map((unit, index) => (
-              <div key={index} className="radio">
-                <input
-                  type="radio"
-                  name={name}
-                  value={unit}
-                  checked={selectedUnit === unit}
-                  onChange={() => setSelectedUnit(unit)}
-                  style={{ color: 'gray' }} 
-                />
-                {unit.amount} {unit.unit ?? "glass"} {unit.unit_price} Ft
+              <div key={index} className="radio-wrapper">
+                <label className="radio-label" style={{ fontSize: "17px" }}>
+                  <input
+                    type="radio"
+                    name={name}
+                    value={unit}
+                    checked={selectedUnit === unit}
+                    onChange={() => setSelectedUnit(unit)}
+                    className="custom-radio"
+                  />
+                  {unit.amount} {unit.unit ?? "glass"} {unit.unit_price} Ft
+                </label>
               </div>
             ))}
           </div>
@@ -76,12 +132,17 @@ function DrinkCard(props) {
             variant="light"
             onClick={handleAddToCart}
             className="m-1"
-            style={{ fontSize: '1.2em' }} // nagyobb gomb
+            style={{ fontSize: "20px", fontWeight: "bold" }}
           >
             Add to Cart
           </Button>
           <Link to={`/drink/${props.drink.id}`}>
-            <Button variant="light"  style={{ fontSize: '1.2em' }}>View</Button>
+            <Button
+              variant="light"
+              style={{ fontSize: "20px", fontWeight: "bold" }}
+            >
+              View
+            </Button>
           </Link>
         </Card.Body>
       </Card>
