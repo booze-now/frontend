@@ -91,6 +91,7 @@ export default function Cards() {
 function DrinkCard(props) {
   const { name, units } = props.drink;
   const { addToCart } = useCart();
+  const { __ } = useTranslation();
 
   const [selectedUnit, setSelectedUnit] = React.useState(units[0]);
 
