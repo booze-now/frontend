@@ -11,7 +11,7 @@ const ToggleTheme = () => {
   };
 
   return (
-    <div className="toggle-theme" >
+    <div className="toggle-theme" style={{ fontSize: 20, margin: 40 }} >
       <i className="fa-regular fa-moon"></i>&nbsp;
       <div className="form-check form-switch">
         <input type="checkbox" role="switch" id="theme-toggler" onChange={handleChange}

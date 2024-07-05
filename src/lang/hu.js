@@ -78,6 +78,14 @@ const translations_hu = {
     'What\'s better than a glass of wine? Two glasses for the price of one.': 'Mi lehet jobb egy pohár bornál? Két pohár egy áráért.',
     'I want this!': 'Ezt akarom!',
     'Check out the other drinks!':'Nézd meg a többi italunkat is',
+    'About us':'Rólunk',
+    'Shopping Cart':'Kosár',
+    'Drinks':'Itallap',
+    'Add to Cart':'Kosárba!',
+    'View':'Megnézem!',
+    'Load More':'Mutass még!',
+    'View all dinks':'Mutasd az összes italt!',
+
 }
 
 export default translations_hu;

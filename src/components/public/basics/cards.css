@@ -40,41 +40,32 @@
   accent-color: gray;
 }
 
-@media (max-width: 600px) {
+/* Tablet and below */
+/* Tablet and below */
+@media (max-width: 800px) {
   .cards {
-    min-height: 500px !important;
-    margin: 20px;
-    display: block;
-  }
-  .card-custom {
-    min-width: 300px !important;
-    height: 100% !important;
-    margin-bottom: 60px !important;
-    padding: 0px;
-  }
-  .card-custom img {
-    max-width: 40px;
-    height: auto;
-    padding: 10px;
-  }
-  .radio-container {
-    height: auto;
-    overflow-y: auto;
-  }
-  .radio-wrapper {
-    margin: 5px;
-    padding: 2px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
+/* Mobile */
+@media (max-width: 480px) {
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+
 @keyframes goldChase {
   0% {
-    border-color: #ffd700; 
+    border-color: #ffd700;
   }
   50% {
-    border-color: #f1ad2f; 
+    border-color: #f1ad2f;
   }
   100% {
-    border-color: #ffd700; 
+    border-color: #ffd700;
   }
 }

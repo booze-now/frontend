@@ -66,7 +66,7 @@ export default function Cards() {
             borderRadius: "5px",
           }}
         >
-          Load More
+          {__("Load More")}
         </Button>
         <Link to="/drinks">
           <Button
@@ -80,7 +80,7 @@ export default function Cards() {
               borderRadius: "5px",
             }}
           >
-            View All Drinks
+            {__("View all dinks")}
           </Button>
         </Link>
       </div>
@@ -134,14 +134,14 @@ function DrinkCard(props) {
             className="m-1"
             style={{ fontSize: "20px", fontWeight: "bold" }}
           >
-            Add to Cart
+            {__("Add to Cart")}
           </Button>
           <Link to={`/drink/${props.drink.id}`}>
             <Button
               variant="light"
               style={{ fontSize: "20px", fontWeight: "bold" }}
             >
-              View
+              {__("View")}
             </Button>
           </Link>
         </Card.Body>
