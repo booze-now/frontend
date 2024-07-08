@@ -1,0 +1,22 @@
+.table-header {
+  font-size: 30px;
+}
+
+.table-cell {
+  font-size: 25px;
+  margin: 20px;
+}
+
+.h3-red {
+  color: red;
+  font-size: 24px;
+  margin: 20px;
+}
+
+.link {
+  font-size: 18px;
+}
+
+.button-secondary {
+  font-size: 20px;
+}

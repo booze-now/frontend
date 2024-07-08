@@ -4,21 +4,21 @@ import { useApi } from "contexts/ApiContext";
 import { useMessages } from "contexts/MessagesContext";
 import { useTranslation } from "contexts/TranslationContext";
 import { useConfig } from "contexts/ConfigContext";
+import { Button } from 'react-bootstrap';
 
-export default function Drink({ match }) {
+export default function Drink() {
   const { id } = useParams();
   const { get } = useApi();
   const { addMessage } = useMessages();
-  const [drink, setDrink] = useState(null)
-  const { __ } = useTranslation()
-  const { realm } = useConfig()
-
+  const [drink, setDrink] = useState(null);
+  const { __ } = useTranslation();
+  const { realm } = useConfig();
 
   useEffect(() => {
     if (realm) {
       get(`drinks/${id}`)
         .then((response) => {
-          const drink = response.data //.user;
+          const drink = response.data; //.user;
           // console.log('drink:', drink);
           setDrink(drink);
         })
@@ -26,24 +26,43 @@ export default function Drink({ match }) {
           //setDrink(null);
           console.log(error.response.data);
           // error.response.status == 401
-          console.warn(error)
+          console.warn(error);
           addMessage("danger", error.response.data.error);
         });
     }
-  }, [get, id, realm, addMessage])
+  }, [get, id, realm, addMessage]);
 
   if (!drink) {
-    return <div>{__('Please wait')}</div>;
+    return <div>{__("Please wait")}</div>;
   }
   // console.log('drink', drink)
-  return (
-    (!drink === null) ? <div>Nem nyert</div>
-      :
-      <div>
-        <h2>Drink Details</h2>
-        <h3>#{id} {drink.name}</h3>
-        <p>Description: {drink.description}</p>
-        {/* <p>Price: ${drink.units[0].unit_price.toFixed(2)}</p> */}
-        {/* Add more details as needed */}
-      </div>);
+  return !drink === null ? (
+    <div>Nem nyert</div>
+  ) : (
+    <div style={{ textAlign: "center" }}>
+      <h1 className="gold-text" style={{ margin: "50px" }}>
+        {drink.name}
+      </h1>
+      <img
+        style={{ width: "800px" }}
+        src={drink.image_url}
+        className="card-img-top"
+        alt={drink.name}
+      />
+      <h2 style={{ margin: "50px" }}>{drink.description}</h2>
+      <Button
+        variant="light"
+            style={{
+              fontSize: "30px",
+              padding: "15px 15px",
+              margin: "20px",
+              backgroundColor: "#d4af37",
+              border: "none",
+              borderRadius: "5px",
+            }}
+      >
+        {__("Add to Cart")}
+      </Button>
+    </div>
+  );
 }

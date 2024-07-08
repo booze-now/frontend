@@ -213,7 +213,6 @@ export const CartProvider = ({ children }) => {
     Object.entries(cartItems).forEach(([key, value]) => {
       const { drink_id, amount, unit } = parseKey(key);
       const drink = drinkList[drink_id];
-      // console.log(drink, key);
       let unitPrice = NaN;
       if (drink) {
         const selectedUnit = drink.units.find(
@@ -223,11 +222,12 @@ export const CartProvider = ({ children }) => {
           unitPrice = selectedUnit.unit_price;
         }
       }
-
-      // console.log("cartItem", key, value, "*", drink, "total:", grandTotal);
-      grandTotal += Number(value) * Number(unitPrice);
+  
+      if (!isNaN(unitPrice)) {
+        grandTotal += Number(value) * Number(unitPrice);
+      }
     });
-
+  
     return grandTotal;
   };
 

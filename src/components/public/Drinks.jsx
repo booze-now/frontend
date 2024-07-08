@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
-import { Button, Card } from "react-bootstrap";
+
 import { useTranslation } from "contexts/TranslationContext";
 import { useCart } from "contexts/CartContext";
 import "./drinks.css";
+import React from "react";
+import DrinkCard from "./basics/DrinkCard";
 
 export default function Drinks() {
   const { __ } = useTranslation();
@@ -13,7 +14,7 @@ export default function Drinks() {
     <div>{__("Please wait...")}</div>
   ) : (
     <div className="menu">
-      <h2 style={{ margin: "50px" }}>{__("All Drinks")}</h2>
+      <h2 className="gold-text" style={{ margin: "50px", }}>{__("Beverage Menu")}</h2>
       <div className="accordion" id="accordionDrinks">
         {menu instanceof Object &&
           Object.keys(menu).map((category, i) => (
@@ -99,37 +100,65 @@ function DrinkMainCategory(props) {
 //   );
 // }
 
-function DrinkCard(props) {
-  const { name, units } = props.drink;
-  const { addToCart } = useCart();
+// function DrinkCard(props) {
+//   const { name, units } = props.drink;
+//   const { addToCart } = useCart();
+//   const { __ } = useTranslation();
 
-  const handleAddToCart = (unit) => {
-    addToCart(props.drink.id, unit.amount, unit.unit, 1, "add"); // Mindig csak 1 ital kerül a kosárba
-  };
+//   const [selectedUnit, setSelectedUnit] = React.useState(units[0]);
 
-  return (
-    <>
-      {units.map((unit, index) => (
-        <Card className="card-custom" key={index}>
-          <Card.Body>
-            <Card.Title>{name}</Card.Title>
-            <div>
-              {unit.amount} {unit.unit ?? "glass"} {unit.unit_price} Ft
-            </div>
-            <Card.Img src={props.drink.image_url} />
-            <Button
-              variant="light"
-              onClick={() => handleAddToCart(unit)}
-              className="m-1"
-            >
-              Add to Cart
-            </Button>
-            <Link to={`/drink/${props.drink.id}`}>
-              <Button variant="light">View</Button>
-            </Link>
-          </Card.Body>
-        </Card>
-      ))}
-    </>
-  );
-}
+//   const handleAddToCart = () => {
+//     addToCart(props.drink.id, selectedUnit.amount, selectedUnit.unit, 1, "add");
+//   };
+
+//   return (
+//     <div className="cards">
+//       <Card
+//         className="card-custom"
+//         style={{
+//           animation: "goldChase 3s infinite",
+//         }}
+//       >
+//         <Card.Body>
+//           <Card.Title style={{ fontWeight: "bold", fontSize: "30px" }}>
+//             {name}
+//           </Card.Title>
+//           <Card.Img src={props.drink.image_url} />
+//           <div className="radio-container">
+//             {units.map((unit, index) => (
+//               <div key={index} className="radio-wrapper">
+//                 <label className="radio-label" style={{ fontSize: "17px" }}>
+//                   <input
+//                     type="radio"
+//                     name={name}
+//                     value={unit}
+//                     checked={selectedUnit === unit}
+//                     onChange={() => setSelectedUnit(unit)}
+//                     className="custom-radio"
+//                   />
+//                   {unit.amount} {unit.unit ?? "glass"} {unit.unit_price} Ft
+//                 </label>
+//               </div>
+//             ))}
+//           </div>
+//           <Button
+//             variant="light"
+//             onClick={handleAddToCart}
+//             className="m-1"
+//             style={{ fontSize: "20px", fontWeight: "bold" }}
+//           >
+//             {__("Add to Cart")}
+//           </Button>
+//           <Link to={`/drink/${props.drink.id}`}>
+//             <Button
+//               variant="light"
+//               style={{ fontSize: "20px", fontWeight: "bold" }}
+//             >
+//               {__("View")}
+//             </Button>
+//           </Link>
+//         </Card.Body>
+//       </Card>
+//     </div>
+//   );
+

@@ -80,11 +80,24 @@ const translations_hu = {
     'Check out the other drinks!':'Nézd meg a többi italunkat is',
     'About us':'Rólunk',
     'Shopping Cart':'Kosár',
-    'Drinks':'Itallap',
+    'Beverage Menu':'Itallap',
     'Add to Cart':'Kosárba!',
     'View':'Megnézem!',
     'Load More':'Mutass még!',
     'View all dinks':'Mutasd az összes italt!',
+    'Attention! You have to log in to place orders!':'Figyelem! Rendelést csak bejelentkezés után lehet leadni!',
+    'Cart':'Kosár',
+    'terms of use':'felhasználási feltételeket',
+    'I have read the':'Elolvastam a',
+    'Name':'Név',
+    'Price for one':'Egy darab ára',
+    'Unit':'Egység',
+    'Quantity':'Mennyiség',
+    'Total price':'Teljes összeg',
+    'Remove from cart':'Törlés a kosárból',
+    'Remove':'Törlés',
+    'Order for ':'Rendeld meg ',
+
 
 }
 

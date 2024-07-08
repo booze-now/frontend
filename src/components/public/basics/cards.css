@@ -9,12 +9,18 @@
 .card-custom {
   display: flex;
   flex-direction: column;
-  height: 400px;
+  min-height: 400px;
   margin: 20px;
 }
 
 .card-custom.card-body {
   flex: 1;
+}
+.card-title {
+  max-height: 40px; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .card-custom img {
@@ -41,7 +47,6 @@
 }
 
 /* Tablet and below */
-/* Tablet and below */
 @media (max-width: 800px) {
   .cards {
     display: grid;
@@ -53,7 +58,7 @@
 @media (max-width: 480px) {
   .cards {
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(1, 1fr) !important;
   }
 }
 

@@ -1,10 +1,43 @@
 .gold-text {
-  font-size: 30px;
+  font-size: 40px;
   margin-right: 5px;
   color: #ffd700;
+  font-family: 'Great Vibes', serif; 
 }
+
 .white-text {
   font-size: 25px;
   margin-right: 5px;
   color: #ffffff;
+  font-family: 'Great Vibes', serif; 
+}
+.hidden-form {
+  display: none;
+}
+@media (max-width: 600px) {
+  .custom-navbar {
+    padding: 0;
+  }
+  .navbar-toggler {
+    border: none;
+    padding: 0;
+  }
+  .navbar-toggler-icon {
+    font-size: 24px;
+    color: transparent;
+  }
+  .collapse.navbar-collapse {
+    background-color: #333;
+    padding: 10px;
+  }
+  .collapse.navbar-collapse ul {
+    flex-direction: column;
+  }
+  .collapse.navbar-collapse li {
+    margin-bottom: 10px;
+  }
+  .collapse.navbar-collapse a {
+    color: #fff;
+  }
+
 }

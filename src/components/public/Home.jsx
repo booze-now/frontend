@@ -9,7 +9,7 @@ const Home = () => {
   const { __ } = useTranslation();
   return (
    <div className="home">
-     <h1 style={{ margin: "20px" }}>{__("Welcome here!")}</h1> 
+     <h1 className="gold-text" style={{ margin: "20px" }}>{__("Welcome here!")}</h1> 
     <div className="home-carousel">
       <Carousel>
         <Carousel.Item>
@@ -21,7 +21,7 @@ const Home = () => {
           <Carousel.Caption>
             <h1>{__("Our finest champagne!")}</h1>
             <p>{__("20% off until July 15")}</p>
-            <Link to="/drink/80">
+            <Link to="/drink/26">
               <Button variant="dark">{__("Order this!")}</Button>
             </Link>
           </Carousel.Caption>
@@ -35,7 +35,7 @@ const Home = () => {
           <Carousel.Caption>
             <h1>{__("The strongest beers in the city")}</h1>
             <p>{__("Be careful with this!")}</p>
-            <Link to="/drink/55">
+            <Link to="/drink/15">
               <Button variant="dark">{__("I will taste it!")}</Button>
             </Link>
           </Carousel.Caption>
@@ -51,7 +51,7 @@ const Home = () => {
             <p>
               {__("What's better than a glass of wine? Two glasses for the price of one.")}
             </p>
-            <Link to="/drink/76">
+            <Link to="/drink/22">
               <Button variant="dark">{__("I want this!")}</Button>
             </Link>
           </Carousel.Caption>

@@ -36,11 +36,13 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  
 }
 
 .card-custom {
   margin: 50px;
   width: 400px;
+  
 }
 
 .card-custom img {
@@ -59,4 +61,7 @@
   .card-custom {
     max-width: 300px;
   }
+}
+.accordion-item .accordion-button {
+  font-size: xx-large;
 }
